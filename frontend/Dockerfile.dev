@@ -1,0 +1,32 @@
+FROM node:10.4.0
+
+# Install yarn
+RUN apt-get update && apt-get install -y apt-transport-https
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install yarn
+
+RUN yarn global add bs-platform
+RUN yarn global add reason-cli@3.2.0-darwin
+
+RUN yarn global add serve
+
+# Copy just the package.json first to install deps
+ADD package.json .
+ADD bsconfig.json .
+ADD graphql_schema.json .
+ADD tailwind.js .
+ADD razzle.config.js .
+ADD /src /src
+ADD /public /public
+WORKDIR .
+RUN yarn install
+
+# Now add source code & build
+RUN yarn build
+
+EXPOSE 3000
+
+ENV NODE_ENV production
+
+ENTRYPOINT yarn start:prod
