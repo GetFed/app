@@ -7,38 +7,10 @@ import UserModel, { IUser } from './UserModel';
 
 import { GraphQLContext } from '../../TypeDefinition';
 
-export default class User {
-  id: string;
-
-  _id: Types.ObjectId;
-
-  name: string;
-
-  email: string | null | undefined;
-
-  active: boolean | null | undefined;
-
-  constructor(data: IUser, { user }: GraphQLContext) {
-    this.id = data.id;
-    this._id = data._id;
-    this.name = data.name;
-
-    // you can only see your own email, and your active status
-    if (user && user._id.equals(data._id)) {
-      this.email = data.email;
-      this.active = data.active;
-    }
-  }
-}
-
 export const getLoader = () => new DataLoader(ids => mongooseLoader(UserModel, ids));
 
-const viewerCanSee = () => true;
-
-export const load = async (context: GraphQLContext, id: string): Promise<User | null> => {
-  if (!id) {
-    return null;
-  }
+export const load = async (context: GraphQLContext, id: string): Promise<IUser | null> => {
+  if (!id) { return null; }
 
   let data;
   try {
@@ -46,7 +18,8 @@ export const load = async (context: GraphQLContext, id: string): Promise<User | 
   } catch (err) {
     return null;
   }
-  return viewerCanSee() ? new User(data, context) : null;
+
+  return data;
 };
 
 export const clearCache = ({ dataloaders }: GraphQLContext, id: Types.ObjectId) => dataloaders.UserLoader.clear(id.toString());
@@ -60,10 +33,19 @@ export const loadUsers = async (context: GraphQLContext, args: UserArgs) => {
   const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
   const users = UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
 
-  return connectionFromMongoCursor({
+  const mongoUsersCursored = await connectionFromMongoCursor({
     cursor: users,
     context,
     args,
     loader: load,
   });
+
+  const updatedEdges = mongoUsersCursored.edges.map(async (edge) => {
+    const {node} = edge;
+    edge.node = node.then(({_id}) => _id);
+    return edge;
+  });
+
+  mongoUsersCursored.edges = updatedEdges;
+  return mongoUsersCursored;
 };

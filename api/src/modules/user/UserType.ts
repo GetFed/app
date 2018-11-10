@@ -1,30 +1,43 @@
-import { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLNonNull } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLNonNull, GraphQLID } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 
 import { connectionDefinitions } from '../../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../../interface/NodeInterface';
+import { UserLoader } from '../../loader';
 
 const UserType = registerType(
   new GraphQLObjectType({
     name: 'User',
     description: 'User data',
     fields: () => ({
-      id: globalIdField('User'),
-      _id: {
-        type: GraphQLString,
-        resolve: user => user._id,
+      // id: globalIdField('User'),
+      id: {
+        type: GraphQLNonNull(GraphQLID),
+        resolve: async (id, abc, context) => {
+          const userAgain = await UserLoader.load(context, id);
+          return userAgain ? userAgain._id: null
+        },
       },
       name: {
         type: GraphQLString,
-        resolve: user => user.name,
+        resolve: async (id, abc, context) => {
+          const userAgain = await UserLoader.load(context, id);
+          return userAgain ? userAgain.name: null
+        },
       },
       email: {
         type: GraphQLString,
-        resolve: user => user.email,
+        resolve: async (id, abc, context) => {
+          const userAgain = await UserLoader.load(context, id);
+          return userAgain ? userAgain.email: null
+        },
       },
       active: {
         type: GraphQLBoolean,
-        resolve: user => user.active,
+        resolve: async (id, abc, context) => {
+          const userAgain = await UserLoader.load(context, id);
+          return userAgain ? userAgain.active: null
+        },
       },
     }),
     interfaces: () => [nodeInterface],

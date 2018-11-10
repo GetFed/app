@@ -1,40 +1,64 @@
 import mongoose, { Document, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-const schema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      hidden: true,
-    },
-    email: {
-      type: String,
-      required: false,
-      index: true,
-    },
-    active: {
-      type: Boolean,
-      default: true,
-    },
+const schema = new mongoose.Schema({
+  _id: String,
+  address_zipcode: String,
+  // emails: {
+  //   type: [
+  //     'Mixed'
+  //   ]
+  // },
+  first_name: String,
+  last_name: String,
+  phone: String,
+  address_city: String,
+  address_line_1: String,
+  address_line_2: String,
+  address_state: String,
+  amount_spent: Number,
+  createdAt: {
+    type: Date
   },
-  {
-    timestamps: {
-      createdAt: 'createdAt',
-      updatedAt: 'updatedAt',
-    },
-    collection: 'user',
+  credit: Number,
+  diet: String,
+  email: String,
+  preferredDelivDay: String,
+  profile: {
+    zipCode: String
   },
-);
+  restrictions: [String],
+  stripe_id: String,
+  // subscriptions: {
+  //   type: [
+  //     'Mixed'
+  //   ]
+  // }
+});
 
 export interface IUser extends Document {
-  name: string;
-  password?: string;
+  _id: string;
+  address_zipcode: string;
+  emails: object[];
+  first_name: string;
+  last_name: string;
+  phone: string;
+  address_city: string;
+  address_line_1: string;
+  address_line_2: string;
+  address_state: string;
+  amount_spent: number;
+  createdAt: Date;
+  credit: number;
+  diet: string;
   email: string;
-  active: boolean;
+  preferredDelivDay: string;
+  profile: {
+    zipCode: string,
+  };
+  restrictions: string[];
+  stripe_id: string;
+  subscriptions: object;
   authenticate: (plainTextPassword: string) => boolean;
   encryptPassword: (password: string | undefined) => string;
 }

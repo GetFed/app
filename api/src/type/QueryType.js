@@ -14,7 +14,7 @@ export default new GraphQLObjectType({
     node: nodeField,
     me: {
       type: UserType,
-      resolve: (root, args, context) => (context.user ? UserLoader.load(context, context.user._id) : null),
+      resolve: async (root, args, context) => (context.user ? UserLoader.load(context, context.user._id) : null),
     },
     user: {
       type: UserType,
@@ -23,7 +23,7 @@ export default new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLID),
         },
       },
-      resolve: (obj, args, context) => {
+      resolve: async (obj, args, context) => {
         const { id } = fromGlobalId(args.id);
         return UserLoader.load(context, id);
       },
@@ -36,12 +36,7 @@ export default new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: (obj, args, context) => {
-        console.log("obj = %j", obj);
-        console.log("args = %j", args);
-        console.log("context = %j", context);
-        return UserLoader.loadUsers(context, args);
-      },
+      resolve: async (obj, args, context) => UserLoader.loadUsers(context, args),
     },
   }),
 });
