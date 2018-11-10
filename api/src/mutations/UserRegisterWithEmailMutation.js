@@ -5,7 +5,7 @@ import { mutationWithClientMutationId } from 'graphql-relay';
 import { generateToken } from '../auth';
 import pubSub, { EVENTS } from '../pubSub';
 
-import { UserModel } from '../model/user';
+import UserModel from '../model/UserModel';
 
 
 export default mutationWithClientMutationId({

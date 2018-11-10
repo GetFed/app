@@ -1,6 +1,6 @@
 import { graphql } from 'graphql';
 
-import { UserModel } from '../../../../model/user';
+import UserModel from '../../../../model/UserModel';
 import { schema } from '../../../../schema';
 import {
   getContext,

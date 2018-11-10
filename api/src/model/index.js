@@ -1,3 +1,3 @@
-import { UserModel } from './user';
+import { UserModel } from './UserModel';
 
 export const User = UserModel;

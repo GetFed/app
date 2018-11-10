@@ -5,7 +5,7 @@ import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import UserType, { UserConnection } from '../modules/UserType';
 import { nodeField } from '../interface/NodeInterface';
-import UserModel, { Loader as UserLoader } from '../model/user/UserModel';
+import UserModel, { Loader as UserLoader } from '../model/UserModel';
 
 type UserArgs = ConnectionArguments & {
   search?: string;

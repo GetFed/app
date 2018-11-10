@@ -8,7 +8,7 @@ import {
 
 import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../interface/NodeInterface';
-import { Loader as UserLoader } from '../model/user/UserModel';
+import { Loader as UserLoader } from '../model/UserModel';
 
 import _ from 'lodash';
 

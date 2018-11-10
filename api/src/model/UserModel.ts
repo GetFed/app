@@ -1,6 +1,6 @@
 import mongoose, { Document, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
-import {createLoader} from '../../loader/LoaderCreator';
+import {createLoader} from '../loader/LoaderCreator';
 
 // can only access data if defined on schema
 const schema = new mongoose.Schema({
