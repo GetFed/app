@@ -10,7 +10,11 @@ import { fullConnectionDefinitions } from '../core/connection/CustomConnectionTy
 import { registerType, nodeInterface } from '../interface/NodeInterface';
 import { UserLoader } from '../loader';
 
+import _ from 'lodash';
+
 const TYPE_NAME = 'Email';
+
+// idObj is {id: String, email: String}
 
 const EmailType = registerType(
   new GraphQLObjectType({
@@ -19,24 +23,20 @@ const EmailType = registerType(
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => {
-          return `${idObj.id} ${idObj.email}`;
-        },
+        resolve: async (idObj, args, context) => `${idObj.id} ${idObj.address}`,
       },
 
       address: {
         type: GraphQLString,
-        resolve: async (idObj, args, context) => {
-          return idObj.email
-        },
+        resolve: async (idObj, args, context) => idObj.address,
       },
 
       verified: {
         type: GraphQLBoolean,
         resolve: async (idObj, args, context) => {
-          const userAgain = await UserLoader.load(context, idObj.id);
-          const addressObj = userAgain && userAgain.emails.find(({address}) => address === idObj.address)
-          return addressObj ? addressObj.verified : false;
+          const user = await UserLoader.load(context, idObj.id);
+          const addressObj = _.get(user, "emails", []).find(({address}) => address === idObj.address);
+          return _.get(addressObj, "verified", false);
         },
       },
     }),
@@ -46,4 +46,5 @@ const EmailType = registerType(
 
 export default EmailType;
 
+// this is how arrays are handled
 export const EmailConnection = fullConnectionDefinitions(EmailType);

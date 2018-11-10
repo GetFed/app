@@ -10,6 +10,7 @@ import {
 import { connectionFromArray } from 'graphql-relay';
 
 import { GraphQLDateTime } from 'graphql-iso-date';
+import _ from 'lodash';
 
 import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../interface/NodeInterface';
@@ -18,75 +19,82 @@ import {EmailConnection} from './EmailType';
 
 const TYPE_NAME = 'User';
 
+// idObj is String
+
 const UserType = registerType(
   new GraphQLObjectType({
     name: TYPE_NAME,
     description: 'User data',
     fields: () => ({
-      // id: globalIdField('User'),
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
+        resolve: async (idObj, args, context) => {
+          const userAgain = await UserLoader.load(context, idObj);
           return userAgain ? userAgain._id: null
         },
       },
 
       createdAt: {
-        type: GraphQLString,
-        resolve: async (id, args, context) => null,
+        type: GraphQLDateTime,
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "createdAt")
+        },
       },
 
       emails: {
         type: EmailConnection.connectionType,
-        resolve: async (id, args, context) => {
-          const user = await UserLoader.load(context, id);
-          const address = (user && user.emails && user.emails.map(({address}) => ({address, id}))) || [];
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          const address = _.get(user, "emails", []).map(({address}) => ({address, id: idObj}));
           return connectionFromArray(address, args);
         },
       },
 
       stripeId: {
         type: GraphQLString,
-        resolve: async (id, args, context) => null,
+        resolve: async (idObj, args, context) =>  {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "stripeId");
+        },
       },
 
       firstName: {
         type: GraphQLString,
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain.first_name: null
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "first_name");
         },
       },
       lastName: {
         type: GraphQLString,
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain.last_name: null
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "lastName");
         },
       },
       
       amountSpent: {
         type: GraphQLFloat,
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain.email: null
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "email");
         },
       },
 
       lastPurchaseDate: {
         type: GraphQLDateTime,
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain.email: null
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "lastPurchaseDate");
         },
       },
 
       discount: {
         type: GraphQLFloat,
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain.email: null
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "discount");
         },
       },
     }),
@@ -96,4 +104,5 @@ const UserType = registerType(
 
 export default UserType;
 
+// this is how arrays are handled
 export const UserConnection = fullConnectionDefinitions(UserType);
