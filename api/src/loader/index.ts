@@ -1,12 +1,8 @@
-import { Loader as UserLoader } from '../model/UserModel';
-// const files = require.context('../model');
-// console.log("files = %j", files);
+import { MODELS } from '../model';
 
-const loaders = [
-  UserLoader
-];
+const LOADERS = MODELS.map(({Loader}) => Loader);
 
-export const dataloaders = loaders.reduce(
+export const dataloaders = LOADERS.reduce(
   (prev, loader) => ({
     ...prev,
     [loader.loaderName]: loader.getLoader(),

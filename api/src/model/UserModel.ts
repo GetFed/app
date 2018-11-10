@@ -1,5 +1,4 @@
 import mongoose, { Document, Model } from 'mongoose';
-import bcrypt from 'bcryptjs';
 import {createLoader} from '../loader/LoaderCreator';
 
 // can only access data if defined on schema
@@ -65,27 +64,8 @@ export interface IUser extends Document {
   encryptPassword: (password: string | undefined) => string;
 }
 
-schema.pre<IUser>('save', function encryptPasswordHook(next) {
-  // Hash the password
-  if (this.isModified('password')) {
-    this.password = this.encryptPassword(this.password);
-  }
-
-  return next();
-});
-
-schema.methods = {
-  authenticate(plainTextPassword: string) {
-    return bcrypt.compareSync(plainTextPassword, this.password);
-  },
-  encryptPassword(password: string) {
-    return bcrypt.hashSync(password, 8);
-  },
-};
-
 // this will make find, findOne typesafe
 const UserModel: Model<IUser> = mongoose.model('User', schema);
-
 export const Loader = createLoader(UserModel);
 
 export default UserModel;
