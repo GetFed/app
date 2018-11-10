@@ -60,6 +60,7 @@ function resolveMaybeThunk<T>(thingOrThunk: Thunk<T>): T {
   return typeof thingOrThunk === 'function' ? thingOrThunk() : thingOrThunk;
 }
 
+
 export function connectionDefinitions(config: ConnectionConfig): GraphQLConnectionDefinitions {
   const { nodeType, resolveCursor, resolveNode } = config;
   const name = config.name || nodeType.name;
@@ -123,4 +124,12 @@ export function connectionDefinitions(config: ConnectionConfig): GraphQLConnecti
   });
 
   return { edgeType, connectionType };
-}
+};
+
+export function fullConnectionDefinitions(nodeType): GraphQLConnectionDefinitions {
+  return connectionDefinitions({
+    name: nodeType.name,
+    nodeType: GraphQLNonNull(nodeType),
+  });
+};
+

@@ -36,14 +36,7 @@ export default new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: async (obj, args, context) => {
-        console.log("args = %j", args);
-        console.log(args);
-        const res = UserLoader.loadUsers(context, args);
-        console.log("res = %j", res);
-        console.log(res);
-        return res;
-      },
+      resolve: async (obj, args, context) => UserLoader.loadUsers(context, args),
     },
   }),
 });

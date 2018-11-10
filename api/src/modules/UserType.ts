@@ -11,7 +11,7 @@ import { connectionFromArray } from 'graphql-relay';
 
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-import { connectionDefinitions } from '../core/connection/CustomConnectionType';
+import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../interface/NodeInterface';
 import { UserLoader } from '../loader';
 import {EmailConnection} from './EmailType';
@@ -42,7 +42,6 @@ const UserType = registerType(
         resolve: async (id, args, context) => {
           const user = await UserLoader.load(context, id);
           const address = (user && user.emails && user.emails.map(({address}) => ({address, id}))) || [];
-          console.log("address = %j", address)
           return connectionFromArray(address, args);
         },
       },
@@ -97,7 +96,4 @@ const UserType = registerType(
 
 export default UserType;
 
-export const UserConnection = connectionDefinitions({
-  name: TYPE_NAME,
-  nodeType: GraphQLNonNull(UserType),
-});
+export const UserConnection = fullConnectionDefinitions(UserType);

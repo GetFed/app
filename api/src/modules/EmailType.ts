@@ -6,7 +6,7 @@ import {
   GraphQLID
 } from 'graphql';
 
-import { connectionDefinitions } from '../core/connection/CustomConnectionType';
+import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../interface/NodeInterface';
 import { UserLoader } from '../loader';
 
@@ -46,7 +46,4 @@ const EmailType = registerType(
 
 export default EmailType;
 
-export const EmailConnection = connectionDefinitions({
-  name: TYPE_NAME,
-  nodeType: GraphQLNonNull(EmailType),
-});
+export const EmailConnection = fullConnectionDefinitions(EmailType);
