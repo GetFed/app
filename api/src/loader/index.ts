@@ -1,3 +1,3 @@
-import {UserLoader} from '../model/user';
+import { Loader as UserLoader } from '../model/user/UserModel';
 
 export { UserLoader };

@@ -5,7 +5,11 @@ import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import UserType, { UserConnection } from '../modules/UserType';
 import { nodeField } from '../interface/NodeInterface';
-import { UserLoader } from '../loader';
+import UserModel, { Loader as UserLoader } from '../model/user/UserModel';
+
+type UserArgs = ConnectionArguments & {
+  search?: string;
+};
 
 export default new GraphQLObjectType({
   name: 'Query',
@@ -36,7 +40,12 @@ export default new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: async (obj, args, context) => UserLoader.loadUsers(context, args),
+      resolve: async (obj, args, context) => {
+        const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
+        const users = UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
+
+        return UserLoader.loadMany(users, args, context);
+      },
     },
   }),
 });

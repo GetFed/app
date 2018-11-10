@@ -1,5 +1,6 @@
 import mongoose, { Document, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import {createLoader} from '../../loader/LoaderCreator';
 
 // can only access data if defined on schema
 const schema = new mongoose.Schema({
@@ -84,5 +85,7 @@ schema.methods = {
 
 // this will make find, findOne typesafe
 const UserModel: Model<IUser> = mongoose.model('User', schema);
+
+export const Loader = createLoader(UserModel);
 
 export default UserModel;

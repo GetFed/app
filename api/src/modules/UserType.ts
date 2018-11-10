@@ -14,8 +14,11 @@ import _ from 'lodash';
 
 import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../interface/NodeInterface';
-import { UserLoader } from '../loader';
+import { Loader as UserLoader } from '../model/user/UserModel';
+
 import {EmailConnection} from './EmailType';
+
+import { connectionArgs } from 'graphql-relay';
 
 const TYPE_NAME = 'User';
 
@@ -44,6 +47,7 @@ const UserType = registerType(
 
       emails: {
         type: EmailConnection.connectionType,
+        args: connectionArgs,
         resolve: async (idObj, args, context) => {
           const user = await UserLoader.load(context, idObj);
           const address = _.get(user, "emails", []).map(({address}) => ({address, id: idObj}));
