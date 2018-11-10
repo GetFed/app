@@ -11,6 +11,7 @@
     "dotenv-safe": "^4.0.4",
     "fs-extra-promise": "^1.0.1",
     "graphql": "^14.0.0",
+    "graphql-iso-date": "^3.6.1",
     "graphql-playground-middleware-koa": "^1.6.4",
     "graphql-relay": "^0.5.5",
     "graphql-subscriptions": "^0.5.8",
@@ -122,4 +123,3 @@
     "update-schema": "babel-node --extensions \".es6,.js,.es,.jsx,.mjs,.ts\" ./scripts/updateSchema.js"
   }
 }
-
