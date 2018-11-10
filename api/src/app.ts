@@ -14,7 +14,7 @@ import { GraphQLError } from 'graphql';
 
 import { schema } from './schema';
 import { getUser } from './auth';
-import * as loaders from './loader';
+import {dataloaders} from './loader';
 
 const app = new Koa();
 const router = new Router();
@@ -23,14 +23,6 @@ app.keys = [process.env.JWT_KEY];
 
 const graphqlSettingsPerReq = async (req: Request) => {
   const { user } = await getUser(req.header.authorization);
-
-  const dataloaders = Object.keys(loaders).reduce(
-    (acc, loaderKey) => ({
-      ...acc,
-      [loaderKey]: loaders[loaderKey].getLoader(),
-    }),
-    {},
-  );
 
   return {
     graphiql: process.env.NODE_ENV !== 'production',

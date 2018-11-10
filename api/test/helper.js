@@ -2,7 +2,7 @@
 
 import mongoose from 'mongoose';
 
-import * as loaders from '../src/loader';
+import {dataloaders} from '../src/loader';
 import * as _createRows from './createRows';
 
 export const createRows = _createRows;
@@ -66,14 +66,6 @@ export async function clearDbAndRestartCounters() {
 }
 
 export function getContext(context: Object) {
-  const dataloaders = Object.keys(loaders).reduce(
-    (prev, loaderKey) => ({
-      ...prev,
-      [loaderKey]: loaders[loaderKey].getLoader(),
-    }),
-    {},
-  );
-
   return {
     ...context,
     req: {},

@@ -1,7 +1,7 @@
 // @flow
 
 import jwt from 'jsonwebtoken';
-import { User } from './model';
+import UserModel from './model/UserModel';
 import { jwtSecret } from './config';
 
 export async function getUser(token: string) {
@@ -10,7 +10,7 @@ export async function getUser(token: string) {
   try {
     const decodedToken = jwt.verify(token.substring(4), jwtSecret);
 
-    const user = await User.findOne({ _id: decodedToken.id });
+    const user = await UserModel.findOne({ _id: decodedToken.id });
 
     return {
       user,

@@ -22,10 +22,14 @@ type Loader = {
 type Loaders = {
   [key: string]: Loader;
 };
+console.log("hello");
 export const { nodeField, nodeInterface } = nodeDefinitions(
   (globalId, context: GraphQLContext) => {
+    console.log("globalId = %j", globalId);
+
     const { type, id } = fromGlobalId(globalId);
     // TODO - convert loaders to Loaders
+
     const loader = loaders[`${type}Loader`];
 
     return (loader && loader.load(context, id)) || null;

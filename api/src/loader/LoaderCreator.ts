@@ -49,6 +49,7 @@ export function createLoader<T extends Document>(model: Model<T>) {
   };
 
   return {
+    loaderName,
     getLoader,
     load,
     clearCache, 
