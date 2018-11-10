@@ -1,14 +1,15 @@
 import mongoose, { Document, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+// can only access data if defined on schema
 const schema = new mongoose.Schema({
   _id: String,
   address_zipcode: String,
-  // emails: {
-  //   type: [
-  //     'Mixed'
-  //   ]
-  // },
+  emails: {
+    type: [
+      'Mixed'
+    ]
+  },
   first_name: String,
   last_name: String,
   phone: String,

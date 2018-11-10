@@ -1,7 +1,6 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList,
   GraphQLBoolean,
   GraphQLNonNull,
   GraphQLID
@@ -10,36 +9,44 @@ import {
 import { connectionDefinitions } from '../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../interface/NodeInterface';
 import { UserLoader } from '../loader';
-import EmailType from './EmailType';
 
-export default registerType(
+const TYPE_NAME = 'Email';
+
+const EmailType = registerType(
   new GraphQLObjectType({
-    name: 'Email',
+    name: TYPE_NAME,
     description: 'Email type',
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain._id: null
+        resolve: async (idObj, args, context) => {
+          return `${idObj.id} ${idObj.email}`;
         },
       },
 
-      email: {
-        type: GraphQLNonNull(GraphQLID),
-        resolve: async (id, args, context) => {
-          const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain._id: null
+      address: {
+        type: GraphQLString,
+        resolve: async (idObj, args, context) => {
+          return idObj.email
         },
       },
 
       verified: {
         type: GraphQLBoolean,
-        resolve: async (id, args, context) => {
-          return null
+        resolve: async (idObj, args, context) => {
+          const userAgain = await UserLoader.load(context, idObj.id);
+          const addressObj = userAgain && userAgain.emails.find(({address}) => address === idObj.address)
+          return addressObj ? addressObj.verified : false;
         },
       },
     }),
     interfaces: () => [nodeInterface],
   }),
 );
+
+export default EmailType;
+
+export const EmailConnection = connectionDefinitions({
+  name: TYPE_NAME,
+  nodeType: GraphQLNonNull(EmailType),
+});

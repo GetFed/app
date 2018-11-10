@@ -7,20 +7,20 @@ import {
   GraphQLFloat,
   GraphQLID
 } from 'graphql';
-// import { globalIdField } from 'graphql-relay';
+import { connectionFromArray } from 'graphql-relay';
 
-import {
-  GraphQLDateTime
-} from 'graphql-iso-date';
+import { GraphQLDateTime } from 'graphql-iso-date';
 
 import { connectionDefinitions } from '../core/connection/CustomConnectionType';
 import { registerType, nodeInterface } from '../interface/NodeInterface';
 import { UserLoader } from '../loader';
-import EmailType from './EmailType';
+import {EmailConnection} from './EmailType';
+
+const TYPE_NAME = 'User';
 
 const UserType = registerType(
   new GraphQLObjectType({
-    name: 'User',
+    name: TYPE_NAME,
     description: 'User data',
     fields: () => ({
       // id: globalIdField('User'),
@@ -38,8 +38,13 @@ const UserType = registerType(
       },
 
       emails: {
-        type: GraphQLList(EmailType),
-        resolve: async (id, args, context) => [],
+        type: EmailConnection.connectionType,
+        resolve: async (id, args, context) => {
+          const user = await UserLoader.load(context, id);
+          const address = (user && user.emails && user.emails.map(({address}) => ({address, id}))) || [];
+          console.log("address = %j", address)
+          return connectionFromArray(address, args);
+        },
       },
 
       stripeId: {
@@ -51,14 +56,14 @@ const UserType = registerType(
         type: GraphQLString,
         resolve: async (id, args, context) => {
           const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain.name: null
+          return userAgain ? userAgain.first_name: null
         },
       },
       lastName: {
         type: GraphQLString,
         resolve: async (id, args, context) => {
           const userAgain = await UserLoader.load(context, id);
-          return userAgain ? userAgain.name: null
+          return userAgain ? userAgain.last_name: null
         },
       },
       
@@ -93,6 +98,6 @@ const UserType = registerType(
 export default UserType;
 
 export const UserConnection = connectionDefinitions({
-  name: 'User',
+  name: TYPE_NAME,
   nodeType: GraphQLNonNull(UserType),
 });
