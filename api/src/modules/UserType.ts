@@ -1,9 +1,9 @@
 import { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLNonNull, GraphQLID } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 
-import { connectionDefinitions } from '../../core/connection/CustomConnectionType';
-import { registerType, nodeInterface } from '../../interface/NodeInterface';
-import { UserLoader } from '../../loader';
+import { connectionDefinitions } from '../core/connection/CustomConnectionType';
+import { registerType, nodeInterface } from '../interface/NodeInterface';
+import { UserLoader } from '../loader';
 
 const UserType = registerType(
   new GraphQLObjectType({

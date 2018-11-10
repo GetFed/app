@@ -2,7 +2,7 @@
 
 import { GraphQLObjectType } from 'graphql';
 
-import UserMutations from '../modules/user/mutation';
+import UserMutations from './user';
 
 export default new GraphQLObjectType({
   name: 'Mutation',

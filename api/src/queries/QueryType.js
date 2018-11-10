@@ -3,7 +3,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
 import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
-import UserType, { UserConnection } from '../modules/user/UserType';
+import UserType, { UserConnection } from '../modules/UserType';
 import { nodeField } from '../interface/NodeInterface';
 import { UserLoader } from '../loader';
 

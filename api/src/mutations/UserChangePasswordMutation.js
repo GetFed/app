@@ -5,8 +5,8 @@ import { mutationWithClientMutationId } from 'graphql-relay';
 
 import type { GraphQLContext } from '../../../TypeDefinition';
 
-import UserType from '../UserType';
-import {UserLoader} from '../../../model/user';
+import UserType from '../modules/UserType';
+import {UserLoader} from '../model/user';
 
 export default mutationWithClientMutationId({
   name: 'UserChangePassword',
