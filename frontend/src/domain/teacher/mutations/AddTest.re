@@ -1,4 +1,4 @@
-module AddTest = [%graphql
+/* module AddTest = [%graphql
   {|
     mutation addTest($id: ID!, $name: String!, $description: String!, $teacherId: ID!) {
       addTest(test: { id: $id, name: $name, description: $description, teacherId: $teacherId}){
@@ -30,4 +30,4 @@ let make = (~id, ~name, ~description, ~teacherId, children) => {
            }
          }
     </AddTestMutation>,
-};
+}; */

@@ -6,7 +6,8 @@ let make = (~user: User.Model.Record.t, _children) => {
   ...component,
   render: _self =>
     <div style=fullSizeStyle>
-      {
+      <div/>
+      /* {
         switch (user.data.teacherId) {
         | None => <AccountTypeLayout />
         | Some(teacherId) =>
@@ -16,16 +17,17 @@ let make = (~user: User.Model.Record.t, _children) => {
                    <NormalizrInit records=[`Teacher(teacher)]>
                      ...{
                           (~normalized, ~updateNormalizr) =>
-                            <TeacherLayout
+                            <div/>
+                            /* <TeacherLayout
                               teacherId={`TeacherId(teacher.data.id)}
                               normalized
                               updateNormalizr
-                            />
+                            /> */
                         }
                    </NormalizrInit>
                )
           </Teacher.Container>
         }
-      }
+      } */
     </div>,
 };

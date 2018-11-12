@@ -1,4 +1,4 @@
-module CreateTeacher = [%graphql
+/* module CreateTeacher = [%graphql
   {|
   mutation createTeacher($id: ID!) {
     createTeacher(teacher: {id: $id}){
@@ -29,4 +29,4 @@ let make = (~id, children) => {
            }
          }
     </CreateTeacherMutation>,
-};
+}; */

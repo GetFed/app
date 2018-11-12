@@ -1,2 +1,2 @@
-module AddClassroom = AddClassroom;
-module AddTest = AddTest;
+/* module AddClassroom = AddClassroom;
+module AddTest = AddTest; */

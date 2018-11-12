@@ -3,7 +3,7 @@
 const config = {
   local: {
     frontend: "http://localhost:3000",
-    api: "http://localhost:4001",
+    api: "http://localhost:5000",
     auth: "http://localhost:4000",
   },
   staging: {

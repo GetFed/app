@@ -1,7 +1,6 @@
 type _data = {
   id: UUID.t,
   email: string,
-  teacherId: option(Schema.teacherId(Schema.modelIdType)),
   /* UI */
 };
 
@@ -16,11 +15,6 @@ module GraphFragment = [%graphql
   {|
     fragment userFields on User {
       id
-      email
-      teacherId
-      teacher {
-        ...Teacher.Model.Fragment.TeacherFields
-      }
     }
   |}
 ];
@@ -34,7 +28,6 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 let _defaultData = () => {
   id: UUID.generateUUID(),
   email: "",
-  teacherId: None,
   /* UI */
 };
 
@@ -58,7 +51,6 @@ module Record = {
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
       email: "",
-      teacherId: Belt.Option.map(obj##teacher, Teacher.Model.objectToId),
     };
   };
   let default = () => _defaultRecord();

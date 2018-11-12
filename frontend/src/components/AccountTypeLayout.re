@@ -32,7 +32,8 @@ let make = _children => {
   ...component,
   render: _self =>
     <LoginBackground style=backgroundStyle>
-      <User.Mutation.CreateTeacher id={UUID.generateUUID()}>
+      <div/>
+      /* <User.Mutation.CreateTeacher id={UUID.generateUUID()}>
         ...{
              (~createTeacher) =>
                <div>
@@ -62,6 +63,6 @@ let make = _children => {
                  </div>
                </div>
            }
-      </User.Mutation.CreateTeacher>
+      </User.Mutation.CreateTeacher> */
     </LoginBackground>,
 };

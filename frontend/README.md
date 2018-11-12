@@ -166,5 +166,5 @@ export default server;
 
 Introspection
 ```
-yarn send-introspection-query http://localhost:4001/api
+yarn send-introspection-query http://localhost:5000/graphql
 ```

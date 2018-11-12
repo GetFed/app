@@ -1,7 +1,5 @@
 type _data = {
   id: UUID.t,
-  testIds: list(Schema.testId(Schema.modelIdType)),
-  classroomIds: list(Schema.classroomId(Schema.modelIdType)),
   /* UI */
 };
 
@@ -14,16 +12,8 @@ let idToTypedId = (id: UUID.t): idType => `TeacherId(id);
 
 module GraphFragment = [%graphql
   {|
-    fragment teacherFields on Teacher {
+    fragment teacherFields on User {
       id
-      testIds
-      tests{
-        ...Test.Model.Fragment.TestFields
-      }
-      classroomIds
-      classrooms{
-        ...Classroom.Model.Fragment.ClassroomFields
-      }
     }
   |}
 ];
@@ -35,9 +25,7 @@ module Fragment = {
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
-  id,
-  testIds: [],
-  classroomIds: [],
+  id: id,
   /* UI */
 };
 
@@ -57,14 +45,6 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
-      testIds:
-        obj##tests
-        |> Belt.List.fromArray
-        |> Belt.List.map(_, Test.Model.objectToId),
-      classroomIds:
-        obj##classrooms
-        |> Belt.List.fromArray
-        |> Belt.List.map(_, Classroom.Model.objectToId),
     };
   };
 
