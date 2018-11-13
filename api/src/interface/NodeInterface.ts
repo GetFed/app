@@ -22,7 +22,7 @@ type Loader = {
 type Loaders = {
   [key: string]: Loader;
 };
-console.log("hello");
+
 export const { nodeField, nodeInterface } = nodeDefinitions(
   (globalId, context: GraphQLContext) => {
     console.log("globalId = %j", globalId);

@@ -3,7 +3,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
 import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
-import UserType, { UserConnection } from '../modules/UserType';
+import NodeType, { Connection as UserConnection } from '../modules/UserType';
 import { nodeField } from '../interface/NodeInterface';
 import UserModel, { Loader as UserLoader } from '../model/UserModel';
 
@@ -17,11 +17,11 @@ export default new GraphQLObjectType({
   fields: () => ({
     node: nodeField,
     me: {
-      type: UserType,
+      type: NodeType,
       resolve: async (root, args, context) => (context.user ? UserLoader.load(context, context.user._id) : null),
     },
     user: {
-      type: UserType,
+      type: NodeType,
       args: {
         id: {
           type: new GraphQLNonNull(GraphQLID),

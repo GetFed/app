@@ -12,7 +12,7 @@ let inMemoryCache: ReasonApolloTypes.apolloCache =
 
 let httpLink: ReasonApolloTypes.apolloLink =
   ApolloLinks.createHttpLink(
-    ~uri=Config.config.api ++ "/api",
+    ~uri=Config.config.api ++ "/graphql",
     ~fetch=Document.isBrowser() ? Document.fetch : Node.fetch,
     ~headers=
       Json.Encode.object_([

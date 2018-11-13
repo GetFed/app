@@ -16,7 +16,12 @@ import { fullConnectionDefinitions } from '../core/connection/CustomConnectionTy
 import { registerType, nodeInterface } from '../interface/NodeInterface';
 import { Loader as UserLoader } from '../model/UserModel';
 
-import {EmailConnection} from './EmailType';
+import * as Email from './EmailType';
+import * as Address from './AddressType';
+import * as Restriction from './RestrictionType';
+import * as Promo from './PromoType';
+import * as PublicProfile from './PublicProfileType';
+import * as RoleGroup from './RoleGroupType';
 
 import { connectionArgs } from 'graphql-relay';
 
@@ -24,7 +29,7 @@ const TYPE_NAME = 'User';
 
 // idObj is String
 
-const UserType = registerType(
+const SchemaType = registerType(
   new GraphQLObjectType({
     name: TYPE_NAME,
     description: 'User data',
@@ -45,39 +50,14 @@ const UserType = registerType(
         },
       },
 
-      emails: {
-        type: EmailConnection.connectionType,
+      addresses: {
+        type: Address.Connection.connectionType,
         args: connectionArgs,
         resolve: async (idObj, args, context) => {
-          const user = await UserLoader.load(context, idObj);
-          const address = _.get(user, "emails", []).map(({address}) => ({address, id: idObj}));
-          return connectionFromArray(address, args);
+          return null;
         },
       },
 
-      stripeId: {
-        type: GraphQLString,
-        resolve: async (idObj, args, context) =>  {
-          const user = await UserLoader.load(context, idObj);
-          return _.get(user, "stripeId");
-        },
-      },
-
-      firstName: {
-        type: GraphQLString,
-        resolve: async (idObj, args, context) => {
-          const user = await UserLoader.load(context, idObj);
-          return _.get(user, "first_name");
-        },
-      },
-      lastName: {
-        type: GraphQLString,
-        resolve: async (idObj, args, context) => {
-          const user = await UserLoader.load(context, idObj);
-          return _.get(user, "lastName");
-        },
-      },
-      
       amountSpent: {
         type: GraphQLFloat,
         resolve: async (idObj, args, context) => {
@@ -94,6 +74,39 @@ const UserType = registerType(
         },
       },
 
+      restrictions: {
+        type: Restriction.Connection.connectionType,
+        args: connectionArgs,
+        resolve: async (idObj, args, context) => {
+          return null;
+        },
+      },
+
+      credit: {
+        type: GraphQLFloat,
+        resolve: async (idObj, args, context) => {
+          return 0.0;
+        },
+      },
+
+      emails: {
+        type: Email.Connection.connectionType,
+        args: connectionArgs,
+        resolve: async (idObj, args, context) => {
+          const user = await UserLoader.load(context, idObj);
+          const address = _.get(user, "emails", []).map(({address}) => ({address, id: idObj}));
+          return connectionFromArray(address, args);
+        },
+      },
+
+      phoneNumber: {
+        type: GraphQLString,
+        args: connectionArgs,
+        resolve: async (idObj, args, context) => {
+          return "";
+        },
+      },
+
       discount: {
         type: GraphQLFloat,
         resolve: async (idObj, args, context) => {
@@ -101,12 +114,42 @@ const UserType = registerType(
           return _.get(user, "discount");
         },
       },
+
+      referral: {
+        type: Promo.default,
+        resolve: async (idObj, args, context) => {
+          return null;
+        },
+      },
+
+      stripeId: {
+        type: GraphQLString,
+        resolve: async (idObj, args, context) =>  {
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "stripeId");
+        },
+      },
+
+      publicProfile: {
+        type: PublicProfile.default,
+        resolve: async (idObj, args, context) =>  {
+          return null;
+        },
+      },
+
+      roleGroup: {
+        type: RoleGroup.default,
+        resolve: async (idObj, args, context) =>  {
+          return null;
+        },
+      },
+
     }),
     interfaces: () => [nodeInterface],
   }),
 );
 
-export default UserType;
+export default SchemaType;
 
 // this is how arrays are handled
-export const UserConnection = fullConnectionDefinitions(UserType);
+export const Connection = fullConnectionDefinitions(SchemaType);
