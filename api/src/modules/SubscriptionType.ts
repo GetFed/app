@@ -4,14 +4,13 @@ import {
   GraphQLID
 } from 'graphql';
 
-import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
-import { registerType, nodeInterface } from '../interface/NodeInterface';
+import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
 const TYPE_NAME = 'Subscription';
 
 // idObj is id: String
 
-const SchemaType = registerType(
+export const {Type, Connection} = fullTypeDefinition(
   new GraphQLObjectType({
     name: TYPE_NAME,
     description: 'Subscription type',
@@ -24,8 +23,3 @@ const SchemaType = registerType(
     interfaces: () => [nodeInterface],
   }),
 );
-
-export default SchemaType;
-
-// this is how arrays are handled
-export const Connection = fullConnectionDefinitions(SchemaType);

@@ -6,8 +6,7 @@ import {
   GraphQLID
 } from 'graphql';
 
-import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
-import { registerType, nodeInterface } from '../interface/NodeInterface';
+import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 import { Loader as UserLoader } from '../model/UserModel';
 
 import _ from 'lodash';
@@ -16,7 +15,7 @@ const TYPE_NAME = 'Email';
 
 // idObj is {id: String, email: String}
 
-const SchemaType = registerType(
+export const {Type, Connection} = fullTypeDefinition(
   new GraphQLObjectType({
     name: TYPE_NAME,
     description: 'Email type',
@@ -43,8 +42,3 @@ const SchemaType = registerType(
     interfaces: () => [nodeInterface],
   }),
 );
-
-export default SchemaType;
-
-// this is how arrays are handled
-export const Connection = fullConnectionDefinitions(SchemaType);

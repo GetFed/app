@@ -5,6 +5,7 @@ import { GraphQLObjectType } from 'graphql';
 
 import * as loaders from '../loader';
 import { GraphQLContext } from '../TypeDefinition';
+import { fullConnectionDefinitions } from '../core/connection/CustomConnectionType';
 
 type RegisteredTypes = {
   [key: string]: GraphQLObjectType;
@@ -36,3 +37,6 @@ export const { nodeField, nodeInterface } = nodeDefinitions(
   },
   object => registeredTypes[object.constructor.name] || null,
 );
+
+export const fullTypeDefinition = (type: GraphQLObjectType) =>
+  ({Type: registerType(type), Connection: fullConnectionDefinitions(type)});
