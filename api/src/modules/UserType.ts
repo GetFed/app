@@ -1,8 +1,6 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList,
-  GraphQLBoolean,
   GraphQLNonNull,
   GraphQLFloat,
   GraphQLID
@@ -11,6 +9,8 @@ import { connectionFromArray } from 'graphql-relay';
 
 import { GraphQLDateTime } from 'graphql-iso-date';
 import _ from 'lodash';
+
+import Hashids from 'hashids';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 import { Loader as UserLoader } from '../model/UserModel';
@@ -23,6 +23,9 @@ import * as PublicProfile from './PublicProfileType';
 import * as RoleGroup from './RoleGroupType';
 
 import { connectionArgs } from 'graphql-relay';
+
+const hashids = new Hashids();
+
 
 const TYPE_NAME = 'User';
 
