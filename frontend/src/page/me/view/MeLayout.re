@@ -5,14 +5,22 @@ let make = _children => {
   render: _self =>
     <Me.Container>
       ...{
-           (~me) =>
+           (~me) => {
            /* TODO very very wrong */
-             Belt.Option.mapWithDefault(me, <div/>, (me) => {
-              <User.Container id=me##id>
-               ...{(~user) => <UserLayout user />}
-             </User.Container>
+           Js.log("me = %j");
+               Js.log(me);
+               /* Accounts.accountClient; */
+             Belt.Option.mapWithDefault(me, <LoginLayout/>, (me) => {
+               
+              <Customer.Container id=me##id>
+               ...{(~customer) => {
+                 Js.log("customer = ");
+                 Js.log(customer);
+                 <div />
+                }}
+             </Customer.Container>
              })
-             
+             }
          }
     </Me.Container>,
 };

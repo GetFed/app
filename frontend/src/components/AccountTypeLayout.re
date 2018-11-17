@@ -31,8 +31,7 @@ let disableButton =
 let make = _children => {
   ...component,
   render: _self =>
-    <LoginBackground style=backgroundStyle>
-      <div/>
+      <div/>,
       /* <User.Mutation.CreateTeacher id={UUID.generateUUID()}>
         ...{
              (~createTeacher) =>
@@ -64,5 +63,4 @@ let make = _children => {
                </div>
            }
       </User.Mutation.CreateTeacher> */
-    </LoginBackground>,
 };

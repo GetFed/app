@@ -21,6 +21,7 @@ import * as Restriction from './RestrictionType';
 import * as Promo from './PromoType';
 import * as PublicProfile from './PublicProfileType';
 import * as RoleGroup from './RoleGroupType';
+import * as Session from './SessionType';
 
 import { connectionArgs } from 'graphql-relay';
 
@@ -106,6 +107,14 @@ export const {Type, Connection} = fullTypeDefinition(
         args: connectionArgs,
         resolve: async (idObj, args, context) => {
           return "";
+        },
+      },
+
+      sessions: {
+        type: Session.Connection.connectionType,
+        args: connectionArgs,
+        resolve: async (idObj, args, context) => {
+          return null;
         },
       },
 

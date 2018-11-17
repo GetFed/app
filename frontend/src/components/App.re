@@ -73,7 +73,7 @@ let make = /*~title, ~initialUrl, ~server : bool, */ _children => {
     self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
   },
   render: ({state}) =>
-    <ReasonApollo.Provider client=Client.instance>
+    <ReasonApollo.Provider client=Client.apiInstance>
       {
         switch (state.ids) {
         | _ => <MeLayout />

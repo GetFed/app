@@ -1,5 +1,6 @@
 type recordType = [
   | `Teacher(Teacher.Model.Record.t)
+  | `Customer(Customer.Model.Record.t)
 ];
 
 module type DomainWrapper = {
@@ -20,6 +21,17 @@ module Wrapper = {
       };
     let apolloEnabled = true;
   };
+
+  module Customer = {
+    type model = Customer.Model.Record.t;
+    let wrap = model => `Customer(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `Customer(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
 };
 
 /* Can be put into normizr */
@@ -27,6 +39,7 @@ let modelTypeToRecordType =
     (recordType: recordType): (Schema.schemaType, UUID.t) =>
   switch (recordType) {
   | `Teacher(teacher) => (`TeacherSchema, teacher.data.id)
+  | `Customer(customer) => (`CustomerSchema, customer.data.id)
   };
 
 type normalizedType =
@@ -176,4 +189,5 @@ module DomainTypeConverter =
 
 module Converter = {
   module Teacher = DomainTypeConverter(Teacher, Wrapper.Teacher);
+  module Customer = DomainTypeConverter(Customer, Wrapper.Customer);
 };

@@ -1,1 +1,1 @@
-module User = Query_User;
+module Me = Query_Me;

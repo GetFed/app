@@ -4,6 +4,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'gra
 import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import { Type as UserType, Connection as UserConnection } from '../modules/UserType';
+import { Type as CustomerType } from '../modules/CustomerType';
 import { nodeField } from '../interface/NodeInterface';
 import UserModel, { Loader as UserLoader } from '../model/UserModel';
 
@@ -17,8 +18,22 @@ export default new GraphQLObjectType({
   fields: () => ({
     node: nodeField,
     me: {
-      type: UserType,
-      resolve: async (root, args, context) => (context.user ? UserLoader.load(context, context.user._id) : null),
+      type: CustomerType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+        },
+        sessionId: {
+          type: new GraphQLNonNull(GraphQLID),
+        },
+      },
+      resolve: async (root, args, context) => {
+        return {
+          id: args.id,
+          userId: context.user ? context.user._id : null,
+          sessionId: args.sessionId
+        };
+      },
     },
     user: {
       type: UserType,

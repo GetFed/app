@@ -10,9 +10,11 @@ let inMemoryCache: ReasonApolloTypes.apolloCache =
 
 /* Create an HTTP Link */
 
-let httpLink: ReasonApolloTypes.apolloLink =
+
+
+let httpLink = (url: string): ReasonApolloTypes.apolloLink => 
   ApolloLinks.createHttpLink(
-    ~uri=Config.config.api ++ "/graphql",
+    ~uri=(url),
     ~fetch=Document.isBrowser() ? Document.fetch : Node.fetch,
     ~headers=
       Json.Encode.object_([
@@ -32,9 +34,22 @@ let httpLink: ReasonApolloTypes.apolloLink =
     (),
   );
 
-let instance: ApolloClient.generatedApolloClient =
+
+
+let apiHttpLink = httpLink(Config.config.api ++ "/graphql");
+let authHttpLink = httpLink(Config.config.api);
+
+let apiInstance: ApolloClient.generatedApolloClient =
   ReasonApollo.createApolloClient(
-    ~link=httpLink,
+    ~link=apiHttpLink,
+    ~cache=inMemoryCache,
+    ~ssrMode=!Document.isBrowser(),
+    (),
+  );
+
+let authInstance: ApolloClient.generatedApolloClient =
+  ReasonApollo.createApolloClient(
+    ~link=authHttpLink,
     ~cache=inMemoryCache,
     ~ssrMode=!Document.isBrowser(),
     (),

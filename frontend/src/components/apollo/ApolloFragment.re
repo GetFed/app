@@ -6,7 +6,7 @@ module Container =
 
   let get = (~fragmentType, ~id, ~fragmentName) =>
     FragmentConfig.read(
-      ~client=Client.instance,
+      ~client=Client.apiInstance,
       ~id=fragmentType ++ ":" ++ id,
       ~fragmentName,
       (),

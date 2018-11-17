@@ -15,11 +15,13 @@ type modelIdType = [
   | `ObjectiveId(UUID.t)
   | `MultipleChoiceId(UUID.t)
   | `UserId(UUID.t)
+  | `CustomerId(UUID.t)
   | `GradeId(UUID.t)
 ];
 
 /* pass as type id to domains */
 type teacherId('a) = [> | `TeacherId(UUID.t)] as 'a;
+type customerId('a) = [> | `CustomerId(UUID.t)] as 'a;
 type classroomId('a) = [> | `ClassroomId(UUID.t)] as 'a;
 type studentId('a) = [> | `StudentId(UUID.t)] as 'a;
 type studentTestId('a) = [> | `StudentTestId(UUID.t)] as 'a;
@@ -46,6 +48,7 @@ type questionId('a) =
 /* can belong to domain */
 type schemaType = [
   | `TeacherSchema
+  | `CustomerSchema
   | `ClassroomSchema
   | `StudentSchema
   | `StudentTestSchema
@@ -67,6 +70,7 @@ type schemaType = [
 let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   switch (recordIdType) {
   | `TeacherId(uuid) => (`TeacherSchema, uuid)
+  | `CustomerId(uuid) => (`CustomerSchema, uuid)
   | `ClassroomId(uuid) => (`ClassroomSchema, uuid)
   | `StudentId(uuid) => (`StudentSchema, uuid)
   | `StudentTestId(uuid) => (`StudentTestSchema, uuid)
