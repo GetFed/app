@@ -1,4 +1,3 @@
-
 let css = Css.css;
 let tw = Css.tw;
 let loginLayoutClass = [%bs.raw
@@ -36,7 +35,7 @@ let make = (~accountSend, _children) => {
               "user": { "email": self.state.email },
               "code": ""
             }))
-        })
+          })
         theme=CTA
       >
         {ReasonReact.string("Login abc")}

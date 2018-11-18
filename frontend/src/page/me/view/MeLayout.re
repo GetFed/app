@@ -9,15 +9,27 @@ let make = _children => {
            /* TODO very very wrong */
 
                <Accounts>
-                ...{(~accountSend, ~user) => {
-                Belt.Option.mapWithDefault(me, <LoginLayout accountSend/>, (me) => {
-                    <Customer.Container id=me##id>
+                ...{(~accountSend, ~userId) => {
+                  Js.log("userId");
+                    Js.log(userId);
+                Belt.Option.mapWithDefault(userId, <LoginLayout accountSend/>, (userId) => {
+                    
+
+                    Js.log("me");
+                    Js.log(me);
+
+                    <div>
+                          <LoginLayout accountSend />
+                        </div>
+
+
+                    /* <Customer.Container id=me##id>
                       ...{(~customer) => {
                         <div>
                           <LoginLayout accountSend />
                         </div>
                         }}
-                    </Customer.Container>
+                    </Customer.Container> */
                   })
                 }
                 
