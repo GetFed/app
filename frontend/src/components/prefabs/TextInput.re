@@ -10,6 +10,7 @@ let make =
       ~placeholder,
       ~onBlur=?,
       ~autoFocus=?,
+      ~type_="text",
       _children,
     ) => {
   ...component,
@@ -22,6 +23,7 @@ let make =
       onTextChange
       ?onKeyDown
       placeholder
+      type_
       ?onBlur
       ?autoFocus
     />,

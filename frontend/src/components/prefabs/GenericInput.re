@@ -46,6 +46,7 @@ let make =
       ~onKeyDown=?,
       ~placeholder,
       ~onBlur=?,
+      ~type_,
       ~autoFocus=?,
       _children,
     ) => {
@@ -110,6 +111,7 @@ let make =
         onKeyDown=?onKeydownOptional
         placeholder
         onChange
+        type_
         ?onBlur
         autoFocus={Belt.Option.getWithDefault(autoFocus, false)}
         value={self.state.internalValue}

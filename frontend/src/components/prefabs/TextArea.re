@@ -19,6 +19,7 @@ let make =
       ?className
       ?style
       value
+      type_="text"
       onTextChange
       ?onKeyDown
       placeholder

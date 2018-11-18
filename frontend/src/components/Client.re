@@ -10,8 +10,6 @@ let inMemoryCache: ReasonApolloTypes.apolloCache =
 
 /* Create an HTTP Link */
 
-
-
 let httpLink = (url: string): ReasonApolloTypes.apolloLink => 
   ApolloLinks.createHttpLink(
     ~uri=(url),
@@ -23,9 +21,8 @@ let httpLink = (url: string): ReasonApolloTypes.apolloLink =>
           "Bearer "
           ++ (
             Document.isBrowser() ?
-              LocalStorage.saveAuth()
-              |> LocalStorage.getAuth(_)
-              |> Belt.Option.getWithDefault(_, "") :
+              Document.getHash()
+              |> LocalStorage.replaceToken(LocalStorage.accessTokenNamespace, _) :
               ""
           )
           |> Json.Encode.string,
@@ -34,10 +31,8 @@ let httpLink = (url: string): ReasonApolloTypes.apolloLink =>
     (),
   );
 
-
-
 let apiHttpLink = httpLink(Config.config.api ++ "/graphql");
-let authHttpLink = httpLink(Config.config.api);
+let authHttpLink = httpLink(Config.config.auth);
 
 let apiInstance: ApolloClient.generatedApolloClient =
   ReasonApollo.createApolloClient(
