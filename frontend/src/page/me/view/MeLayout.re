@@ -3,39 +3,30 @@ let component = ReasonReact.statelessComponent("MeLayout");
 let make = _children => {
   ...component,
   render: _self =>
-    <Me.Container>
-      ...{
-           (~me) => {
+    <Accounts>
+      ...{(~accountSend, ~userId) => {
+        <Me.Container>
+          ...{(~me) => {
            /* TODO very very wrong */
-
-               <Accounts>
-                ...{(~accountSend, ~userId) => {
-                  Js.log("userId");
-                    Js.log(userId);
-                Belt.Option.mapWithDefault(userId, <LoginLayout accountSend/>, (userId) => {
-                    
-
-                    Js.log("me");
-                    Js.log(me);
-
+            Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) => {
+              Js.log("HELLO me");
+              Js.log(me);
+              Belt.Option.mapWithDefault(userId, <LoginLayout accountSend/>, (userId) => {
+                Js.log("userId");
+                Js.log(userId);
+                <Customer.Container id=me##id>
+                  ...{(~customer) => {
+                    Js.log("customer = ");
+                    Js.log(customer);
                     <div>
-                          <LoginLayout accountSend />
-                        </div>
-
-
-                    /* <Customer.Container id=me##id>
-                      ...{(~customer) => {
-                        <div>
-                          <LoginLayout accountSend />
-                        </div>
-                        }}
-                    </Customer.Container> */
-                  })
-                }
-                
-              }
-          </Accounts>
-        }
-        }
-    </Me.Container>,
+                      {ReasonReact.string("HELLO im logged in")}
+                    </div>
+                  }}
+                </Customer.Container>
+              });
+            });
+          }}
+        </Me.Container>
+      }}
+    </Accounts>,
 };

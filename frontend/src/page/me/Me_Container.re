@@ -10,7 +10,7 @@ let make = (children) => {
       ...{(~response) => {
         Js.log("response = ");
         Js.log(response);
-        children(~me=response##me)}
+        children(~me=(response##me ))}
       }
     </Container>,
 };

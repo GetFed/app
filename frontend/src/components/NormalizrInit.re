@@ -24,7 +24,9 @@ let make = (~records: list(MyNormalizr.recordType)=[], children) => {
     children(~normalized=state.normalized, ~updateNormalizr=norm =>
       norm
       |> Js.Promise.then_(n =>
-           UpdateNormalizr(n) |> send(_) |> Js.Promise.resolve
-         )
+        UpdateNormalizr(n)
+        |> send(_)
+        |> Js.Promise.resolve
+      )
     ),
 };
