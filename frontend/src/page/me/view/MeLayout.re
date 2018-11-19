@@ -5,7 +5,7 @@ let make = _children => {
   render: _self =>
     <Accounts>
       ...{(~accountSend, ~userId) => {
-        <Me.Container>
+        <Me.Container userId>
           ...{(~me) => {
            /* TODO very very wrong */
             Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) => {

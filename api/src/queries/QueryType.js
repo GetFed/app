@@ -20,6 +20,9 @@ export default new GraphQLObjectType({
     me: {
       type: CustomerType,
       args: {
+        userId: {
+          type: GraphQLID,
+        },
         id: {
           type: new GraphQLNonNull(GraphQLID),
         },
