@@ -30,7 +30,7 @@ type t = {
   [@bs.meth] "twoFactorSet": (string, string) => Js.Promise.t(unit),
   [@bs.meth] "verifyEmail":  (string) => Js.Promise.t(unit),
 };
-[@bs.new] [@bs.module "apollo-accounts-password-client"] external createAccountClient : (ApolloClient.generatedApolloClient) => t = "default";
+[@bs.new] [@bs.module "../../../../src/apollo-accounts-password-client.js"] external createAccountClient : (ApolloClient.generatedApolloClient) => t = "default";
 let accountClient = createAccountClient(Client.authInstance);
 
 type state = {

@@ -15,8 +15,10 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@accounts/client": "0.3.0-beta.30",
+    "@accounts/client-password": "0.3.0-beta.30",
+    "@accounts/graphql-client": "0.3.0-beta.30",
     "@glennsl/bs-json": "^3.0.0",
-    "apollo-accounts-password-client": "0.3.0-beta.26",
     "apollo-boost": "0.1.10",
     "apollo-cache-inmemory": "^1.2.6",
     "apollo-client": "^2.3.7",

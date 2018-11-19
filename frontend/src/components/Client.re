@@ -8,8 +8,31 @@ let fragmentMatcher: ApolloInMemoryCache.fragmentMatcher =
 let inMemoryCache: ReasonApolloTypes.apolloCache =
   ApolloInMemoryCache.createInMemoryCache(~fragmentMatcher, ());
 
-/* Create an HTTP Link */
+let authInMemoryCache: ReasonApolloTypes.apolloCache =
+  ApolloInMemoryCache.createInMemoryCache();
 
+
+let getToken = () =>
+  Document.isBrowser() ?
+    LocalStorage.accessTokenNamespace
+    |> LocalStorage.getAuth
+    |> Belt.Option.getWithDefault(_, "") :
+    "";
+
+/* create context link*/
+let headerContextLink = ApolloLinks.createContextLink(() => {
+  let token = getToken();
+  Js.log("headerContextLink = token " );
+  Js.log(token);
+  {
+    "headers": {
+      "authorization": "Bearer " ++ token,
+      "accounts-access-token": token
+    }
+  }
+});
+
+/* Create an HTTP Link */
 let httpLink = (url: string): ReasonApolloTypes.apolloLink => 
   ApolloLinks.createHttpLink(
     ~uri=(url),
@@ -19,12 +42,7 @@ let httpLink = (url: string): ReasonApolloTypes.apolloLink =>
         (
           "authorization",
           "Bearer "
-          ++ (
-            Document.isBrowser() ?
-              Document.getHash()
-              |> LocalStorage.replaceToken(LocalStorage.accessTokenNamespace, _) :
-              ""
-          )
+          ++ (Document.isBrowser() ? getToken() : "")
           |> Json.Encode.string,
         ),
       ]),
@@ -36,7 +54,7 @@ let authHttpLink = httpLink(Config.config.auth);
 
 let apiInstance: ApolloClient.generatedApolloClient =
   ReasonApollo.createApolloClient(
-    ~link=apiHttpLink,
+    ~link=ApolloLinks.from([|headerContextLink, apiHttpLink|]),
     ~cache=inMemoryCache,
     ~ssrMode=!Document.isBrowser(),
     (),
@@ -44,8 +62,9 @@ let apiInstance: ApolloClient.generatedApolloClient =
 
 let authInstance: ApolloClient.generatedApolloClient =
   ReasonApollo.createApolloClient(
-    ~link=authHttpLink,
-    ~cache=inMemoryCache,
+    ~link=ApolloLinks.from([|headerContextLink, authHttpLink|]),
+    ~cache=authInMemoryCache,
     ~ssrMode=!Document.isBrowser(),
+    ~queryDeduplication=false,
     (),
   );
