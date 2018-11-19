@@ -26,7 +26,7 @@ export const {Type, Connection} = fullTypeDefinition(
       user: {
         type: UserType,
         resolve: async (idObj, args, context) => {
-          return idObj.user_id;
+          return idObj.userId;
         },
       },
       session: {

@@ -9,11 +9,7 @@ let make = _children => {
           ...{(~me) => {
            /* TODO very very wrong */
             Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) => {
-              Js.log("HELLO me");
-              Js.log(me);
               Belt.Option.mapWithDefault(userId, <LoginLayout accountSend/>, (userId) => {
-                Js.log("userId");
-                Js.log(userId);
                 <Customer.Container id=me##id>
                   ...{(~customer) => {
                     Js.log("customer = ");

@@ -14,6 +14,14 @@ module GraphFragment = [%graphql
   {|
     fragment customerFields on Customer {
       id
+      user {
+        ...User.Model.Fragment.UserFields
+        
+      }
+      session {
+        id
+        
+      }
     }
   |}
 ];

@@ -65,7 +65,7 @@ export interface IUser extends Document {
 }
 
 // this will make find, findOne typesafe
-const UserModel: Model<IUser> = mongoose.model('User', schema);
-export const Loader = createLoader(UserModel);
+const DataModel: Model<IUser> = mongoose.model('User', schema);
+export const Loader = createLoader(DataModel);
 
-export default UserModel;
+export default DataModel;
