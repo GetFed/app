@@ -66,10 +66,14 @@ let tryAgainifNullOption = (optionA, optionB) =>
   };
 
 module DomainTypeConverter =
-       (
-         DomainType: Domain.M,
-         Wrapper: DomainWrapper with type model = DomainType.Model.Record.t,
-       ) => {
+  (
+    DomainType: Domain.M,
+    Container: Domain.Container
+      with type idType = DomainType.Model.idType
+      and type record = DomainType.Model.Record.t
+      and type config = DomainType.Model.Fragment.Fields.t,
+    Wrapper: DomainWrapper with type model = DomainType.Model.Record.t,
+  ) => {
   let update =
       (
         default: Schema.modelIdType => DomainType.Model.Record.t,
@@ -82,25 +86,18 @@ module DomainTypeConverter =
         normalized: Js.Promise.t(normalizedType),
         id: Schema.modelIdType,
         action: DomainType.Action.action,
-      )
-      : Js.Promise.t(normalizedType) => {
-    let modelPromise =
-      normalized
-      |> Js.Promise.then_(norm =>
-           norm
-           |> getterFn(_, id)
-           |> Belt.Option.getWithDefault(_, default(id))
-           |> Js.Promise.resolve
-         )
-      |> reduce(action, _);
-
-    (normalized, modelPromise)
+      ) : Js.Promise.t(normalizedType) => {
+    normalized
+    |> Js.Promise.then_(norm =>
+        norm
+        |> getterFn(_, id)
+        |> Belt.Option.getWithDefault(_, default(id))
+        |> Js.Promise.resolve)
+    |> reduce(action, _)
+    |> (modelPromise) => (normalized, modelPromise)
     |> Js.Promise.all2
     |> Js.Promise.then_(((norm, model)) =>
-         Js.Promise.resolve(
-           normalizerCommitItemToSchema(norm, Wrapper.wrap(model)),
-         )
-       );
+        Js.Promise.resolve(normalizerCommitItemToSchema(norm, Wrapper.wrap(model))));
   };
   let fromLocal =
       (
@@ -122,7 +119,7 @@ module DomainTypeConverter =
 
     Wrapper.apolloEnabled ?
       id
-      |> DomainType.Model.getById
+      |> Container.getById
       |> Belt.Option.map(_, (fragment: DomainType.Model.Fragment.Fields.t) =>
            (
              switch (optionNormalized) {
@@ -188,6 +185,8 @@ module DomainTypeConverter =
 };
 
 module Converter = {
-  module Teacher = DomainTypeConverter(Teacher, Wrapper.Teacher);
-  module Customer = DomainTypeConverter(Customer, Wrapper.Customer);
+  module Teacher = DomainTypeConverter(Teacher, Teacher.Container, Wrapper.Teacher);
+  module Customer = DomainTypeConverter(Customer, Customer.Container, Wrapper.Customer);
 };
+
+/* module TeacherMutation = MutationNormalizr.GetRecord(Teacher.Container); */

@@ -16,11 +16,9 @@ module GraphFragment = [%graphql
       id
       user {
         ...User.Model.Fragment.UserFields
-        
       }
       session {
         id
-        
       }
     }
   |}
@@ -66,11 +64,6 @@ module Record = {
   };
 };
 
-module Container =
-  ApolloFragment.Container(ApolloClient.ReadFragment, Fragment.Fields);
 let fragmentType = "Customer";
 
 let fragmentName = "customerFields";
-
-let getById = id =>
-  Container.get(~fragmentType, ~fragmentName, ~id=Schema.getUUIDFromId(id));

@@ -9,3 +9,4 @@ let recordOptionalToObjNullable = (record, convertToObj) =>
   | None => Js.Nullable.null
   | Some(record) => record |> convertToObj |> Js.Nullable.return
   };
+

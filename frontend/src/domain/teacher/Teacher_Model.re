@@ -58,11 +58,6 @@ module Record = {
   };
 };
 
-module Container =
-  ApolloFragment.Container(ApolloClient.ReadFragment, Fragment.Fields);
 let fragmentType = "Teacher";
 
 let fragmentName = "teacherFields";
-
-let getById = id =>
-  Container.get(~fragmentType, ~fragmentName, ~id=Schema.getUUIDFromId(id));

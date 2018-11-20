@@ -76,7 +76,7 @@ let make = /*~title, ~initialUrl, ~server : bool, */ _children => {
     <ReasonApollo.Provider client=Client.apiInstance>
       {
         switch (state.ids) {
-        | _ => <MeLayout />
+        | _ => <Page.Home />
         }
       }
     </ReasonApollo.Provider>,
