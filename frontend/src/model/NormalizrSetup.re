@@ -1,7 +1,5 @@
-type recordType = [
-  | `Teacher(Teacher.Model.Record.t)
-  | `Customer(Customer.Model.Record.t)
-];
+type recordType = NormalizrRecordType.t;
+let modelTypeToRecordType = NormalizrRecordType.modelTypeToRecordType;
 
 module type DomainWrapper = {
   type model;
@@ -9,38 +7,6 @@ module type DomainWrapper = {
   let unwrap: recordType => option(model);
   let apolloEnabled: bool;
 };
-
-module Wrapper = {
-  module Teacher = {
-    type model = Teacher.Model.Record.t;
-    let wrap = model => `Teacher(model);
-    let unwrap = recordType =>
-      switch (recordType) {
-      | `Teacher(model) => Some(model)
-      | _ => None
-      };
-    let apolloEnabled = true;
-  };
-
-  module Customer = {
-    type model = Customer.Model.Record.t;
-    let wrap = model => `Customer(model);
-    let unwrap = recordType =>
-      switch (recordType) {
-      | `Customer(model) => Some(model)
-      | _ => None
-      };
-    let apolloEnabled = true;
-  };
-};
-
-/* Can be put into normizr */
-let modelTypeToRecordType =
-    (recordType: recordType): (Schema.schemaType, UUID.t) =>
-  switch (recordType) {
-  | `Teacher(teacher) => (`TeacherSchema, teacher.data.id)
-  | `Customer(customer) => (`CustomerSchema, customer.data.id)
-  };
 
 type normalizedType =
   NormalizrNew.normalizedSchema(Schema.schemaType, UUID.t, recordType);
@@ -183,10 +149,3 @@ module DomainTypeConverter =
       );
   };
 };
-
-module Converter = {
-  module Teacher = DomainTypeConverter(Teacher, Teacher.Container, Wrapper.Teacher);
-  module Customer = DomainTypeConverter(Customer, Customer.Container, Wrapper.Customer);
-};
-
-/* module TeacherMutation = MutationNormalizr.GetRecord(Teacher.Container); */

@@ -1,18 +1,18 @@
-type state = {normalized: MyNormalizr.normalizedType};
+type state = {normalized: NormalizrSetup.normalizedType};
 
 type action =
-  | UpdateNormalizr(MyNormalizr.normalizedType);
+  | UpdateNormalizr(NormalizrSetup.normalizedType);
 
 let component = ReasonReact.reducerComponent("NormalizrInit");
 
-let make = (~records: list(MyNormalizr.recordType)=[], children) => {
+let make = (~records: list(NormalizrRecordType.t)=[], children) => {
   ...component,
   initialState: () => {
     normalized:
       Belt.List.reduce(
         records,
         NormalizrNew.Normalizr.defaultNormalized,
-        MyNormalizr.normalizerCommitItemToSchema,
+        NormalizrSetup.normalizerCommitItemToSchema,
       ),
   },
   reducer: (action, _state) =>
