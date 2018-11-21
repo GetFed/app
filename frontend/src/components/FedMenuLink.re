@@ -5,7 +5,7 @@ let cx = Css.cx;
 let tw = Css.tw;
 
 let fedMenuLinkMainClass = [%bs.raw {| css(tw`
-  mb-4
+  mb-3
   text-sm
   font-medium
 `)|}];
