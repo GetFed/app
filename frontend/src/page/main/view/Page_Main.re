@@ -1,15 +1,6 @@
 let css = Css.css;
 let tw = Css.tw;
-let backgroundImageClass = [%bs.raw {| css(tw`
-  w-full
-  h-screen
-  bg-cover
-  bg-center
-`)|}];
 
-let aboutUsSubscriptionClass = [%bs.raw {| css(tw`
-  h-4
-`)|}];
 
 type modalType =
   | LOGIN;
@@ -21,7 +12,7 @@ type action =
   | OpenLoginModal
   | CloseLoginModal;
 
-let component = ReasonReact.reducerComponent("PageHome");
+let component = ReasonReact.reducerComponent("PageMain");
 
 let make = (~pathIds, _children) => {
   ...component,
@@ -44,15 +35,12 @@ let make = (~pathIds, _children) => {
           modalContents={ modalId => {
             switch(modalId){
             | LOGIN =>
-                <LoginLayout accountSend afterLoginClick=(() => self.send(CloseLoginModal))
-                />
+                <LoginLayout accountSend afterLoginClick=(() => self.send(CloseLoginModal)) />
             }
           } 
         }>
           <FedSideMenu pathIds accountSend authUserId openModal=(() => self.send(OpenLoginModal)) />
-          <div className=(backgroundImageClass ++ " bg-image")>
-          </div>
-          <div className=aboutUsSubscriptionClass/>
+          <FedMainPageContent pathIds />
         </Modal>
       }}
     </Accounts>

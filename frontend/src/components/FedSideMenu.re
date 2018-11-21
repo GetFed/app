@@ -21,6 +21,7 @@ type menuLink =
   | SUPPORT
   | GIFT
   | SUBSCRIPTION
+  | ABOUT_US
   | MY_ACCOUNT;
 
 let idToMenuLink = (pathIds: PathIds.t) : menuLink =>
@@ -30,6 +31,7 @@ let idToMenuLink = (pathIds: PathIds.t) : menuLink =>
   | {supportId: Some(_)} => SUPPORT
   | {menuId: Some(_)} => MENU
   | {subscriptionId: Some(_)} => SUBSCRIPTION
+  | {aboutUsId: Some(_)} => ABOUT_US
   | _ => HOME
   };
 
@@ -59,6 +61,9 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
           <A key="home" href="/">
             <FedMenuLink key="link" text="HOME" selected=(menuLink == HOME)/>
           </A>
+          <A key="menu" href="/menu">
+            <FedMenuLink key="link" text="MENU" selected=(menuLink == MENU)/>
+          </A>
           <A key="my-account" href="/my-account">
             <FedMenuLink key="link" text="MY ACCOUNT" selected=(menuLink == MY_ACCOUNT)/>
           </A>
@@ -73,6 +78,9 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
               : <div key="none" />
           }
           <div key="separator" className=sideMenuInternalSeparatorClass />
+          <A key="about-us" href="/about-us">
+            <FedMenuLink key="link" text="ABOUT US" selected=(menuLink == ABOUT_US)/>
+          </A>
           <A key="support" href="/support">
             <FedMenuLink key="link" text="SUPPORT" selected=(menuLink == SUPPORT)/>
           </A>

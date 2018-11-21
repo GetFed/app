@@ -7,7 +7,6 @@ let tw = Css.tw;
 let fedMenuLinkMainClass = [%bs.raw {| css(tw`
   mb-3
   text-sm
-  font-medium
   cursor-pointer
 `)|}];
 

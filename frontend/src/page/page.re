@@ -1,2 +1,2 @@
 /* module Member =  */
-module Home = Page_Home;
+module Main = Page_Main;
