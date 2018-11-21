@@ -6,8 +6,7 @@ let menuOverlayClass = [%bs.raw {| css(tw`
   w-1/6
   h-screen
   fixed
-  bg-white
-  opacity-50
+  
 `)|}];
 
 let make =
