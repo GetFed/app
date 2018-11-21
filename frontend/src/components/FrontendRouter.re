@@ -3,18 +3,21 @@ type myAccountId = option(option(string));
 type giftsId = option(option(string));
 type supportId = option(option(string));
 type menuId = option(option(string));
+type adminId = option(option(string));
 
 type pathIds = {
   myAccountId,
   giftsId,
   supportId,
   menuId,
+  adminId,
 };
-let defaultIds = {
+let defaultIds: pathIds = {
   myAccountId: None,
   giftsId: None,
   supportId: None,
   menuId: None,
+  adminId: None,
 };
 
 let stringEmptyStringOptional = (possibleEmptyString: string) : option(string) =>
@@ -30,13 +33,14 @@ let urlToIds = (url: ReasonReact.Router.url): pathIds =>
   | ["support"] => {...defaultIds, supportId: Some(None)}
   | ["menu", menuId] => {...defaultIds, menuId: Some(stringEmptyStringOptional(menuId))}
   | ["menu"] => {...defaultIds, menuId: Some(None)}
+  | ["admin"] => {...defaultIds, adminId: Some(None)}
   | _ => defaultIds
   };
 
 let defaultState = () => ReasonReact.Router.dangerouslyGetInitialUrl() |> urlToIds;
 
 type state = {
-  ids: pathIds
+  pathIds
 };
 
 type action =
@@ -47,10 +51,10 @@ let component = ReasonReact.reducerComponent("FrontendRouter");
 
 let make = (_children) => {
   ...component,
-  initialState: () => {ids: defaultState()},
+  initialState: () => {pathIds: defaultState()},
   reducer: (action, _state: state) =>
     switch (action) {
-    | RouteInfo(ids) => ReasonReact.Update({ids: ids })
+    | RouteInfo(pathIds) => ReasonReact.Update({pathIds: pathIds})
     | NoOp => ReasonReact.NoUpdate
     },
   didMount: self => {
@@ -58,12 +62,13 @@ let make = (_children) => {
     self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
   },
   render: (self) =>
-    switch (self.state.ids) {
-    | {myAccountId: Some(_)} => <Page.Home />
-    | {giftsId: Some(_)} => <Page.Home />
-    | {supportId: Some(_)} => <Page.Home />
-    | {menuId: Some(_)} => <Page.Home />
-    | _ => <Page.Home />
+    switch (self.state.pathIds) {
+    | {myAccountId: Some(_)} => <Page.Home pathIds />
+    | {giftsId: Some(_)} => <Page.Home pathIds />
+    | {supportId: Some(_)} => <Page.Home pathIds />
+    | {menuId: Some(_)} => <Page.Home pathIds />
+    | {adminId: Some(_)} => <Page.Home pathIds />
+    | _ => <Page.Home pathIds />
     }
 };
 

@@ -13,7 +13,7 @@ let aboutUsSubscriptionClass = [%bs.raw {| css(tw`
   h-4
 `)|}];
 
-let make = _children => {
+let make = (~pathIds, _children) => {
   ...component,
   render: _self =>
     <div>
