@@ -21,5 +21,9 @@ body {
 
 .bg-image {
   background-image: url("/images/Fed1.jpg");
-};
+}
+
+.bg-logo {
+  background-image: url("/images/FedLogo.png");
+}
 /* purgecss end ignore */
