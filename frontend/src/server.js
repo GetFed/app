@@ -43,7 +43,13 @@ server
     // console.log("assets.client.css = %j", assets.client.css);
     // console.log("req.url = %j", req.url);
 
-    const markup = renderToString(<App title="Welcome to Razzle Reason React" initialUrl={req.url} server={true} />);
+    const markup = renderToString(
+      <App
+        title="Welcome to Razzle Reason React"
+        initialUrl={req.url}
+        server={true}
+      />
+    );
     res.send(
       `<!doctype html>
     <html lang="">

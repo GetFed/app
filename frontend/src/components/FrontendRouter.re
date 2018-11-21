@@ -1,8 +1,8 @@
 let stringEmptyStringOptional = (possibleEmptyString: string) : option(string) =>
   possibleEmptyString == "" ? None : Some(possibleEmptyString);
  
-let urlToIds = (url: ReasonReact.Router.url): PathIds.t =>
-  switch (url.path) {
+let pathToIds = (path: list(string)): PathIds.t =>
+  switch (path) {
   | ["my-account", myAccountId] => {...PathIds.default, myAccountId: Some(stringEmptyStringOptional(myAccountId))}
   | ["my-account"] => {...PathIds.default, myAccountId: Some(None)}
   | ["gifts", giftsId] => {...PathIds.default, giftsId: Some(stringEmptyStringOptional(giftsId))}
@@ -16,7 +16,13 @@ let urlToIds = (url: ReasonReact.Router.url): PathIds.t =>
   | _ => PathIds.default
   };
 
-let defaultState = () => ReasonReact.Router.dangerouslyGetInitialUrl() |> urlToIds;
+let defaultState = () => {
+  let url = ReasonReact.Router.dangerouslyGetInitialUrl();
+  Js.log("url = %j");
+  Js.log(url);
+  (url.path)
+  |> pathToIds
+};
 
 type state = {
   pathIds: PathIds.t
@@ -28,16 +34,22 @@ type action =
 
 let component = ReasonReact.reducerComponent("FrontendRouter");
 
-let make = (_children) => {
+let make = (~initialUrl: option(string), _children) => {
   ...component,
-  initialState: () => {pathIds: defaultState()},
+  initialState: () => ({
+    pathIds: 
+      switch (initialUrl) {
+      | Some(url) => url |> Utils.Dom.parseUrl |> pathToIds
+      | None => defaultState()
+      },
+  }),
   reducer: (action, _state: state) =>
     switch (action) {
     | RouteInfo(pathIds) => ReasonReact.Update({pathIds: pathIds})
     | NoOp => ReasonReact.NoUpdate
     },
   didMount: self => {
-    let watcherID = ReasonReact.Router.watchUrl(url => self.send(RouteInfo(urlToIds(url))));
+    let watcherID = ReasonReact.Router.watchUrl(url => self.send(RouteInfo(pathToIds(url.path))));
     self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
   },
   render: ({state: {pathIds}}) =>
