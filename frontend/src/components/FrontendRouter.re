@@ -1,50 +1,28 @@
-
-type myAccountId = option(option(string));
-type giftsId = option(option(string));
-type supportId = option(option(string));
-type menuId = option(option(string));
-type adminId = option(option(string));
-
-type pathIds = {
-  myAccountId,
-  giftsId,
-  supportId,
-  menuId,
-  adminId,
-};
-let defaultIds: pathIds = {
-  myAccountId: None,
-  giftsId: None,
-  supportId: None,
-  menuId: None,
-  adminId: None,
-};
-
 let stringEmptyStringOptional = (possibleEmptyString: string) : option(string) =>
   possibleEmptyString == "" ? None : Some(possibleEmptyString);
  
-let urlToIds = (url: ReasonReact.Router.url): pathIds =>
+let urlToIds = (url: ReasonReact.Router.url): PathIds.t =>
   switch (url.path) {
-  | ["my-account", myAccountId] => {...defaultIds, myAccountId: Some(stringEmptyStringOptional(myAccountId))}
-  | ["my-account"] => {...defaultIds, myAccountId: Some(None)}
-  | ["gifts", giftsId] => {...defaultIds, giftsId: Some(stringEmptyStringOptional(giftsId))}
-  | ["gifts"] => {...defaultIds, giftsId: Some(None)}
-  | ["support", supportId] => {...defaultIds, supportId: Some(stringEmptyStringOptional(supportId))}
-  | ["support"] => {...defaultIds, supportId: Some(None)}
-  | ["menu", menuId] => {...defaultIds, menuId: Some(stringEmptyStringOptional(menuId))}
-  | ["menu"] => {...defaultIds, menuId: Some(None)}
-  | ["admin"] => {...defaultIds, adminId: Some(None)}
-  | _ => defaultIds
+  | ["my-account", myAccountId] => {...PathIds.default, myAccountId: Some(stringEmptyStringOptional(myAccountId))}
+  | ["my-account"] => {...PathIds.default, myAccountId: Some(None)}
+  | ["gifts", giftsId] => {...PathIds.default, giftsId: Some(stringEmptyStringOptional(giftsId))}
+  | ["gifts"] => {...PathIds.default, giftsId: Some(None)}
+  | ["support", supportId] => {...PathIds.default, supportId: Some(stringEmptyStringOptional(supportId))}
+  | ["support"] => {...PathIds.default, supportId: Some(None)}
+  | ["menu", menuId] => {...PathIds.default, menuId: Some(stringEmptyStringOptional(menuId))}
+  | ["menu"] => {...PathIds.default, menuId: Some(None)}
+  | ["admin"] => {...PathIds.default, adminId: Some(None)}
+  | _ => PathIds.default
   };
 
 let defaultState = () => ReasonReact.Router.dangerouslyGetInitialUrl() |> urlToIds;
 
 type state = {
-  pathIds
+  pathIds: PathIds.t
 };
 
 type action =
-  | RouteInfo(pathIds)
+  | RouteInfo(PathIds.t)
   | NoOp;
 
 let component = ReasonReact.reducerComponent("FrontendRouter");
@@ -61,8 +39,8 @@ let make = (_children) => {
     let watcherID = ReasonReact.Router.watchUrl(url => self.send(RouteInfo(urlToIds(url))));
     self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
   },
-  render: (self) =>
-    switch (self.state.pathIds) {
+  render: ({state: {pathIds}}) =>
+    switch (pathIds) {
     | {myAccountId: Some(_)} => <Page.Home pathIds />
     | {giftsId: Some(_)} => <Page.Home pathIds />
     | {supportId: Some(_)} => <Page.Home pathIds />

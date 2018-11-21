@@ -17,7 +17,7 @@ let make = (~pathIds, _children) => {
   ...component,
   render: _self =>
     <div>
-      <FedSideMenu />
+      <FedSideMenu pathIds />
       <div className=(backgroundImageClass ++ " bg-image")>
       </div>
       <div className=aboutUsSubscriptionClass/>
