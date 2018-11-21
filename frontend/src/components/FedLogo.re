@@ -6,7 +6,7 @@ let tw = Css.tw;
 let logoClass = [%bs.raw {| css(tw`
   bg-contain
   bg-no-repeat
-  bg-center
+  bg-left
   h-32
 `)|}];
 

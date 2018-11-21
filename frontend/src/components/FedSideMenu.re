@@ -4,7 +4,15 @@ let css = Css.css;
 let tw = Css.tw;
 
 let sideMenuInternalClass = [%bs.raw {| css(tw`
-  m-4
+  m-8
+`)|}];
+
+let sideMenuInternalLogoClass = [%bs.raw {| css(tw`
+  mb-4
+`)|}];
+
+let sideMenuInternalSeparatorClass = [%bs.raw {| css(tw`
+  mb-16
 `)|}];
 
 let make = (_children) => {
@@ -13,7 +21,15 @@ let make = (_children) => {
   <SideMenu>
     <SolidOverOpacity>
       <div className=sideMenuInternalClass>
-      <FedLogo />
+        <div className=sideMenuInternalLogoClass>
+          <FedLogo />
+        </div>
+        <FedMenuLink text="HOME" selected=true/>
+        <FedMenuLink text="MY ACCOUNT" selected=false/>
+        <FedMenuLink text="GIFTS" selected=false/>
+        <div className=sideMenuInternalSeparatorClass />
+        <FedMenuLink text="SUPPORT" selected=false/>
+        <FedMenuLink text="SIGN OUT" selected=false/>
         <Accounts>
           ...{(~accountSend, ~userId as authUserId) =>
             <Query.Me.Container userId=authUserId>

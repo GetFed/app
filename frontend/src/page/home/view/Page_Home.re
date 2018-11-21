@@ -9,12 +9,9 @@ let backgroundImageClass = [%bs.raw {| css(tw`
   bg-center
 `)|}];
 
-
-
 let aboutUsSubscriptionClass = [%bs.raw {| css(tw`
   h-4
 `)|}];
-
 
 let make = _children => {
   ...component,
