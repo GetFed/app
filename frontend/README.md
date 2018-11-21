@@ -140,7 +140,7 @@ server
     // Again, no JSX needed
     const markup = renderToString(
       React.createElement(App, {
-        title: 'Welcome to Razzle Reason React',
+        title: 'Fed | Delicious Dishes Delivered',
       })
     );
     res.send(

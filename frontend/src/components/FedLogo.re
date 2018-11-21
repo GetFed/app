@@ -7,7 +7,7 @@ let logoClass = [%bs.raw {| css(tw`
   bg-contain
   bg-no-repeat
   bg-left
-  h-32
+  h-24
 `)|}];
 
 let make = (_children) => {

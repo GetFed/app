@@ -7,7 +7,7 @@ import App from './init'; // BuckleScript output directory
 
 hydrate(
   <App
-    title="Welcome to Razzle Reason React"
+    title="Fed | Delicious Dishes Delivered"
     server={false}
   />,
   document.getElementById('root')

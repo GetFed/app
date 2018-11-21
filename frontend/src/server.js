@@ -37,15 +37,9 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
-
-    // console.log("process.env.RAZZLE_ASSETS_MANIFEST = %j", process.env.RAZZLE_ASSETS_MANIFEST);
-    // console.log("assets.client = %j", assets.client);
-    // console.log("assets.client.css = %j", assets.client.css);
-    // console.log("req.url = %j", req.url);
-
     const markup = renderToString(
       <App
-        title="Welcome to Razzle Reason React"
+        title="Fed | Delicious Dishes Delivered"
         initialUrl={req.url}
         server={true}
       />
@@ -56,7 +50,7 @@ server
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charSet='utf-8' />
-        <title>Welcome to Razzle Reason React</title>
+        <title>Fed | Delicious Dishes Delivered</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         ${
       !!assets.client.css
