@@ -36,26 +36,25 @@ let make = (~pathIds, _children) => {
     let closeFunction = () => self.send(CloseLoginModal);
     <Accounts>
       ...{(~accountSend, ~userId as authUserId) => {
-          Js.log("authUserId = %j");
-          Js.log(authUserId);
-          <Modal
-            modalSelect={ self.state.modal }
-            closeFn=(() => closeFunction() |> ignore)
-            modalContents={ modalId => {
-              switch(modalId){
-              | LOGIN =>
-                  <LoginLayout accountSend afterLoginClick=(() => self.send(CloseLoginModal))
-                  />
-              }
-            } 
-          }>
-            <FedSideMenu pathIds accountSend authUserId openModal=(() => self.send(OpenLoginModal)) />
-            <div className=(backgroundImageClass ++ " bg-image")>
-            </div>
-            <div className=aboutUsSubscriptionClass/>
-          </Modal>
-        }
-      }
+        Js.log("authUserId = %j");
+        Js.log(authUserId);
+        <Modal
+          modalSelect={ self.state.modal }
+          closeFn=(() => closeFunction() |> ignore)
+          modalContents={ modalId => {
+            switch(modalId){
+            | LOGIN =>
+                <LoginLayout accountSend afterLoginClick=(() => self.send(CloseLoginModal))
+                />
+            }
+          } 
+        }>
+          <FedSideMenu pathIds accountSend authUserId openModal=(() => self.send(OpenLoginModal)) />
+          <div className=(backgroundImageClass ++ " bg-image")>
+          </div>
+          <div className=aboutUsSubscriptionClass/>
+        </Modal>
+      }}
     </Accounts>
   }
 };

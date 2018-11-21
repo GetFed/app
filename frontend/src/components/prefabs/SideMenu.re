@@ -13,7 +13,7 @@ let make =
     (/*~labelContentList: list((string, ReasonReact.reactElement)), */children) => {
   ...component,
   render: _self =>
-    <div className=menuOverlayClass>
+    <div key="sidemenu" className=menuOverlayClass>
       {children |> ReasonReact.array}
     </div>,
 };

@@ -11,7 +11,7 @@ let urlToIds = (url: ReasonReact.Router.url): PathIds.t =>
   | ["support"] => {...PathIds.default, supportId: Some(None)}
   | ["menu", menuId] => {...PathIds.default, menuId: Some(stringEmptyStringOptional(menuId))}
   | ["menu"] => {...PathIds.default, menuId: Some(None)}
-  | ["subscription"] => {...PathIds.default, subscriptionId: Some(None)}
+  | ["subscribe"] => {...PathIds.default, subscriptionId: Some(None)}
   | ["admin"] => {...PathIds.default, adminId: Some(None)}
   | _ => PathIds.default
   };

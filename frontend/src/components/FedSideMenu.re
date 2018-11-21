@@ -39,37 +39,52 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
     let menuLink = idToMenuLink(pathIds);
     Js.log("menuLink = %j");
     Js.log(menuLink);
+    Js.log("HOME");
+    Js.log(HOME);
+
+    Js.log("pathIds = %j");
+    Js.log(pathIds);
     
     <SideMenu>
-      <SolidOverOpacity>
-        <div className=sideMenuInternalClass>
-          <div className=sideMenuInternalLogoClass>
+      <SolidOverOpacity key="solidOver">
+        <div key="sideMenuInternal" className=sideMenuInternalClass>
+          <div key="logo" className=sideMenuInternalLogoClass>
             <FedLogo />
           </div>
-          <FedMenuLink text="HOME" selected=(menuLink == HOME)/>
-          <FedMenuLink text="MY ACCOUNT" selected=(menuLink == MY_ACCOUNT)/>
-          <FedMenuLink text="GIFTS" selected=(menuLink == GIFT)/>
+          <A key="home" href="/">
+            <FedMenuLink key="link" text="HOME" selected=(menuLink == HOME)/>
+          </A>
+          <A key="my-account" href="/my-account">
+            <FedMenuLink key="link" text="MY ACCOUNT" selected=(menuLink == MY_ACCOUNT)/>
+          </A>
+          <A key="gifts" href="/gifts">
+            <FedMenuLink key="link" text="GIFTS" selected=(menuLink == GIFT)/>
+          </A>
           {
             authUserId == None
-              ? <FedMenuLink text="SUBSCRIBE" selected=(menuLink == SUBSCRIPTION)/>
-              : <div/>
+              ? <A key="subscribe" href="/subscribe">
+                  <FedMenuLink key="link" text="SUBSCRIBE" selected=(menuLink == SUBSCRIPTION)/>
+                </A>
+              : <div key="none" />
           }
-          <div className=sideMenuInternalSeparatorClass />
-          <FedMenuLink text="SUPPORT" selected=(menuLink == SUPPORT)/>
-          <Query.Me.Container userId=authUserId>
+          <div key="separator" className=sideMenuInternalSeparatorClass />
+          <A key="support" href="/support">
+            <FedMenuLink key="link" text="SUPPORT" selected=(menuLink == SUPPORT)/>
+          </A>
+          <Query.Me.Container key="me-container" userId=authUserId>
             ...{(~me) =>
               Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) =>
                 Belt.Option.mapWithDefault(authUserId,
-                  <div onClick=((_) => openModal())>
-                    <FedMenuLink text="SIGN IN" selected=(false)/>
+                  <div key="signin-container" onClick=((_) => openModal())>
+                    <FedMenuLink key="signin" text="SIGN IN" selected=(false)/>
                   </div>
                 ,
                   (userId) =>
                     <Customer.Container id=me##id>
                       ...{(~data as customer) =>
-                        <div>
-                          <div onClick=((_) => accountSend(Accounts.Account(Logout)))>
-                            <FedMenuLink text="SIGN OUT" selected=(false)/>
+                        <div key="container">
+                          <div key="signout-container" onClick=((_) => accountSend(Accounts.Account(Logout)))>
+                            <FedMenuLink key="signout" text="SIGN OUT" selected=(false)/>
                           </div>
                           {ReasonReact.string("HELLO im logged in")}
                         </div>
