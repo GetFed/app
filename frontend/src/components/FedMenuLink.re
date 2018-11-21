@@ -1,22 +1,30 @@
 let component = ReasonReact.statelessComponent("FedMenuLink");
 
 let css = Css.css;
+let cx = Css.cx;
 let tw = Css.tw;
 
-let fedMenuLinkClass = [%bs.raw {| css(tw`
-  text-green-darker
+let fedMenuLinkMainClass = [%bs.raw {| css(tw`
   mb-4
+  text-sm
+  font-medium
+`)|}];
+
+let fedMenuInactiveLinkClass = [%bs.raw {| css(tw`
+  text-green-darker
 `)|}];
 
 let fedMenuActiveLinkClass = [%bs.raw {| css(tw`
   text-orange-light
-  mb-4
 `)|}];
+
+let circleInfoClass = (active) => 
+  cx(fedMenuLinkMainClass, active ? fedMenuActiveLinkClass : fedMenuInactiveLinkClass);
 
 let make = (~selected: bool, ~text: string, _children) => {
   ...component,
   render: _self =>
-  <div className=(selected ? fedMenuActiveLinkClass : fedMenuLinkClass)>
+  <div className=(circleInfoClass(selected))>
     {ReasonReact.string(text)}
   </div>
 };
