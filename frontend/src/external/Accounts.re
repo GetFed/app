@@ -37,7 +37,7 @@ type state = {
   id: option(string),
 };
 
-type action =
+type accountAction =
   | UpdateUserId(option(string))
   | RefreshSession
   | SendVerficationEmail(string)
@@ -50,42 +50,62 @@ type action =
   | TwoFactorSet(string, string)
   | VerifyEmail(string);
 
+type action =
+  | Account(accountAction)
+  | AccountWithPromise(accountAction, Js.Promise.t(bool));
+
 let component = ReasonReact.reducerComponent("Accounts");
 
 let getUserPromise = (promise, send) => 
-promise
-|> Js.Promise.then_((_) => accountClient##getUser())
-|> Js.Promise.then_(u => {
-  u
-  |> Js.Nullable.toOption(_)
-  |> Belt.Option.map(_, (u) => u##id)
-  |> (id) => UpdateUserId(id)
-  |> send
-  |> Js.Promise.resolve
-})
-|> ignore;
+  promise
+  |> Js.Promise.then_((_) => accountClient##getUser())
+  |> Js.Promise.then_(u => {
+    u
+    |> Js.Nullable.toOption(_)
+    |> Belt.Option.map(_, (u) => u##id)
+    |> (id) => Account(UpdateUserId(id))
+    |> send
+    |> Js.Promise.resolve
+  });
 
-let make = children => {
+let accountUpdater = (accountAction: accountAction, promise: Js.Promise.t(bool)) => {
+  let additionalStep = (a) => (a |> Js.Promise.then_((_) => promise)) |> ignore;
+  switch (accountAction) {
+  | UpdateUserId(id) => ReasonReact.Update({id: id})
+  | RefreshSession => ReasonReact.SideEffects(({send}) => accountClient##refreshSession() |> getUserPromise(_, send) |> additionalStep)
+  | SendVerficationEmail(verify) => ReasonReact.SideEffects(({send}) => accountClient##sendVerficationEmail(verify) |> getUserPromise(_, send) |> additionalStep)
+  | Logout => ReasonReact.SideEffects(({send}) => accountClient##logout() |> getUserPromise(_, send) |> additionalStep)
+  | Login(loginInput) => ReasonReact.SideEffects(({send}) => accountClient##login(loginInput) |> getUserPromise(_, send) |> additionalStep)
+  | RequestPasswordReset(reset) => ReasonReact.SideEffects(({send}) => accountClient##requestPasswordReset(reset) |> getUserPromise(_, send) |> additionalStep)
+  | ResetPassword(email, password) => ReasonReact.SideEffects(({send}) => accountClient##resetPassword(email, password) |> getUserPromise(_, send) |> additionalStep)
+  | CreateUser(createUserInput) => ReasonReact.SideEffects(({send}) => accountClient##createUser(createUserInput) |> getUserPromise(_, send) |> additionalStep)
+  | GetTwoFactorSecret => ReasonReact.SideEffects(({send}) => accountClient##getTwoFactorSecret() |> getUserPromise(_, send) |> additionalStep)
+  | TwoFactorSet(f1, f2) => ReasonReact.SideEffects(({send}) => accountClient##twoFactorSet(f1, f2) |> getUserPromise(_, send) |> additionalStep)
+  | VerifyEmail(verify) => ReasonReact.SideEffects(({send}) => accountClient##verifyEmail(verify) |> getUserPromise(_, send) |> additionalStep)
+  }
+}
+
+let make = (
+  children: ((~accountSend: action => unit, ~userId: option(string)) => ReasonReact.reactElement)
+) => {
   ...component,
   initialState: () => ({id: None}),
-  reducer: (action, _state: state) =>
-    switch (action) {
-    | UpdateUserId(id) => ReasonReact.Update({id: id})
-    | RefreshSession => ReasonReact.SideEffects(({send}) => accountClient##refreshSession() |> getUserPromise(_, send))
-    | SendVerficationEmail(verify) => ReasonReact.SideEffects(({send}) => accountClient##sendVerficationEmail(verify) |> getUserPromise(_, send))
-    | Logout => ReasonReact.SideEffects(({send}) => accountClient##logout() |> getUserPromise(_, send))
-    | Login(loginInput) => ReasonReact.SideEffects(({send}) => accountClient##login(loginInput) |> getUserPromise(_, send))
-    | RequestPasswordReset(reset) => ReasonReact.SideEffects(({send}) => accountClient##requestPasswordReset(reset) |> getUserPromise(_, send))
-    | ResetPassword(email, password) => ReasonReact.SideEffects(({send}) => accountClient##resetPassword(email, password) |> getUserPromise(_, send))
-    | CreateUser(createUserInput) => ReasonReact.SideEffects(({send}) => accountClient##createUser(createUserInput) |> getUserPromise(_, send))
-    | GetTwoFactorSecret => ReasonReact.SideEffects(({send}) => accountClient##getTwoFactorSecret() |> getUserPromise(_, send))
-    | TwoFactorSet(f1, f2) => ReasonReact.SideEffects(({send}) => accountClient##twoFactorSet(f1, f2) |> getUserPromise(_, send))
-    | VerifyEmail(verify) => ReasonReact.SideEffects(({send}) => accountClient##verifyEmail(verify) |> getUserPromise(_, send))
+  reducer: (action: action, _state: state) =>
+    switch(action){
+    | Account(accountAction) => accountUpdater(accountAction, Js.Promise.resolve(true))
+    | AccountWithPromise(accountAction, promise) => accountUpdater(accountAction, promise)
     },
   didMount: self => 
-    Js.Promise.make((~resolve, ~reject) => resolve(. 1)) |> getUserPromise(_, self.send),
+    Js.Promise.make((~resolve, ~reject) => resolve(. 1)) |> getUserPromise(_, self.send) |> ignore,
   render: self =>
     <div>
-      {children(~accountSend=(action => self.send(action)), ~userId=self.state.id)}
+      {
+        children(
+          ~accountSend=(
+            action => self.send(action)
+          ),
+          ~userId=self.state.id
+        )
+      }
     </div>
 };

@@ -15,7 +15,7 @@ type action =
 
 let component = ReasonReact.reducerComponent("LoginLayout");
 
-let make = (~accountSend, _children) => {
+let make = (~accountSend, ~afterLoginClick, _children) => {
   ...component,
   initialState: () => {email: "", password: ""},
   reducer: (action, state) =>
@@ -30,11 +30,17 @@ let make = (~accountSend, _children) => {
       <Button
         onClick=(() =>
           {
-            accountSend(Accounts.Login({
-              "password": self.state.password,
-              "user": { "email": self.state.email },
-              "code": ""
-            }))
+            accountSend(Accounts.AccountWithPromise(
+              Login({
+                "password": self.state.password,
+                "user": { "email": self.state.email },
+                "code": ""
+              }),
+              Js.Promise.make((~resolve, ~reject) => {
+                afterLoginClick();
+                resolve(. true);
+              })
+            ))
           })
         theme=CTA
       >

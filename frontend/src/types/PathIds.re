@@ -4,6 +4,7 @@ type giftsId = option(option(string));
 type supportId = option(option(string));
 type menuId = option(option(string));
 type adminId = option(option(string));
+type subscriptionId = option(option(string));
 
 type t = {
   myAccountId,
@@ -11,6 +12,7 @@ type t = {
   supportId,
   menuId,
   adminId,
+  subscriptionId,
 };
 let default: t = {
   myAccountId: None,
@@ -18,5 +20,6 @@ let default: t = {
   supportId: None,
   menuId: None,
   adminId: None,
+  subscriptionId: None,
 };
 

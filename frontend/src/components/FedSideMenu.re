@@ -12,7 +12,7 @@ let sideMenuInternalLogoClass = [%bs.raw {| css(tw`
 `)|}];
 
 let sideMenuInternalSeparatorClass = [%bs.raw {| css(tw`
-  mb-16
+  mb-12
 `)|}];
 
 type menuLink =
@@ -20,6 +20,7 @@ type menuLink =
   | MENU
   | SUPPORT
   | GIFT
+  | SUBSCRIPTION
   | MY_ACCOUNT;
 
 let idToMenuLink = (pathIds: PathIds.t) : menuLink =>
@@ -28,15 +29,17 @@ let idToMenuLink = (pathIds: PathIds.t) : menuLink =>
   | {giftsId: Some(_)} => GIFT
   | {supportId: Some(_)} => SUPPORT
   | {menuId: Some(_)} => MENU
+  | {subscriptionId: Some(_)} => SUBSCRIPTION
   | _ => HOME
   };
 
-let make = (~pathIds, _children) => {
+let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
   ...component,
   render: _self => {
     let menuLink = idToMenuLink(pathIds);
     Js.log("menuLink = %j");
     Js.log(menuLink);
+    
     <SideMenu>
       <SolidOverOpacity>
         <div className=sideMenuInternalClass>
@@ -46,35 +49,36 @@ let make = (~pathIds, _children) => {
           <FedMenuLink text="HOME" selected=(menuLink == HOME)/>
           <FedMenuLink text="MY ACCOUNT" selected=(menuLink == MY_ACCOUNT)/>
           <FedMenuLink text="GIFTS" selected=(menuLink == GIFT)/>
+          {
+            authUserId == None
+              ? <FedMenuLink text="SUBSCRIBE" selected=(menuLink == SUBSCRIPTION)/>
+              : <div/>
+          }
           <div className=sideMenuInternalSeparatorClass />
           <FedMenuLink text="SUPPORT" selected=(menuLink == SUPPORT)/>
-          
-          <Accounts>
-            ...{(~accountSend, ~userId as authUserId) =>
-              <Query.Me.Container userId=authUserId>
-                ...{(~me) =>
-                  Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) =>
-                    Belt.Option.mapWithDefault(
-                      authUserId,
-                      <div>
-                        <FedMenuLink text="SIGN IN" selected=(false)/>
-                        <LoginLayout accountSend/>
-                      </div>,
-                      (userId) =>
-                        <Customer.Container id=me##id>
-                          ...{(~data as customer) =>
-                            <div>
-                              <FedMenuLink text="SIGN OUT" selected=(false)/>
-                              {ReasonReact.string("HELLO im logged in")}
-                            </div>
-                          }
-                        </Customer.Container>
-                    )
-                  )
-                }
-              </Query.Me.Container>
+          <Query.Me.Container userId=authUserId>
+            ...{(~me) =>
+              Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) =>
+                Belt.Option.mapWithDefault(authUserId,
+                  <div onClick=((_) => openModal())>
+                    <FedMenuLink text="SIGN IN" selected=(false)/>
+                  </div>
+                ,
+                  (userId) =>
+                    <Customer.Container id=me##id>
+                      ...{(~data as customer) =>
+                        <div>
+                          <div onClick=((_) => accountSend(Accounts.Account(Logout)))>
+                            <FedMenuLink text="SIGN OUT" selected=(false)/>
+                          </div>
+                          {ReasonReact.string("HELLO im logged in")}
+                        </div>
+                      }
+                    </Customer.Container>
+                )
+              )
             }
-          </Accounts>
+          </Query.Me.Container>
         </div>
       </SolidOverOpacity>
     </SideMenu>
