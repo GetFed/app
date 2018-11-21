@@ -33,6 +33,11 @@ let idToMenuLink = (pathIds: PathIds.t) : menuLink =>
   | _ => HOME
   };
 
+let fedSigninLink = (openModal) =>
+  <div key="signin-container" onClick=((_) => openModal())>
+    <FedMenuLink key="signin" text="SIGN IN" selected=(false)/>
+  </div>;
+
 let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
   ...component,
   render: _self => {
@@ -71,14 +76,10 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
           <A key="support" href="/support">
             <FedMenuLink key="link" text="SUPPORT" selected=(menuLink == SUPPORT)/>
           </A>
-          <Query.Me.Container key="me-container" userId=authUserId>
+          <Query.Me.Container key="me-container" userId=authUserId loadingComponent=fedSigninLink(openModal)>
             ...{(~me) =>
               Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) =>
-                Belt.Option.mapWithDefault(authUserId,
-                  <div key="signin-container" onClick=((_) => openModal())>
-                    <FedMenuLink key="signin" text="SIGN IN" selected=(false)/>
-                  </div>
-                ,
+                Belt.Option.mapWithDefault(authUserId, fedSigninLink(openModal),
                   (userId) =>
                     <Customer.Container id=me##id>
                       ...{(~data as customer) =>
