@@ -4,9 +4,11 @@ import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'gra
 import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import { Type as UserType, Connection as UserConnection } from '../modules/UserType';
+import { Type as MenuType } from '../modules/MenuType';
 import { Type as CustomerType } from '../modules/CustomerType';
 import { nodeField } from '../interface/NodeInterface';
 import UserModel, { Loader as UserLoader } from '../model/UserModel';
+import MenuModel, { Loader as MenuLoader } from '../model/MenuModel';
 
 type UserArgs = ConnectionArguments & {
   search?: string;
@@ -63,6 +65,17 @@ export default new GraphQLObjectType({
         const users = UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
 
         return UserLoader.loadMany(users, args, context);
+      },
+    },
+    currentMenu: {
+      type: MenuType,
+      resolve: async (obj, args, context) => {
+        const menus = await MenuModel.find({}/*, { _id: 1 }*/)/*.sort({ createdAt: -1 })*/;
+        console.log("menus = %j", menus)
+        console.log(menus)
+        // const { id } = fromGlobalId(args.id);
+        // return UserLoader.load(context, id);
+        return null;
       },
     },
   }),

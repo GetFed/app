@@ -30,7 +30,6 @@ export function createLoader<T extends Document>(model: Model<T>) {
 
   const loadMany = async (objs, args, context, idFn = defaultIdFn) => {
     
-    console.log("objs = %j", objs);
     const mongoObjCursored = await connectionFromMongoCursor({
       cursor: objs,
       context,

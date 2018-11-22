@@ -2,42 +2,51 @@ import mongoose, { Document, Model } from 'mongoose';
 import {createLoader} from '../loader/LoaderCreator';
 
 // can only access data if defined on schema
-const schema = new mongoose.Schema({
-  _id: String,
-  address_zipcode: String,
-  emails: {
-    type: [
-      'Mixed'
-    ]
+const schema = new mongoose.Schema(
+  {
+    _id: String,
+    address_zipcode: String,
+    emails: {
+      type: [
+        'Mixed'
+      ]
+    },
+    first_name: String,
+    last_name: String,
+    phone: String,
+    address_city: String,
+    address_line_1: String,
+    address_line_2: String,
+    address_state: String,
+    amount_spent: Number,
+    createdAt: {
+      type: Date
+    },
+    credit: Number,
+    diet: String,
+    email: String,
+    preferredDelivDay: String,
+    profile: {
+      zipCode: String
+    },
+    restrictions: [String],
+    stripe_id: String,
+    // subscriptions: {
+    //   type: [
+    //     'Mixed'
+    //   ]
+    // }
   },
-  first_name: String,
-  last_name: String,
-  phone: String,
-  address_city: String,
-  address_line_1: String,
-  address_line_2: String,
-  address_state: String,
-  amount_spent: Number,
-  createdAt: {
-    type: Date
-  },
-  credit: Number,
-  diet: String,
-  email: String,
-  preferredDelivDay: String,
-  profile: {
-    zipCode: String
-  },
-  restrictions: [String],
-  stripe_id: String,
-  // subscriptions: {
-  //   type: [
-  //     'Mixed'
-  //   ]
-  // }
-});
+  {
+    timestamps: {
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
+    },
+    collection: 'user',
+  }
+);
 
-export interface IUser extends Document {
+export interface IModel extends Document {
   _id: string;
   address_zipcode: string;
   emails: object[];
@@ -65,7 +74,7 @@ export interface IUser extends Document {
 }
 
 // this will make find, findOne typesafe
-const DataModel: Model<IUser> = mongoose.model('User', schema);
+const DataModel: Model<IModel> = mongoose.model('user', schema);
 export const Loader = createLoader(DataModel);
 
 export default DataModel;

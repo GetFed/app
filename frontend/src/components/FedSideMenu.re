@@ -44,13 +44,6 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
   ...component,
   render: _self => {
     let menuLink = idToMenuLink(pathIds);
-    Js.log("menuLink = %j");
-    Js.log(menuLink);
-    Js.log("HOME");
-    Js.log(HOME);
-
-    Js.log("pathIds = %j");
-    Js.log(pathIds);
     
     <SolidOverOpacity key="solidOver">
       <div key="sideMenuInternal" className=sideMenuInternalClass>

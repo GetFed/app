@@ -11,7 +11,6 @@ let inMemoryCache: ReasonApolloTypes.apolloCache =
 let authInMemoryCache: ReasonApolloTypes.apolloCache =
   ApolloInMemoryCache.createInMemoryCache();
 
-
 let getToken = () =>
   Document.isBrowser() ?
     LocalStorage.accessTokenNamespace
