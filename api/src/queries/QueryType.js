@@ -70,12 +70,8 @@ export default new GraphQLObjectType({
     currentMenu: {
       type: MenuType,
       resolve: async (obj, args, context) => {
-        const menus = await MenuModel.find({}/*, { _id: 1 }*/)/*.sort({ createdAt: -1 })*/;
-        console.log("menus = %j", menus)
-        console.log(menus)
-        // const { id } = fromGlobalId(args.id);
-        // return UserLoader.load(context, id);
-        return null;
+        const user = await MenuModel.findOne({active: true}, { _id: 1 }).sort({ createdAt: -1 });
+        return user._id;
       },
     },
   }),

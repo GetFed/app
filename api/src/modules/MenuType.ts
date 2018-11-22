@@ -5,6 +5,7 @@ import {
 } from 'graphql';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
+import { Loader as MenuLoader } from '../model/MenuModel';
 
 const TYPE_NAME = 'Menu';
 
@@ -17,7 +18,10 @@ export const {Type, Connection} = fullTypeDefinition(
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => "1",
+        resolve: async (idObj, args, context) => {
+          const menu = await MenuLoader.load(context, idObj);
+          return menu._id;
+        },
       },
     }),
     interfaces: () => [nodeInterface],
