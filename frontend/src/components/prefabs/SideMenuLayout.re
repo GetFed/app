@@ -11,14 +11,12 @@ let sidemenuLayoutClass = [%bs.raw {| css(tw`
 
 let sidemenuContentsClass = [%bs.raw {| css(tw`
   w-5/6
-  overflow-y-scroll
 `)|}];
 
 let sidemenuClass = [%bs.raw {| css(tw`
   w-1/6
   h-screen
   z-10
-  overflow-y-scroll
   fixed
 `)|}];
 
