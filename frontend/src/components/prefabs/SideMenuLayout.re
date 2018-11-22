@@ -19,18 +19,26 @@ let sidemenuClass = [%bs.raw {| css(tw`
   h-screen
   z-10
   overflow-y-scroll
+  fixed
+`)|}];
+
+let sidemenuEmptyClass = [%bs.raw {| css(tw`
+  w-1/6
 `)|}];
 
 let make =
     (~sideMenu, children) => {
   ...component,
   render: _self =>
-    <div key="sidemenuLayout" className=sidemenuLayoutClass>
+    <div>
       <div className=sidemenuClass>
         {sideMenu}
       </div>
-      <div className=sidemenuContentsClass>
-        (children |> ReasonReact.array)
+      <div key="sidemenuLayout" className=sidemenuLayoutClass>
+        <div className=sidemenuEmptyClass />
+        <div className=sidemenuContentsClass>
+          (children |> ReasonReact.array)
+        </div>
       </div>
     </div>,
 };
