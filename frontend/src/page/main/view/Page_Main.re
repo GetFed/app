@@ -39,8 +39,17 @@ let make = (~pathIds, _children) => {
             }
           } 
         }>
-          <FedSideMenu pathIds accountSend authUserId openModal=(() => self.send(OpenLoginModal)) />
-          <FedMainPageContent pathIds />
+          <SideMenuLayout
+            sideMenu=(
+              <FedSideMenu
+                pathIds
+                accountSend
+                authUserId
+                openModal=(() => self.send(OpenLoginModal))
+              />)
+          >
+            <FedMainPageContent pathIds />
+          </SideMenuLayout>
         </Modal>
       }}
     </Accounts>
