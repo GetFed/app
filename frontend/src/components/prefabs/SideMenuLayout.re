@@ -10,18 +10,33 @@ let sidemenuLayoutClass = [%bs.raw {| css(tw`
 `)|}];
 
 let sidemenuContentsClass = [%bs.raw {| css(tw`
-  w-5/6
+  
+  w-full
+  sm:w-2/3
+  md:w-3/4
+  lg:w-5/6
 `)|}];
 
 let sidemenuClass = [%bs.raw {| css(tw`
-  w-1/6
+  hidden
+  sm:block
+
+  w-full
+  sm:w-1/3
+  md:w-1/4
+  lg:w-1/6
+
   h-screen
   z-10
   fixed
-`)|}];
+  overflow-y-auto
+  `)|}];
 
 let sidemenuEmptyClass = [%bs.raw {| css(tw`
-  w-1/6
+  w-full
+  sm:w-1/3
+  md:w-1/4
+  lg:w-1/6
 `)|}];
 
 let make =
