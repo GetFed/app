@@ -13,6 +13,5 @@ let logoClass = [%bs.raw {| css(tw`
 let make = (_children) => {
   ...component,
   render: _self =>
-    <div className=(logoClass ++ " bg-logo")>
-    </div>,
+    <div className=(logoClass ++ " bg-logo") />,
 };

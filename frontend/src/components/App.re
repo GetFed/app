@@ -12,12 +12,10 @@ let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
       ~initialUrl=(Js.undefinedToOption(jsProps##initialUrl)),
-      [|
-     
       /* ~server=(
            jsProps##server
            |> Js.undefinedToOption
            |> Belt.Option.getWithDefault(_, false)
          ), */
-    |])
+      [||])
   );

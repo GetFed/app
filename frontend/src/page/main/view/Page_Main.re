@@ -48,7 +48,7 @@ let make = (~pathIds, _children) => {
                 openModal=(() => self.send(OpenLoginModal))
               />)
           >
-            <FedMainPageContent pathIds />
+            <MainPageContent pathIds />
           </SideMenuLayout>
         </Modal>
       }}

@@ -1,6 +1,6 @@
 
 
-let component = ReasonReact.statelessComponent("FedMainPageContent");
+let component = ReasonReact.statelessComponent("MainPageContent");
 
 let make = (~pathIds: PathIds.t, _children) => {
   ...component,
@@ -9,7 +9,7 @@ let make = (~pathIds: PathIds.t, _children) => {
     | {myAccountId: Some(_)} => <MainPageContentMyAccount />
     | {giftsId: Some(_)} => <MainPageContentHome />
     | {supportId: Some(_)} => <MainPageContentHome />
-    | {menuId: Some(_)} => <MainPageContentHome />
+    | {menuId: Some(_)} => <MainPageContentMenu />
     | {subscriptionId: Some(_)} => <MainPageContentHome />
     | {adminId: Some(_)} => <MainPageContentHome />
     | _ => <MainPageContentHome />
