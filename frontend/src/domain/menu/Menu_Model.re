@@ -1,5 +1,6 @@
 type _data = {
   id: UUID.t,
+  itemIds: list(option(Schema.menuItemId(Schema.modelIdType))),
   /* UI */
 };
 
@@ -14,19 +15,16 @@ module GraphFragment = [%graphql
   {|
     fragment menuFields on Menu {
       id
+      items{
+        edges{
+          node{
+            ...MenuItem.Model.Fragment.MenuItemFields
+          }
+        }
+      }
     }
   |}
 ];
-
-/* id
-        items{
-          edges{
-            node{
-              id
-              name
-            }
-          }
-        } */
 
 module Fragment = {
   include GraphFragment;
@@ -36,6 +34,7 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  itemIds: [],
   /* UI */
 };
 
@@ -55,6 +54,9 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      itemIds:
+        obj##items
+        |> ModelUtils.getConnectionList(_, MenuItem.Model.objectToId)
     };
   };
 

@@ -2003,9 +2003,13 @@
                 }
               ],
               "type": {
-                "kind": "OBJECT",
-                "name": "MenuItemConnection",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "MenuItemConnection",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null

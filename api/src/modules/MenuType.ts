@@ -28,7 +28,7 @@ export const {Type, Connection} = fullTypeDefinition(
         },
       },
       items: {
-        type: MenuItem.Connection.connectionType,
+        type: GraphQLNonNull(MenuItem.Connection.connectionType),
         args: connectionArgs,
         resolve: async (idObj, args, context) => {
           const menu = await MenuLoader.load(context, idObj);
