@@ -4,6 +4,7 @@ type modelIdType = [
   | `UserId(UUID.t)
   | `CustomerId(UUID.t)
   | `MenuId(UUID.t)
+  | `MenuItemId(UUID.t)
 ];
 
 /* pass as type id to domains */
@@ -11,6 +12,7 @@ type teacherId('a) = [> | `TeacherId(UUID.t)] as 'a;
 type customerId('a) = [> | `CustomerId(UUID.t)] as 'a;
 type userId('a) = [> | `UserId(UUID.t)] as 'a;
 type menuId('a) = [> | `MenuId(UUID.t)] as 'a;
+type menuItemId('a) = [> | `MenuItemId(UUID.t)] as 'a;
 
 /* just something to look at */
 /* type questionId('a) =
@@ -25,6 +27,7 @@ type schemaType = [
   | `CustomerSchema
   | `UserSchema
   | `MenuSchema
+  | `MenuItemSchema
 ];
 
 /* Generate by Normalizr */
@@ -34,6 +37,7 @@ let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   | `CustomerId(uuid) => (`CustomerSchema, uuid)
   | `UserId(uuid) => (`UserSchema, uuid)
   | `MenuId(uuid) => (`MenuSchema, uuid)
+  | `MenuItemId(uuid) => (`MenuItemSchema, uuid)
   };
 
 /* can come from normalizr module */
