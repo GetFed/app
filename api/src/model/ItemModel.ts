@@ -5,6 +5,9 @@ import {createLoader} from '../loader/LoaderCreator';
 const schema = new mongoose.Schema(
   {
     _id: String,
+    name: String,
+    category: String,
+    description: String
   },
   {
     collection: 'Items',
@@ -13,6 +16,9 @@ const schema = new mongoose.Schema(
 
 export interface IModel extends Document {
   _id: string,
+  name: string,
+  category: string,
+  description: string,
 };
 
 // this will make find, findOne typesafe

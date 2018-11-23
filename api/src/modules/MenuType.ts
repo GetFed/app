@@ -7,6 +7,10 @@ import {
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 import { Loader as MenuLoader } from '../model/MenuModel';
 
+import * as MenuItem from './MenuItemType';
+
+import { connectionArgs, connectionFromArray } from 'graphql-relay';
+
 const TYPE_NAME = 'Menu';
 
 // idObj is id: String
@@ -21,6 +25,15 @@ export const {Type, Connection} = fullTypeDefinition(
         resolve: async (idObj, args, context) => {
           const menu = await MenuLoader.load(context, idObj);
           return menu._id;
+        },
+      },
+      items: {
+        type: MenuItem.Connection.connectionType,
+        args: connectionArgs,
+        resolve: async (idObj, args, context) => {
+          const menu = await MenuLoader.load(context, idObj);
+          console.log("menu.items = %j", menu.items);
+          return connectionFromArray(menu.items, args);
         },
       },
     }),

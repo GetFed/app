@@ -5,6 +5,7 @@ import {
 } from 'graphql';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
+import { Loader as ItemLoader } from '../model/ItemModel';
 
 const TYPE_NAME = 'MenuItem';
 
@@ -17,7 +18,21 @@ export const {Type, Connection} = fullTypeDefinition(
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => "1",
+        resolve: async (idObj, args, context) => {
+          console.log("idObj = %j", idObj);
+          const item = await ItemLoader.load(context, idObj);
+          console.log("item._id", item._id);
+          return item._id
+        },
+      },
+      name: {
+        type: GraphQLNonNull(GraphQLID),
+        resolve: async (idObj, args, context) => {
+          console.log("idObj = %j", idObj);
+          const item = await ItemLoader.load(context, idObj);
+          console.log("item._id", item.name);
+          return item.name
+        },
       },
     }),
     interfaces: () => [nodeInterface],
