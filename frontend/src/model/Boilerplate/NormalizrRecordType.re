@@ -1,6 +1,7 @@
 type t = [
   | `Teacher(Teacher.Model.Record.t)
   | `Customer(Customer.Model.Record.t)
+  | `Menu(Menu.Model.Record.t)
 ];
 
 let modelTypeToRecordType =
@@ -8,4 +9,5 @@ let modelTypeToRecordType =
   switch (recordType) {
   | `Teacher(teacher) => (`TeacherSchema, teacher.data.id)
   | `Customer(customer) => (`CustomerSchema, customer.data.id)
+  | `Menu(menu) => (`MenuSchema, menu.data.id)
   };

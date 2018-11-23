@@ -14,6 +14,22 @@ let make = (_children) => {
   ...component,
   render: _self =>
     <div className=mainPageContentMenuClass>
-      <h2>{ReasonReact.string("MENU")}</h2>
+      <Query.CurrentMenu.Container>
+        ...{(~currentMenu)=> {
+          Belt.Option.mapWithDefault(
+            currentMenu,
+            <h2>{ReasonReact.string("No current Menu")}</h2>,
+            (currentMenu) => {
+              let currentMenuId = currentMenu##id;
+              Js.log("currentMenuId");
+              Js.log(currentMenuId);
+              <Menu.Container id=currentMenuId>
+                ...{(~data) =>
+                  <MenuLayout data/>
+                }
+              </Menu.Container>
+            });
+        }}
+      </Query.CurrentMenu.Container>
     </div>,
 };
