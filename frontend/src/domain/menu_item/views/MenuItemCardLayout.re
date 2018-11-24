@@ -39,7 +39,7 @@ let menuItemLayoutDescriptionClass = [%bs.raw {| css(tw`
 
 let menuItemLayoutButtonClass = [%bs.raw {| css(tw`
   text-green-darker
-  bg-orange-lighter
+  bg-grey
   font-bold
   px-2
   border-b-4
@@ -84,7 +84,7 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, ~numberInCart=0, _child
         </div>
         <div className=cx(menuItemLayoutFooterClass, menuItemLayouteContentDescriptionSection)>
           <div className=menuItemLayoutPriceClass>
-            {menuItem.data.price |> Utils.String.toMoney |> ReasonReact.string}
+            {menuItem.data.price |> Utils.String.toMoney |> ((s) => "$" ++ s) |> ReasonReact.string}
           </div>
           <div className=menuItemLayoutButtonsClass>
             <button className=menuItemLayoutButtonClass>{ReasonReact.string("-")}</button>

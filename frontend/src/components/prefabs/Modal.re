@@ -10,6 +10,7 @@ let modalOverlayClass = [%bs.raw
   w-screen
   bg-grey-darkest
   opacity-50
+  z-40
 `)
 |}
 ];
