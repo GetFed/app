@@ -19,11 +19,11 @@ let modalOuterClass = [%bs.raw
   fixed
   w-screen
   h-screen
-
   flex
   justify-center
   items-center
   pointer-events-none
+  z-50
 `)
 |}
 ];
