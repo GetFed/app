@@ -7,7 +7,9 @@ const schema = new mongoose.Schema(
     _id: String,
     name: String,
     category: String,
-    description: String
+    description: String,
+    photo: String,
+    price_per_unit: Number,
   },
   {
     collection: 'Items',
@@ -19,6 +21,8 @@ export interface IModel extends Document {
   name: string,
   category: string,
   description: string,
+  photo: string,
+  price_per_unit: number,
 };
 
 // this will make find, findOne typesafe

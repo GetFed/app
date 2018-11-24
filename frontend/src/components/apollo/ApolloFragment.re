@@ -59,6 +59,14 @@ module Container = (
         ~id=Schema.getUUIDFromId(id)
       );
 
+  let getRecordById = (id: idType) : option(Model.Record.t) =>
+    InnerContainer.get(
+      ~fragmentType=Model.fragmentType,
+      ~fragmentName=Model.fragmentName,
+      ~id=Schema.getUUIDFromId(id)
+    )
+    |> Belt.Option.map(_, Model.Record.fromObject);
+
   let component = ReasonReact.statelessComponent(Model.fragmentType ++ "Container");
 
   let make = (~id, children) => {

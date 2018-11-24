@@ -10,6 +10,8 @@ let mainPageContentMenuTitleClass = [%bs.raw {| css(tw`
   text-xl
 `)|}];
 
+let noMenu = <h2>{ReasonReact.string("No current Menu")}</h2>;
+
 let make = (_children) => {
   ...component,
   render: _self =>
@@ -18,16 +20,14 @@ let make = (_children) => {
         ...{(~currentMenu)=> {
           Belt.Option.mapWithDefault(
             currentMenu,
-            <h2>{ReasonReact.string("No current Menu")}</h2>,
+            noMenu,
             (currentMenu) => {
               let currentMenuId = currentMenu##id;
               Js.log("currentMenuId");
               Js.log(currentMenuId);
-              <Menu.Container id=currentMenuId>
-                ...{(~data) =>
-                  <MenuLayout data/>
-                }
-              </Menu.Container>
+              `MenuId(currentMenuId)
+              |> Menu.Container.getRecordById
+              |> Belt.Option.mapWithDefault(_, noMenu, (menu) => <MenuLayout data=menu/>)
             });
         }}
       </Query.CurrentMenu.Container>

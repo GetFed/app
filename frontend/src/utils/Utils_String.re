@@ -15,3 +15,6 @@ let stringToDivHtml = string =>
        },
      )
   |> Utils_ReasonReact.listToReactArray;
+
+let toMoney = (number : float) : string =>
+  number |> Js.Float.toFixedWithPrecision(_, ~digits=2);

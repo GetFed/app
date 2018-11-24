@@ -42,6 +42,7 @@ module type Container {
     ReasonReact.actionless
   );
   let getById: idType => option(config);
+  let getRecordById: idType => option(record);
   let make:
     (~id: string,
     (~data: record) =>

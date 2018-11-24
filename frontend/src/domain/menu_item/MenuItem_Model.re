@@ -1,5 +1,10 @@
 type _data = {
   id: UUID.t,
+  name: string,
+  price: float,
+  description: string,
+  photo: string,
+
   /* UI */
 };
 
@@ -14,6 +19,10 @@ module GraphFragment = [%graphql
   {|
     fragment menuItemFields on MenuItem {
       id
+      name
+      description
+      price
+      photo
     }
   |}
 ];
@@ -26,6 +35,10 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  name: "",
+  description: "",
+  photo: "",
+  price: 0.,
   /* UI */
 };
 
@@ -45,6 +58,10 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      name: obj##name,
+      price: obj##price,
+      photo: obj##photo,
+      description: obj##description,
     };
   };
 

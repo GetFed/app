@@ -1,7 +1,9 @@
 import {
   GraphQLObjectType,
   GraphQLNonNull,
-  GraphQLID
+  GraphQLString,
+  GraphQLID,
+  GraphQLFloat,
 } from 'graphql';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
@@ -26,12 +28,39 @@ export const {Type, Connection} = fullTypeDefinition(
         },
       },
       name: {
-        type: GraphQLNonNull(GraphQLID),
+        type: GraphQLNonNull(GraphQLString),
         resolve: async (idObj, args, context) => {
           console.log("idObj = %j", idObj);
           const item = await ItemLoader.load(context, idObj);
           console.log("item._id", item.name);
-          return item.name
+          return item.name;
+        },
+      },
+      description: {
+        type: GraphQLNonNull(GraphQLString),
+        resolve: async (idObj, args, context) => {
+          console.log("idObj = %j", idObj);
+          const item = await ItemLoader.load(context, idObj);
+          console.log("item._id", item.description);
+          return item.description;
+        },
+      },
+      photo: {
+        type: GraphQLNonNull(GraphQLString),
+        resolve: async (idObj, args, context) => {
+          console.log("idObj = %j", idObj);
+          const item = await ItemLoader.load(context, idObj);
+          console.log("item._id", item.photo);
+          return item.photo;
+        },
+      },
+      price: {
+        type: GraphQLNonNull(GraphQLFloat),
+        resolve: async (idObj, args, context) => {
+          console.log("idObj = %j", idObj);
+          const item = await ItemLoader.load(context, idObj);
+          console.log("item._id", item.price_per_unit);
+          return item.price_per_unit;
         },
       },
     }),
