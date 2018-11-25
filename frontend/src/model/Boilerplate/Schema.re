@@ -5,6 +5,8 @@ type modelIdType = [
   | `CustomerId(UUID.t)
   | `MenuId(UUID.t)
   | `MenuItemId(UUID.t)
+  | `DietId(UUID.t)
+  | `RestrictionId(UUID.t)
 ];
 
 /* pass as type id to domains */
@@ -13,6 +15,8 @@ type customerId('a) = [> | `CustomerId(UUID.t)] as 'a;
 type userId('a) = [> | `UserId(UUID.t)] as 'a;
 type menuId('a) = [> | `MenuId(UUID.t)] as 'a;
 type menuItemId('a) = [> | `MenuItemId(UUID.t)] as 'a;
+type dietId('a) = [> | `DietId(UUID.t)] as 'a;
+type restrictionId('a) = [> | `RestrictionId(UUID.t)] as 'a;
 
 /* just something to look at */
 /* type questionId('a) =
@@ -28,6 +32,8 @@ type schemaType = [
   | `UserSchema
   | `MenuSchema
   | `MenuItemSchema
+  | `DietSchema
+  | `RestrictionSchema
 ];
 
 /* Generate by Normalizr */
@@ -38,6 +44,8 @@ let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   | `UserId(uuid) => (`UserSchema, uuid)
   | `MenuId(uuid) => (`MenuSchema, uuid)
   | `MenuItemId(uuid) => (`MenuItemSchema, uuid)
+  | `DietId(uuid) => (`DietSchema, uuid)
+  | `RestrictionId(uuid) => (`RestrictionSchema, uuid)
   };
 
 /* can come from normalizr module */

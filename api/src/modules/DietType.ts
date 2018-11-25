@@ -43,10 +43,8 @@ export const {Type, Connection} = fullTypeDefinition(
         args: connectionArgs,
         resolve: async (idObj: string, args, context) => {
           const typeId = stringToTypeId(idObj);
-
           if (!typeId) { return null; }
-
-          return connectionFromArray(Diet.DATABASE_OBJECT[typeId].restrictions, args)
+          return connectionFromArray(Diet.DATABASE_OBJECT[typeId].restrictions, args);
         },
       },
     }),

@@ -42,6 +42,28 @@ module Wrapper = {
       };
     let apolloEnabled = true;
   };
+
+  module Diet = {
+    type model = Diet.Model.Record.t;
+    let wrap = model => `Diet(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `Diet(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
+
+  module Restriction = {
+    type model = Restriction.Model.Record.t;
+    let wrap = model => `Restriction(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `Restriction(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
 };
 
 
@@ -52,6 +74,8 @@ module Converter = {
   module Customer = NormalizrSetup.DomainTypeConverter(Customer, Customer.Container, Wrapper.Customer);
   module Menu = NormalizrSetup.DomainTypeConverter(Menu, Menu.Container, Wrapper.Menu);
   module MenuItem = NormalizrSetup.DomainTypeConverter(MenuItem, MenuItem.Container, Wrapper.MenuItem);
+  module Diet = NormalizrSetup.DomainTypeConverter(Diet, Diet.Container, Wrapper.Diet);
+  module Restriction = NormalizrSetup.DomainTypeConverter(Restriction, Restriction.Container, Wrapper.Restriction);
 };
 
 /* module TeacherMutation = MutationNormalizr.GetRecord(Teacher.Container); */
