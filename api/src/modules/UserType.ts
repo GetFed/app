@@ -5,7 +5,8 @@ import {
   GraphQLFloat,
   GraphQLID
 } from 'graphql';
-import { connectionFromArray } from 'graphql-relay';
+
+import { connectionArgs, connectionFromArray } from 'graphql-relay';
 
 import { GraphQLDateTime } from 'graphql-iso-date';
 import _ from 'lodash';
@@ -23,7 +24,7 @@ import * as PublicProfile from './PublicProfileType';
 import * as RoleGroup from './RoleGroupType';
 import * as Session from './SessionType';
 
-import { connectionArgs } from 'graphql-relay';
+
 
 const hashids = new Hashids();
 

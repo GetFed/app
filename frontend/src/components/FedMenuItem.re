@@ -8,6 +8,7 @@ let fedMenuItemMainClass = [%bs.raw {| css(tw`
   mb-3
   text-sm
   cursor-pointer
+  hover:opacity-75
 `)|}];
 
 let fedMenuInactiveLinkClass = [%bs.raw {| css(tw`
