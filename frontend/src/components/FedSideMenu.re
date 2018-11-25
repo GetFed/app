@@ -36,9 +36,12 @@ let idToMenuLink = (pathIds: PathIds.t) : menuLink =>
   };
 
 let fedSigninLink = (openModal) =>
-  <div key="signin-container" onClick=((_) => openModal())>
-    <FedMenuLink key="signin" text="SIGN IN" selected=(false)/>
-  </div>;
+  <FedMenuItem key="signin" selected=(false)>
+    <div key="signin-container" onClick=((_) => openModal())>
+      {ReasonReact.string("SIGN IN")}
+    </div>
+  </FedMenuItem>
+;
 
 let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
   ...component,
@@ -50,32 +53,33 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
         <div key="logo" className=sideMenuInternalLogoClass>
           <FedLogo />
         </div>
-        <A key="home" href="/">
-          <FedMenuLink key="link" text="HOME" selected=(menuLink == HOME)/>
-        </A>
-        <A key="menu" href="/menu">
-          <FedMenuLink key="link" text="MENU" selected=(menuLink == MENU)/>
-        </A>
-        <A key="my-account" href="/my-account">
-          <FedMenuLink key="link" text="MY ACCOUNT" selected=(menuLink == MY_ACCOUNT)/>
-        </A>
-        <A key="gifts" href="/gifts">
-          <FedMenuLink key="link" text="GIFTS" selected=(menuLink == GIFT)/>
-        </A>
+        <FedMenuItem key="signin" selected=(menuLink == HOME)>
+          <FedMenuLink href="/" text="HOME" /> 
+        </FedMenuItem>
+        <FedMenuItem key="menu" selected=(menuLink == MENU)>
+          <FedMenuLink href="/menu" text="MENU" /> 
+        </FedMenuItem>
+        <FedMenuItem key="my-account" selected=(menuLink == MY_ACCOUNT)>
+          <FedMenuLink href="/my-account" text="MY ACCOUNT" /> 
+        </FedMenuItem>
+        <FedMenuItem key="gifts" selected=(menuLink == GIFT)>
+          <FedMenuLink href="/gifts" text="GIFTS" /> 
+        </FedMenuItem>
         {
           authUserId == None
-            ? <A key="subscribe" href="/subscribe">
-                <FedMenuLink key="link" text="SUBSCRIBE" selected=(menuLink == SUBSCRIPTION)/>
-              </A>
+            ? <FedMenuItem key="subscribe" selected=(menuLink == SUBSCRIPTION)>
+                <FedMenuLink href="/subscribe" text="SUBSCRIBE" /> 
+              </FedMenuItem>
             : <div key="none" />
         }
         <div key="separator" className=sideMenuInternalSeparatorClass />
-        <A key="about-us" href="/about-us">
-          <FedMenuLink key="link" text="ABOUT US" selected=(menuLink == ABOUT_US)/>
-        </A>
-        <A key="support" href="/support">
-          <FedMenuLink key="link" text="SUPPORT" selected=(menuLink == SUPPORT)/>
-        </A>
+        <FedMenuItem key="about-us" selected=(menuLink == ABOUT_US)>
+          <FedMenuLink href="/about-us" text="ABOUT US" /> 
+        </FedMenuItem>
+
+        <FedMenuItem key="support" selected=(menuLink == SUPPORT)>
+          <FedMenuLink href="/support" text="SUPPORT" /> 
+        </FedMenuItem>
         <Query.Me.Container key="me-container" userId=authUserId loadingComponent=fedSigninLink(openModal)>
           ...{(~me) =>
             Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) =>
@@ -84,9 +88,11 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
                   <Customer.Container id=me##id>
                     ...{(~data as customer) =>
                       <div key="container">
-                        <div key="signout-container" onClick=((_) => accountSend(Accounts.Account(Logout)))>
-                          <FedMenuLink key="signout" text="SIGN OUT" selected=(false)/>
-                        </div>
+                        <FedMenuItem key="signout" selected=(false)>
+                          <div key="signout-container" onClick=((_) => accountSend(Accounts.Account(Logout)))>
+                            {ReasonReact.string("SIGN OUT")}
+                          </div>
+                        </FedMenuItem>
                         {ReasonReact.string("HELLO im logged in")}
                       </div>
                     }

@@ -17,7 +17,7 @@ let addClass = (originalClassName : string, newClassName: option(string)) =>
 let make = (~className: option(string)=?, ~href : string, children) => {
   ...component,
   render: _self =>
-    <a key="a" className=addClass(aClass, className) href>
+    <a key="a" className=((aClass ++ " text-inherit") |> addClass(_, className)) href>
       {children |> ReasonReact.array}
     </a>
 };

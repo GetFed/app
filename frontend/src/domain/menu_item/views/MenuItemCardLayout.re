@@ -5,7 +5,6 @@ let cx = Css.cx;
 let tw = Css.tw;
 let menuItemLayoutClass = [%bs.raw {| css(tw`
   max-w-sm
-  rounded
   overflow-hidden
   shadow-lg
   flex
@@ -43,8 +42,8 @@ let menuItemLayoutButtonClass = [%bs.raw {| css(tw`
   font-bold
   px-2
   border-b-4
-  rounded
   text-xl
+  rounded
   `)|}];
 
 let menuItemLayoutCountClass = [%bs.raw {| css(tw`

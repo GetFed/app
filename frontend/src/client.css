@@ -26,4 +26,8 @@ body {
 .bg-logo {
   background-image: url("/images/FedLogo.png");
 }
+
+.text-inherit {
+  color: inherit;
+}
 /* purgecss end ignore */
