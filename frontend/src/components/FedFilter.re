@@ -10,18 +10,20 @@ let fedFilterClass = [%bs.raw {| css(tw`
   p-2
 `)|}];
 
-let make = (~diets:list(Diet.Model.idType), ~selectedDiet: option(Diet.Model.idType), _children) => {
+let make = (~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.idType), _children) => {
   ...component,
   render: _self =>
     <div className=fedFilterClass>
       {ReasonReact.string("Filters")}
       {
-        switch(selectedDiet) {
-        | Some(selectedDiet) => <FedFilterDietDropdown diets selectedDiet />
-        | None => <div />
-        }
+        Belt.Option.mapWithDefault(selectedDietId, <div/>, (selectedDietId) => {
+          selectedDietId
+          |> Diet.Container.getRecordById
+          |> Belt.Option.mapWithDefault(_, <div/>, (selectedDiet) => {
+            <FedFilterDietDropdown diets selectedDiet />
+          })
+        })
       }
-      
       <FedFilterRestrictionSection/>
     </div>
 };

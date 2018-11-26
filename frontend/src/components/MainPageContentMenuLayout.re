@@ -7,7 +7,7 @@ let mainPageContentFedFilterClass = [%bs.raw {| css(tw`
 `)|}];
 
 type state = {
-  selectedDiet: option(Diet.Model.idType),
+  selectedDietId: option(Diet.Model.idType),
 };
 
 type action =
@@ -17,11 +17,7 @@ let component = ReasonReact.reducerComponent("MainPageContentMenuLayout");
 
 let make = (~diets, ~restrictions, ~currentMenu, _children) => {
   ...component,
-  initialState: () => {
-    selectedDiet:
-      diets
-      |> Belt.List.head
-  },
+  initialState: () => { selectedDietId: Belt.List.head(diets) },
   reducer: (_action, state) =>
     switch (_action) {
     | Noop => ReasonReact.NoUpdate
@@ -29,7 +25,7 @@ let make = (~diets, ~restrictions, ~currentMenu, _children) => {
   render: self =>
     <div>
       <div className=mainPageContentFedFilterClass>
-        <FedFilter diets selectedDiet=self.state.selectedDiet />
+        <FedFilter diets selectedDietId=self.state.selectedDietId />
       </div>
       <FedMenuSection />
     </div>

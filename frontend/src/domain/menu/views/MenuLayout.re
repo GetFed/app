@@ -17,7 +17,7 @@ let menuLayoutResonsiveMenuItemClass = [%bs.raw {| css(tw`
 `)|}];
 
 let menuLayoutMenuItemClass = [%bs.raw {| css(tw`
-  pr-4
+  px-2
   h-full
 `)|}];
 

@@ -19,7 +19,7 @@ type action =
 
 let component = ReasonReact.reducerComponent("FedFilterDietDropdown");
 
-let make = (~diets: list(Diet.Model.idType), ~selectedDiet: Diet.Model.idType, _children) => {
+let make = (~diets: list(Diet.Model.idType), ~selectedDiet: Diet.Model.Record.t, _children) => {
   ...component,
   initialState: () => defaultState,
   reducer: (action, state) =>
@@ -38,14 +38,7 @@ let make = (~diets: list(Diet.Model.idType), ~selectedDiet: Diet.Model.idType, _
         })
         |> Utils.List.removeOptionsFromList(_)
         |> Utils.ReasonReact.listToReactArray
-    | false => {
-      /* let diet =
-        Belt.Option.getWithDefault(
-          selectedDiet,
-          (dietId) => Diet.Container.getRecordById(dietId)) */
-    /* } */
-        <div/>
-        /* <DietButton data=selectedDiet/> */
+    | false =>
+        <DietButton data=selectedDiet/>
     }
-  }
 };

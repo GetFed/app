@@ -6,7 +6,7 @@ let tw = Css.tw;
 let noMenu = <h2>{ReasonReact.string("No current Menu")}</h2>;
 
 let mainPageContentMenuClass = [%bs.raw {| css(tw`
-  mr-4
+  mx-2
 `)|}];
 let mainPageContentMenuTitleClass = [%bs.raw {| css(tw`
   text-xl
