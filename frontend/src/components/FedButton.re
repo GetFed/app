@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("DietButton");
+let component = ReasonReact.statelessComponent("FedButton");
 
 let css = Css.css;
 let tw = Css.tw;
@@ -13,8 +13,10 @@ let dietButtonClass = [%bs.raw {| css(tw`
   text-lg
 `)|}];
 
-let make = (~data as diet : Diet.Model.Record.t, _children) => {
+let make = (~text : string, _children) => {
   ...component,
   render: _self =>
-    <FedButton text=diet.data.name/>
+   <button className=dietButtonClass>
+     {ReasonReact.string(text)}
+   </button>
 };

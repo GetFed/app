@@ -7,13 +7,21 @@ let fedFilterClass = [%bs.raw {| css(tw`
   h-full
   w-full
   bg-grey
+  p-2
 `)|}];
 
-let make = (_children) => {
+let make = (~diets:list(Diet.Model.idType), ~selectedDiet: option(Diet.Model.idType), _children) => {
   ...component,
   render: _self =>
-   <div className=fedFilterClass>
-     <FedFilterDietSection/>
-     <FedFilterRestrictionSection/>
-   </div>
+    <div className=fedFilterClass>
+      {ReasonReact.string("Filters")}
+      {
+        switch(selectedDiet) {
+        | Some(selectedDiet) => <FedFilterDietDropdown diets selectedDiet />
+        | None => <div />
+        }
+      }
+      
+      <FedFilterRestrictionSection/>
+    </div>
 };

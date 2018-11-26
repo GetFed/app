@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("MainPageContentMyAccount");
+let component = ReasonReact.statelessComponent("MainPageContentMyAccountContainer");
 
 let css = Css.css;
 let tw = Css.tw;
