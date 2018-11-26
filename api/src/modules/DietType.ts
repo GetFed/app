@@ -38,6 +38,10 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(GraphQLID),
         resolve: async (idObj, args, context) => idObj,
       },
+      name: {
+        type: GraphQLNonNull(GraphQLString),
+        resolve: async (idObj, args, context) => idObj,
+      },
       restrictions: {
         type: Restriction.Connection.connectionType,
         args: connectionArgs,

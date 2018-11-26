@@ -13,11 +13,11 @@ let menuLayoutResonsiveMenuItemClass = [%bs.raw {| css(tw`
   w-full
   sm:w-1/2
   md:w-1/3
-  my-2
+  mb-4
 `)|}];
 
 let menuLayoutMenuItemClass = [%bs.raw {| css(tw`
-  p-2
+  pr-4
   h-full
 `)|}];
 

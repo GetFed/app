@@ -80,7 +80,7 @@ export default new GraphQLObjectType({
       },
     },
     diets: {
-      type: DietConnection.connectionType,
+      type: GraphQLNonNull(DietConnection.connectionType),
       args: {
         ...connectionArgs,
         search: {
@@ -92,7 +92,7 @@ export default new GraphQLObjectType({
       },
     },
     restrictions: {
-      type: RestrictionConnection.connectionType,
+      type: GraphQLNonNull(RestrictionConnection.connectionType),
       resolve: async (obj, args, context) => {
         return connectionFromArray(restrictionAll, args);
       },

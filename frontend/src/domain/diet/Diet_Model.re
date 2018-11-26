@@ -1,6 +1,8 @@
 type _data = {
   id: UUID.t,
+  name: string,
   /* UI */
+  restrictionIds: option(list(option(Schema.restrictionId(Schema.modelIdType)))),
 };
 
 type _local = unit;
@@ -14,6 +16,14 @@ module GraphFragment = [%graphql
   {|
     fragment dietFields on Diet {
       id
+      name
+      restrictions {
+        edges {
+          node {
+            ...Restriction.Model.Fragment.RestrictionFields
+          }
+        }
+      }
     }
   |}
 ];
@@ -26,6 +36,8 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  name: "",
+  restrictionIds: None,
   /* UI */
 };
 
@@ -45,6 +57,10 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      name: obj##name,
+      restrictionIds:
+        obj##restrictions
+        |> Belt.Option.map(_, (res) => ModelUtils.getConnectionList(res, Restriction.Model.objectToId))
     };
   };
 

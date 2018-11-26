@@ -45,6 +45,7 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      
     };
   };
 
