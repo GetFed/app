@@ -4,17 +4,33 @@ let css = Css.css;
 let tw = Css.tw;
 
 let dietButtonClass = [%bs.raw {| css(tw`
-  bg-green-darker
-  hover:bg-green-darkest
-  text-white
-  py-1
-  px-4
-  rounded-lg
-  text-lg
+  flex
 `)|}];
 
-let make = (~data as diet : Diet.Model.Record.t, _children) => {
+let dietButtonTextClass = [%bs.raw {| css(tw`
+  mr-2
+`)|}];
+
+type chevronDirection =
+  | Up
+  | Down
+  | None;
+
+let make = (~data as diet : Diet.Model.Record.t, ~chevron=None, ~onClick=((_) => ()), _children) => {
   ...component,
   render: _self =>
-    <FedButton text=diet.data.name/>
+    <FedButton onClick>
+      <div className=dietButtonClass>
+        <div className=dietButtonTextClass>
+          {ReasonReact.string(diet.data.name)}
+        </div>
+        {
+          switch(chevron){
+          | Up => <div />
+          | Down => <ChevronDownIcon />
+          | None => <div />
+          }
+        }
+      </div>
+    </FedButton>
 };

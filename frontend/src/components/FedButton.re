@@ -13,10 +13,10 @@ let dietButtonClass = [%bs.raw {| css(tw`
   text-lg
 `)|}];
 
-let make = (~text : string, _children) => {
+let make = (~onClick, children) => {
   ...component,
   render: _self =>
-   <button className=dietButtonClass>
-     {ReasonReact.string(text)}
+   <button className=dietButtonClass onClick>
+     {children |> ReasonReact.array}
    </button>
 };

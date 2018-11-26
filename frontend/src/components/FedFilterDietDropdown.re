@@ -2,7 +2,9 @@
 let css = Css.css;
 let tw = Css.tw;
 
-let logoClass = [%bs.raw {| css(tw`
+let fedFilterDietDropdownOpenClass = [%bs.raw {| css(tw`
+  flex
+  flex-col
 `)|}];
 
 type state = {
@@ -29,16 +31,20 @@ let make = (~diets: list(Diet.Model.idType), ~selectedDiet: Diet.Model.Record.t,
     },
   render: self =>
     switch(self.state.dropdownOpen){
-    | true =>
-        diets
-        |> Belt.List.map(_, (dietId) => {
-          dietId
-          |> Diet.Container.getRecordById
-          |> Belt.Option.map(_, (diet) => <DietButton data=diet/>)
-        })
-        |> Utils.List.removeOptionsFromList(_)
-        |> Utils.ReasonReact.listToReactArray
-    | false =>
-        <DietButton data=selectedDiet/>
-    }
+      | true =>
+        <div className=fedFilterDietDropdownOpenClass>
+          <DietButton data=selectedDiet chevron=Down onClick=((_) => self.send(CloseDropdown)) />
+            {
+              diets
+              |> Belt.List.map(_, (dietId) => {
+                dietId
+                |> Diet.Container.getRecordById
+                |> Belt.Option.map(_, (diet) => <DietButton data=diet onClick=((_) => self.send(CloseDropdown))/>)
+              })
+              |> Utils.List.removeOptionsFromList(_)
+              |> Utils.ReasonReact.listToReactArray
+            }
+        </div>
+      | false => <DietButton data=selectedDiet chevron=Down onClick=((_) => self.send(OpenDropdown)) />
+      }
 };
