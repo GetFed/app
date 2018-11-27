@@ -11,6 +11,7 @@ let dietButtonClass = [%bs.raw {| css(tw`
   px-4
   rounded-lg
   text-lg
+  w-full
 `)|}];
 
 let make = (~onClick, children) => {

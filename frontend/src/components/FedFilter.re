@@ -9,6 +9,7 @@ let fedFilterClass = [%bs.raw {| css(tw`
   bg-grey
   py-2
   px-4
+  mr-8
   flex
 `)|}];
 
@@ -16,14 +17,20 @@ let fedFilterTextClass = [%bs.raw {| css(tw`
   text-green-darker
   flex
   items-center
+  flex-no-grow
 `)|}];
 
 let fedFilterDietClass = [%bs.raw {| css(tw`
   flex
   items-center
+  flex-no-grow
 `)|}];
 
-let make = (~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.idType), _children) => {
+let fedFilterRestrictionClass = [%bs.raw {| css(tw`
+  flex-grow
+`)|}];
+
+let make = (~restrictions:list(Restriction.Model.idType), ~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.idType), _children) => {
   ...component,
   render: _self =>
     <div className=fedFilterClass>
@@ -38,6 +45,8 @@ let make = (~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.i
           }
         }
       </div>
-      <FedFilterRestrictionSection/>
+      <div className=fedFilterRestrictionClass>
+        <FedFilterRestrictionSection selectedRestrictions=restrictions/>
+      </div>
     </div>
 };

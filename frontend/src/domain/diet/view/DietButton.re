@@ -4,6 +4,7 @@ let css = Css.css;
 let tw = Css.tw;
 
 let dietButtonClass = [%bs.raw {| css(tw`
+  w-full
   flex
 `)|}];
 

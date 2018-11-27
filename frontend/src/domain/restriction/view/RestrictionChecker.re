@@ -23,7 +23,6 @@ let restrictionCheckerImageCrossClass = [%bs.raw {| css(tw`
 let restrictionImageAreaClass = [%bs.raw {| css(tw`
   w-full
   relative
-  flex
   justify-center
   h-4/5
 `)|}];

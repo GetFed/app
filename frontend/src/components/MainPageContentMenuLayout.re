@@ -4,6 +4,9 @@ let tw = Css.tw;
 
 let mainPageContentFedFilterClass = [%bs.raw {| css(tw`
   mb-4
+
+  hidden
+  md:block
 `)|}];
 
 type state = {
@@ -33,7 +36,7 @@ let make = (~diets, ~restrictions, ~currentMenu, _children) => {
   render: self =>
     <div>
       <div className=mainPageContentFedFilterClass>
-        <FedFilter diets selectedDietId=self.state.selectedDietId />
+        <FedFilter diets selectedDietId=self.state.selectedDietId restrictions=(restrictions |> Utils.List.removeOptionsFromList) />
       </div>
       <FedMenuSection restrictions/>
     </div>

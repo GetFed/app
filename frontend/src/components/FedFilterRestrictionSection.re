@@ -5,16 +5,16 @@ let tw = Css.tw;
 
 let fedFilterRestrictionSectionClass = [%bs.raw {| css(tw`
   flex
-  flex-wrap
   h-full
 `)|}];
 
 let fedFilterRestrictionSectionItemClass = [%bs.raw {| css(tw`
   max-h-full
-  w-12
+  w-10
+  mx-2
 `)|}];
 
-let make = (_children) => {
+let make = (~selectedRestrictions: list(Restriction.Model.idType), _children) => {
   ...component,
   render: _self =>
   <Query.Restrictions.Container>

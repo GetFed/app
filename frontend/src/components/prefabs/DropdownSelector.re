@@ -1,12 +1,34 @@
 
 let css = Css.css;
+let cx = Css.cx;
 let tw = Css.tw;
 
 type id = string;
 
 let dropdownSelectorClass = [%bs.raw {| css(tw`
+  relative
+  w-full
+`)|}];
+
+let dropdownSelectorSelectorClass = [%bs.raw {| css(tw`
+  h-full
   flex
   flex-col
+`)|}];
+
+let dropdownSelectorOptionClass = [%bs.raw {| css(tw`
+  absolute
+  pin-t
+  h-full
+`)|}];
+
+let dropdownSelectorHiddenClass = [%bs.raw {| css(tw`
+  relative
+  hidden
+`)|}];
+
+let dropdownSelectorClickableClass = [%bs.raw {| css(tw`
+  w-full
 `)|}];
 
 type state = {
@@ -23,6 +45,11 @@ type action =
   | CloseDropdownWithAfterEffect(id);
 
 let component = ReasonReact.reducerComponent("DropdownSelector");
+
+let selectorComponent = (selected, send, toSelectorButton) =>
+  <div onClick=((_) => send(CloseDropdown))>
+    {selected |> toSelectorButton}
+  </div>
 
 let make = (
   ~selection: list(id),
@@ -45,27 +72,36 @@ let make = (
         )
     },
   render: self =>
-    switch(self.state.dropdownOpen){
-    | true =>
-        <div className=dropdownSelectorClass>
-          {
-            <div onClick=((_) => self.send(CloseDropdown))>
-              {selected |> toSelectorButton}
+    <div className=dropdownSelectorClass>
+      {
+        switch(self.state.dropdownOpen){
+        | true =>
+            <div className=dropdownSelectorSelectorClass>
+              {selectorComponent(selected, self.send, toSelectorButton)}
+              <div className=dropdownSelectorOptionClass>
+                {
+                  (
+                    [
+                      selectorComponent(selected, self.send, toSelectorButton)
+                    ] @
+                    (
+                      selection
+                      |> Belt.List.map(_, (buttonOption: id) =>
+                        <div className=dropdownSelectorClickableClass onClick=((_) => self.send(CloseDropdownWithAfterEffect(buttonOption)))>
+                          {buttonOption |> toOptionButton}
+                        </div>
+                      )
+                    )
+                  )
+                  |> Utils.ReasonReact.listToReactArray
+                }
+              </div>
             </div>
-          }
-          {
-            selection
-            |> Belt.List.map(_, (buttonOption: id) =>
-                <div onClick=((_) => self.send(CloseDropdownWithAfterEffect(buttonOption)))>
-                  {buttonOption |> toOptionButton}
-                </div>
-              )
-            |> Utils.ReasonReact.listToReactArray
-          }
-        </div>
-    | false =>
-        <div className=dropdownSelectorClass onClick=((_) => self.send(OpenDropdown))>
-          {toSelectorButton(selected)}
-        </div>
-    }
+        | false =>
+            <div className=dropdownSelectorSelectorClass onClick=((_) => self.send(OpenDropdown))>
+              {selectorComponent(selected, self.send, toSelectorButton)}
+            </div>
+        }
+      }
+    </div>
 };
