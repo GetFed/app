@@ -12,7 +12,7 @@ let mainPageContentMenuTitleClass = [%bs.raw {| css(tw`
   text-xl
 `)|}];
 
-let make = (_children) => {
+let make = (~restrictions, _children) => {
   ...component,
   render: _self =>
   <div className=mainPageContentMenuClass>

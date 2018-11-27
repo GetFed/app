@@ -8,18 +8,26 @@ let mainPageContentFedFilterClass = [%bs.raw {| css(tw`
 
 type state = {
   selectedDietId: option(Diet.Model.idType),
+  restrictions: list(Restriction.Model.idType)
 };
 
 type action =
+  | SelectDiet(Diet.Model.idType)
+  | EditRestriction(Restriction.Model.idType, bool)
   | Noop;
 
 let component = ReasonReact.reducerComponent("MainPageContentMenuLayout");
 
 let make = (~diets, ~restrictions, ~currentMenu, _children) => {
   ...component,
-  initialState: () => { selectedDietId: Belt.List.head(diets) },
+  initialState: () => {
+    selectedDietId: Belt.List.head(diets),
+    restrictions: [],
+  },
   reducer: (_action, state) =>
     switch (_action) {
+    | SelectDiet(_selectedDiet) => ReasonReact.NoUpdate
+    | EditRestriction(_restrictionId, _selected) => ReasonReact.NoUpdate
     | Noop => ReasonReact.NoUpdate
     },
   render: self =>
@@ -27,6 +35,6 @@ let make = (~diets, ~restrictions, ~currentMenu, _children) => {
       <div className=mainPageContentFedFilterClass>
         <FedFilter diets selectedDietId=self.state.selectedDietId />
       </div>
-      <FedMenuSection />
+      <FedMenuSection restrictions/>
     </div>
 };

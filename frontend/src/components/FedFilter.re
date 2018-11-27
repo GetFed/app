@@ -4,7 +4,7 @@ let css = Css.css;
 let tw = Css.tw;
 
 let fedFilterClass = [%bs.raw {| css(tw`
-  h-full
+  h-12
   w-full
   bg-grey
   py-2

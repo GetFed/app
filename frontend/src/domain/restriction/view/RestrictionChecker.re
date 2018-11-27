@@ -25,7 +25,7 @@ let restrictionImageAreaClass = [%bs.raw {| css(tw`
   relative
   flex
   justify-center
-  h-5/6
+  h-4/5
 `)|}];
 
 let restrictionCheckerTextClass = [%bs.raw {| css(tw`
@@ -34,7 +34,7 @@ let restrictionCheckerTextClass = [%bs.raw {| css(tw`
   justify-center
   text-green-darker
   text-xs
-  h-1/6
+  h-1/5
 `)|}];
 
 let make = (~data as restriction: Restriction.Model.Record.t, ~restricted: bool=true, _children) => {
