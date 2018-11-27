@@ -73,7 +73,7 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, ~numberInCart=0, _child
   ...component,
   render: _self =>
     <div className=menuItemLayoutClass>
-      <img className=menuItemLayoutImageClass src=("https://getfednyc.com" ++ menuItem.data.photo) />
+      <img className=menuItemLayoutImageClass src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />
       <div className=menuItemLayoutContentClass>
         <div className=cx(menuItemLayoutNameClass, menuItemLayouteContentDescriptionSection)>
           {ReasonReact.string(menuItem.data.name)}

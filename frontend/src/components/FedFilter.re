@@ -7,12 +7,20 @@ let fedFilterClass = [%bs.raw {| css(tw`
   h-full
   w-full
   bg-grey
-  p-2
+  py-2
+  px-4
   flex
 `)|}];
 
 let fedFilterTextClass = [%bs.raw {| css(tw`
-  mr-4
+  text-green-darker
+  flex
+  items-center
+`)|}];
+
+let fedFilterDietClass = [%bs.raw {| css(tw`
+  flex
+  items-center
 `)|}];
 
 let make = (~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.idType), _children) => {
@@ -20,14 +28,16 @@ let make = (~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.i
   render: _self =>
     <div className=fedFilterClass>
       <div className=fedFilterTextClass>
-        {ReasonReact.string("Filters")}
+        {ReasonReact.string("Filters: ")}
       </div>
-      {
-        switch(selectedDietId){
-        | Some(selectedDietId) => <FedFilterDietDropdown diets selectedDietId />
-        | None => <div />
+      <div className=fedFilterDietClass>
+        {
+          switch(selectedDietId){
+          | Some(selectedDietId) => <FedFilterDietDropdown diets selectedDietId />
+          | None => <div />
+          }
         }
-      }
+      </div>
       <FedFilterRestrictionSection/>
     </div>
 };
