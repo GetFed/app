@@ -23,13 +23,10 @@ let make = (~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.i
         {ReasonReact.string("Filters")}
       </div>
       {
-        Belt.Option.mapWithDefault(selectedDietId, <div/>, (selectedDietId) => {
-          selectedDietId
-          |> Diet.Container.getRecordById
-          |> Belt.Option.mapWithDefault(_, <div/>, (selectedDiet) => {
-            <FedFilterDietDropdown diets selectedDiet />
-          })
-        })
+        switch(selectedDietId){
+        | Some(selectedDietId) => <FedFilterDietDropdown diets selectedDietId />
+        | None => <div />
+        }
       }
       <FedFilterRestrictionSection/>
     </div>
