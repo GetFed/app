@@ -10,6 +10,18 @@ const schema = new mongoose.Schema(
     description: String,
     photo: String,
     price_per_unit: Number,
+    warnings: {
+      peanuts: Boolean,
+      treenuts: Boolean,
+      soy: Boolean,
+      beef: Boolean,
+      chicken: Boolean,
+      fish: Boolean,
+      shellfish: Boolean,
+      milk: Boolean,
+      eggs: Boolean,
+      wheat: Boolean,
+    }
   },
   {
     collection: 'Items',
@@ -23,6 +35,18 @@ export interface IModel extends Document {
   description: string,
   photo: string,
   price_per_unit: number,
+  warnings: {
+    peanuts: boolean,
+    treenuts: boolean,
+    soy: boolean,
+    beef: boolean,
+    chicken: boolean,
+    fish: boolean,
+    shellfish: boolean,
+    milk: boolean,
+    eggs: boolean,
+    wheat: boolean,
+  }
 };
 
 // this will make find, findOne typesafe

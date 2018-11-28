@@ -24,7 +24,7 @@ let make = (~restrictions, _children) => {
           (currentMenu) => {
             `MenuId(currentMenu##id)
             |> Menu.Container.getRecordById
-            |> Belt.Option.mapWithDefault(_, noMenu, (menu) => <MenuLayout data=menu/>)
+            |> Belt.Option.mapWithDefault(_, noMenu, (menu) => <MenuLayout restrictions data=menu/>)
           });
       }}
     </Query.CurrentMenu.Container>

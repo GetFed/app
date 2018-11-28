@@ -23,7 +23,7 @@ let make = (_children) => {
               <MainPageContentMenuLayout
                 diets=(diets |> Utils.List.removeOptionsFromList)
                 currentMenu
-                restrictions
+                restrictions=(restrictions |> Utils.List.removeOptionsFromList)
               />
             }}
           </Query.Restrictions.Container>

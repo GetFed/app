@@ -25,7 +25,7 @@ let menuLayoutMenuItemClass = [%bs.raw {| css(tw`
 let noMenuItem = <h2>{ReasonReact.string("No current Menu Item")}</h2>;
 
 
-let make = (~data as menu : Menu.Model.Record.t, _children) => {
+let make = (~data as menu : Menu.Model.Record.t, ~restrictions: list(Restriction.Model.idType), _children) => {
   ...component,
   render: _self => {
     Js.log("menu.data.itemIds");
@@ -34,21 +34,33 @@ let make = (~data as menu : Menu.Model.Record.t, _children) => {
       {
         menu.data.itemIds
         |> Utils.List.removeOptionsFromList
-        |> Belt.List.map(
-             _, (menuItemId) => 
-             menuItemId
-             |> MenuItem.Container.getRecordById
-             |> Belt.Option.mapWithDefault(
-                  _,
-                  noMenuItem,
-                  (menuItem) =>
-                    <div className=menuLayoutResonsiveMenuItemClass>
-                      <div className=menuLayoutMenuItemClass>
-                        <MenuItemCardLayout data=menuItem/>
-                      </div>
-                    </div>
+        |> Belt.List.map(_, (menuItemId) => menuItemId |> MenuItem.Container.getRecordById)
+        |> Utils.List.removeOptionsFromList
+        |> Belt.List.keep(_, (menuItem) =>
+          switch(menuItem.data.restrictionIds){
+          | None => true
+          | Some(menuRestrictionIds) => {
+              Js.log("menuRestrictionIds = ");
+              Js.log(menuRestrictionIds);
+              Js.log("menuItem.data.restrictionIds = ");
+              Js.log(menuItem.data.restrictionIds);
+              !(
+                menuRestrictionIds
+                |> Utils.List.removeOptionsFromList
+                |> Belt.List.some(_, (menuRestrictionId) =>
+                  restrictions |> Belt.List.getBy(_, (res) => res == menuRestrictionId) != None
                 )
-            )
+              )
+            }
+          }
+        )
+        |> Belt.List.map(_, (menuItem) =>
+          <div className=menuLayoutResonsiveMenuItemClass>
+            <div className=menuLayoutMenuItemClass>
+              <MenuItemCardLayout data=menuItem/>
+            </div>
+          </div>
+        )
         |> Utils.ReasonReact.listToReactArray
       }
     </div>

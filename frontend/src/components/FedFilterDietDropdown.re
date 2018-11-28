@@ -5,7 +5,12 @@ let tw = Css.tw;
 let component = ReasonReact.statelessComponent("FedFilterDietDropdown");
 
 
-let make = (~diets: list(Diet.Model.idType), ~selectedDietId: Diet.Model.idType, _children) => {
+let make = (
+  ~diets: list(Diet.Model.idType),
+  ~selectedDietId: Diet.Model.idType,
+  ~updateDiet: ((Diet.Model.idType) => unit),
+  _children
+) => {
   ...component,
   render: self =>
     <DropdownSelector

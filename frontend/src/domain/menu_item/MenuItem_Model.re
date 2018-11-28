@@ -4,6 +4,7 @@ type _data = {
   price: float,
   description: string,
   photo: string,
+  restrictionIds: option(list(option(Schema.restrictionId(Schema.modelIdType)))),
 
   /* UI */
 };
@@ -23,6 +24,13 @@ module GraphFragment = [%graphql
       description
       price
       photo
+      restrictions {
+        edges {
+          node {
+            ...Restriction.Model.Fragment.RestrictionFields
+          }
+        }
+      }
     }
   |}
 ];
@@ -39,6 +47,7 @@ let _defaultData = id => {
   description: "",
   photo: "",
   price: 0.,
+  restrictionIds: None,
   /* UI */
 };
 
@@ -62,6 +71,9 @@ module Record = {
       price: obj##price,
       photo: obj##photo,
       description: obj##description,
+      restrictionIds:
+        obj##restrictions
+        |> Belt.Option.map(_, (res) => ModelUtils.getConnectionList(res, Restriction.Model.objectToId))
     };
   };
 

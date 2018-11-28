@@ -18,6 +18,7 @@ let fedFilterTextClass = [%bs.raw {| css(tw`
   flex
   items-center
   flex-no-grow
+  mr-4
 `)|}];
 
 let fedFilterDietClass = [%bs.raw {| css(tw`
@@ -30,7 +31,14 @@ let fedFilterRestrictionClass = [%bs.raw {| css(tw`
   flex-grow
 `)|}];
 
-let make = (~restrictions:list(Restriction.Model.idType), ~diets:list(Diet.Model.idType), ~selectedDietId: option(Diet.Model.idType), _children) => {
+let make = (
+  ~restrictions:list(Restriction.Model.idType),
+  ~diets:list(Diet.Model.idType),
+  ~selectedDietId: option(Diet.Model.idType),
+  ~updateRestriction: ((Restriction.Model.idType, bool) => unit),
+  ~updateDiet: ((Diet.Model.idType) => unit),
+  _children
+) => {
   ...component,
   render: _self =>
     <div className=fedFilterClass>
@@ -40,13 +48,21 @@ let make = (~restrictions:list(Restriction.Model.idType), ~diets:list(Diet.Model
       <div className=fedFilterDietClass>
         {
           switch(selectedDietId){
-          | Some(selectedDietId) => <FedFilterDietDropdown diets selectedDietId />
+          | Some(selectedDietId) =>
+              <FedFilterDietDropdown
+                diets
+                selectedDietId
+                updateDiet
+              />
           | None => <div />
           }
         }
       </div>
       <div className=fedFilterRestrictionClass>
-        <FedFilterRestrictionSection selectedRestrictions=restrictions/>
+        <FedFilterRestrictionSection
+          selectedRestrictions=restrictions
+          updateRestriction
+        />
       </div>
     </div>
 };

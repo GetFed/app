@@ -36,10 +36,23 @@ let restrictionCheckerTextClass = [%bs.raw {| css(tw`
   h-1/5
 `)|}];
 
-let make = (~data as restriction: Restriction.Model.Record.t, ~restricted: bool=true, _children) => {
+let make = (
+  ~data as restriction: Restriction.Model.Record.t,
+  ~restricted: bool,
+  ~updateRestriction: ((Restriction.Model.idType, bool) => unit),
+  _children
+) => {
   ...component,
   render: _self =>
-    <div className=restrictionCheckerClass>
+    {
+      Js.log("restriction.data.id = ");
+      Js.log(restriction.data.id);
+      Js.log("restricted = ");
+      Js.log(restricted);
+      <div
+      className=restrictionCheckerClass
+      onClick=((_) => updateRestriction(`RestrictionId(restriction.data.id), !restricted))
+    >
       <div className=restrictionImageAreaClass>
         {
           switch(restriction.data.image){
@@ -63,4 +76,5 @@ let make = (~data as restriction: Restriction.Model.Record.t, ~restricted: bool=
         {ReasonReact.string(restriction.data.id)}
       </div>
     </div>
+  }
 };
