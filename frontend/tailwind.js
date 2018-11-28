@@ -24,7 +24,7 @@ View the full documentation at https://tailwindcss.com.
 |
 */
 
-// let defaultConfig = require('tailwindcss/defaultConfig')()
+let defaultConfig = require('tailwindcss/defaultConfig')()
 
 
 /*
@@ -129,7 +129,7 @@ let colors = {
   'pink-lightest': '#ffebef',
 }
 
-module.exports = abc = {
+module.exports = {
 
   /*
   |-----------------------------------------------------------------------------
@@ -747,7 +747,6 @@ module.exports = abc = {
     '32': '8rem',
   },
 
-
   /*
   |-----------------------------------------------------------------------------
   | Shadows                                https://tailwindcss.com/docs/shadows
@@ -904,6 +903,7 @@ module.exports = abc = {
     minHeight: ['responsive'],
     minWidth: ['responsive'],
     negativeMargin: ['responsive'],
+    objectFit: ['responsive'],
     opacity: ['responsive'],
     outline: ['focus'],
     overflow: ['responsive'],

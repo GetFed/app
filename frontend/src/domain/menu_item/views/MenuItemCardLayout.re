@@ -8,9 +8,27 @@ let menuItemLayoutClass = [%bs.raw {| css(tw`
   overflow-hidden
   shadow-lg
   flex
-  flex-col
   h-full
+
+
+  
+  sm:flex-col
 `)|}];
+
+
+let menuItemLayoutWrapperImageClass = [%bs.raw {| css(tw`
+  sm:w-full
+  sm:block
+  
+  w-1/3
+
+
+  h-full
+  sm:h-auto
+  
+  
+`)|}];
+
 let menuItemLayoutImageClass = [%bs.raw {| css(tw`
   w-full
 `)|}];
@@ -21,6 +39,9 @@ let menuItemLayoutContentClass = [%bs.raw {| css(tw`
   flex
   flex-col
   justify-between
+  sm:w-full
+
+  w-2/3
 `)|}];
 
 let menuItemLayouteContentDescriptionSection = [%bs.raw {| css(tw`
@@ -73,7 +94,9 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, ~numberInCart=0, _child
   ...component,
   render: _self =>
     <div className=menuItemLayoutClass>
-      <img className=menuItemLayoutImageClass src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />
+      <div className=menuItemLayoutWrapperImageClass>
+        <img className=(menuItemLayoutImageClass ++ " object-contain") src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />
+      </div>
       <div className=menuItemLayoutContentClass>
         <div className=cx(menuItemLayoutNameClass, menuItemLayouteContentDescriptionSection)>
           {ReasonReact.string(menuItem.data.name)}
