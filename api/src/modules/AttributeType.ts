@@ -1,6 +1,7 @@
 import {
   GraphQLObjectType,
   GraphQLNonNull,
+  GraphQLString,
   GraphQLID
 } from 'graphql';
 
@@ -17,7 +18,11 @@ export const {Type, Connection} = fullTypeDefinition(
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => "1",
+        resolve: async (idObj, args, context) => idObj,
+      },
+      name: {
+        type: GraphQLNonNull(GraphQLString),
+        resolve: async (idObj, args, context) => idObj,
       },
     }),
     interfaces: () => [nodeInterface],

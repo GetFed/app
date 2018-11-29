@@ -10,10 +10,13 @@ import { connectionArgs, connectionFromArray } from 'graphql-relay';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 import { Loader as ItemLoader } from '../model/ItemModel';
+import * as RestrictionModel from '../model/non_standard/RestrictionModel';
+
 
 import * as Restriction from './RestrictionType';
 import * as NutritionFacts from './NutritionFactsType';
-import * as RestrictionModel from '../model/non_standard/RestrictionModel';
+import * as Attribute from './AttributeType';
+import * as Ingredient from './IngredientType';
 
 const TYPE_NAME = 'MenuItem';
 
@@ -90,6 +93,24 @@ export const {Type, Connection} = fullTypeDefinition(
         resolve: async (idObj: string, args, context) => {
           const item = await ItemLoader.load(context, idObj);
           return item._id;
+        },
+      },
+      attributes: {
+        type: GraphQLNonNull(Attribute.Connection.connectionType),
+        resolve: async (idObj: string, args, context) => {
+          const item = await ItemLoader.load(context, idObj);
+          const attributes = 
+            Object.entries(item.attributes)
+              .filter(([key, value]) => key && value)
+              .map(([key, value]) => key);
+          return connectionFromArray(attributes, args);
+        },
+      },
+      ingredients: {
+        type: GraphQLNonNull(Ingredient.Connection.connectionType),
+        resolve: async (idObj: string, args, context) => {
+          const item = await ItemLoader.load(context, idObj);
+          return connectionFromArray(item.ingredients, args);
         },
       },
     }),
