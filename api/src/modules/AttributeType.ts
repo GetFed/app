@@ -6,14 +6,14 @@ import {
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
-const TYPE_NAME = 'NutritionFact';
+const TYPE_NAME = 'AttributeType';
 
 // idObj is id: String
 
 export const {Type, Connection} = fullTypeDefinition(
   new GraphQLObjectType({
     name: TYPE_NAME,
-    description: 'Nutrition Fact type',
+    description: 'AttributeType type',
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),

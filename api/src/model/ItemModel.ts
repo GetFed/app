@@ -21,7 +21,8 @@ const schema = new mongoose.Schema(
       milk: Boolean,
       eggs: Boolean,
       wheat: Boolean,
-    }
+    },
+    nutrition_facts: Object
   },
   {
     collection: 'Items',
@@ -46,7 +47,8 @@ export interface IModel extends Document {
     milk: boolean,
     eggs: boolean,
     wheat: boolean,
-  }
+  },
+  nutrition_facts: any
 };
 
 // this will make find, findOne typesafe

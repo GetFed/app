@@ -31,6 +31,9 @@ module GraphFragment = [%graphql
           }
         }
       }
+      nutritionFacts {
+        ...NutritionFacts.Model.Fragment.NutritionFactsFields
+      }
     }
   |}
 ];

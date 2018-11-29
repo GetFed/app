@@ -12,6 +12,7 @@ import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 import { Loader as ItemLoader } from '../model/ItemModel';
 
 import * as Restriction from './RestrictionType';
+import * as NutritionFacts from './NutritionFactsType';
 import * as RestrictionModel from '../model/non_standard/RestrictionModel';
 
 const TYPE_NAME = 'MenuItem';
@@ -39,45 +40,35 @@ export const {Type, Connection} = fullTypeDefinition(
       id: {
         type: GraphQLNonNull(GraphQLID),
         resolve: async (idObj, args, context) => {
-          console.log("idObj = %j", idObj);
           const item = await ItemLoader.load(context, idObj);
-          console.log("item._id", item._id);
-          return item._id
+          return item._id;
         },
       },
       name: {
         type: GraphQLNonNull(GraphQLString),
         resolve: async (idObj, args, context) => {
-          console.log("idObj = %j", idObj);
           const item = await ItemLoader.load(context, idObj);
-          console.log("item._id", item.name);
           return item.name;
         },
       },
       description: {
         type: GraphQLNonNull(GraphQLString),
         resolve: async (idObj, args, context) => {
-          console.log("idObj = %j", idObj);
           const item = await ItemLoader.load(context, idObj);
-          console.log("item._id", item.description);
           return item.description;
         },
       },
       photo: {
         type: GraphQLNonNull(GraphQLString),
         resolve: async (idObj, args, context) => {
-          console.log("idObj = %j", idObj);
           const item = await ItemLoader.load(context, idObj);
-          console.log("item._id", item.photo);
           return item.photo;
         },
       },
       price: {
         type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
-          console.log("idObj = %j", idObj);
           const item = await ItemLoader.load(context, idObj);
-          console.log("item._id", item.price_per_unit);
           return item.price_per_unit;
         },
       },
@@ -92,6 +83,13 @@ export const {Type, Connection} = fullTypeDefinition(
               .map(([key, value]) => warningToRestriction[key]);
 
           return connectionFromArray(restrictions, args);
+        },
+      },
+      nutritionFacts: {
+        type: GraphQLNonNull(NutritionFacts.Type),
+        resolve: async (idObj: string, args, context) => {
+          const item = await ItemLoader.load(context, idObj);
+          return item._id;
         },
       },
     }),

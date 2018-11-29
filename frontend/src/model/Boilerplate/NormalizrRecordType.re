@@ -5,6 +5,7 @@ type t = [
   | `MenuItem(MenuItem.Model.Record.t)
   | `Diet(Diet.Model.Record.t)
   | `Restriction(Restriction.Model.Record.t)
+  | `NutritionFacts(NutritionFacts.Model.Record.t)
 ];
 
 let modelTypeToRecordType =
@@ -16,4 +17,5 @@ let modelTypeToRecordType =
   | `MenuItem(data) => (`MenuItemSchema, data.data.id)
   | `Diet(data) => (`DietSchema, data.data.id)
   | `Restriction(data) => (`RestrictionSchema, data.data.id)
+  | `NutritionFacts(data) => (`NutritionFactsSchema, data.data.id)
   };

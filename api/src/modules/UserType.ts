@@ -24,8 +24,6 @@ import * as PublicProfile from './PublicProfileType';
 import * as RoleGroup from './RoleGroupType';
 import * as Session from './SessionType';
 
-
-
 const hashids = new Hashids();
 
 
