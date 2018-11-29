@@ -4,7 +4,6 @@ let tw = Css.tw;
 
 let component = ReasonReact.statelessComponent("FedFilterDietDropdown");
 
-
 let make = (
   ~diets: list(Diet.Model.idType),
   ~selectedDietId: Diet.Model.idType,
@@ -31,6 +30,6 @@ let make = (
         |> Diet.Container.getRecordById
         |> Belt.Option.mapWithDefault(_, <div/>, (diet) => <DietButton data=diet />)
       }
-      afterSelect=((id) => ())
+      afterSelect=((id) => `DietId(id) |> updateDiet)
     />
 };

@@ -29,16 +29,18 @@ let make = (~diets, ~restrictions, ~currentMenu, _children) => {
   },
   reducer: (_action, state) =>
     switch (_action) {
-    | SelectDiet(_selectedDiet) => ReasonReact.NoUpdate
+    | SelectDiet(selectedDiet) => {
+        Diet.Container.getRecordById(selectedDiet)
+        |> Belt.Option.mapWithDefault(_, ReasonReact.NoUpdate, (diet : Diet.Model.Record.t) => {
+          Belt.Option.mapWithDefault(diet.data.restrictionIds, ReasonReact.NoUpdate, (restrictionIds) => {
+            ReasonReact.Update({
+              restrictions: restrictionIds |> Utils.List.removeOptionsFromList,
+              selectedDietId: Some(`DietId(diet.data.id))
+            });
+          });
+        });
+      }
     | EditRestriction(changedRestrictionId, selected) => {
-      Js.log("changedRestrictionId");
-      Js.log(changedRestrictionId);
-
-      Js.log("state.restrictions");
-      Js.log(state.restrictions);
-
-      Js.log("selected");
-      Js.log(selected);
       ReasonReact.Update({
         ...state,
         restrictions:
