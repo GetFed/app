@@ -7,6 +7,8 @@ type t = [
   | `Restriction(Restriction.Model.Record.t)
   | `NutritionFacts(NutritionFacts.Model.Record.t)
   | `MacroNutrientAmount(MacroNutrientAmount.Model.Record.t)
+  | `MineralNutrientAmount(MineralNutrientAmount.Model.Record.t)
+  | `Nutrient(Nutrient.Model.Record.t)
 ];
 
 let modelTypeToRecordType =
@@ -20,4 +22,6 @@ let modelTypeToRecordType =
   | `Restriction(data) => (`RestrictionSchema, data.data.id)
   | `NutritionFacts(data) => (`NutritionFactsSchema, data.data.id)
   | `MacroNutrientAmount(data) => (`MacroNutrientAmountSchema, data.data.id)
+  | `MineralNutrientAmount(data) => (`MineralNutrientAmountSchema, data.data.id)
+  | `Nutrient(data) => (`NutrientSchema, data.data.id)
   };
