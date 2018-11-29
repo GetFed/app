@@ -6,6 +6,7 @@ type t = [
   | `Diet(Diet.Model.Record.t)
   | `Restriction(Restriction.Model.Record.t)
   | `NutritionFacts(NutritionFacts.Model.Record.t)
+  | `MacroNutrientAmount(MacroNutrientAmount.Model.Record.t)
 ];
 
 let modelTypeToRecordType =
@@ -18,4 +19,5 @@ let modelTypeToRecordType =
   | `Diet(data) => (`DietSchema, data.data.id)
   | `Restriction(data) => (`RestrictionSchema, data.data.id)
   | `NutritionFacts(data) => (`NutritionFactsSchema, data.data.id)
+  | `MacroNutrientAmount(data) => (`MacroNutrientAmountSchema, data.data.id)
   };

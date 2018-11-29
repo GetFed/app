@@ -8,7 +8,7 @@ import {
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
-const TYPE_NAME = 'MacroNutrientAmountType';
+const TYPE_NAME = 'MacroNutrientAmount';
 import * as Nutrient from './NutrientType';
 
 // idObj is {id: String, name: String}
@@ -16,7 +16,7 @@ import * as Nutrient from './NutrientType';
 export const {Type, Connection} = fullTypeDefinition(
   new GraphQLObjectType({
     name: TYPE_NAME,
-    description: 'MacroNutrientAmountType type',
+    description: 'MacroNutrientAmount type',
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),

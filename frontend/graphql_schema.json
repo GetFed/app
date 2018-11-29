@@ -378,7 +378,7 @@
             },
             {
               "kind": "OBJECT",
-              "name": "MacroNutrientAmountType",
+              "name": "MacroNutrientAmount",
               "ofType": null
             },
             {
@@ -388,7 +388,7 @@
             },
             {
               "kind": "OBJECT",
-              "name": "MineralNutrientAmountType",
+              "name": "MineralNutrientAmount",
               "ofType": null
             },
             {
@@ -2216,7 +2216,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MacroNutrientAmountType",
+                  "name": "MacroNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2232,7 +2232,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MacroNutrientAmountType",
+                  "name": "MacroNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2245,7 +2245,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "MacroNutrientAmountType",
+                "name": "MacroNutrientAmount",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2260,7 +2260,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MacroNutrientAmountType",
+                  "name": "MacroNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2276,7 +2276,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MacroNutrientAmountType",
+                  "name": "MacroNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2292,7 +2292,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MacroNutrientAmountType",
+                  "name": "MacroNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2305,7 +2305,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "MacroNutrientAmountType",
+                "name": "MacroNutrientAmount",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2320,7 +2320,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MacroNutrientAmountType",
+                  "name": "MacroNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2336,7 +2336,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MacroNutrientAmountType",
+                  "name": "MacroNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2393,7 +2393,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MineralNutrientAmountTypeConnection",
+                  "name": "MineralNutrientAmountConnection",
                   "ofType": null
                 }
               },
@@ -2414,8 +2414,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "MacroNutrientAmountType",
-          "description": "MacroNutrientAmountType type",
+          "name": "MacroNutrientAmount",
+          "description": "MacroNutrientAmount type",
           "fields": [
             {
               "name": "id",
@@ -2524,7 +2524,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "MineralNutrientAmountTypeConnection",
+          "name": "MineralNutrientAmountConnection",
           "description": "A connection to a list of items.",
           "fields": [
             {
@@ -2619,7 +2619,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "MineralNutrientAmountTypeEdge",
+                    "name": "MineralNutrientAmountEdge",
                     "ofType": null
                   }
                 }
@@ -2635,7 +2635,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "MineralNutrientAmountTypeEdge",
+          "name": "MineralNutrientAmountEdge",
           "description": "An edge in a connection.",
           "fields": [
             {
@@ -2647,7 +2647,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "MineralNutrientAmountType",
+                  "name": "MineralNutrientAmount",
                   "ofType": null
                 }
               },
@@ -2678,8 +2678,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "MineralNutrientAmountType",
-          "description": "MineralNutrientAmountType type",
+          "name": "MineralNutrientAmount",
+          "description": "MineralNutrientAmount type",
           "fields": [
             {
               "name": "id",

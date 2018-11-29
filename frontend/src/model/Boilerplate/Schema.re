@@ -8,6 +8,7 @@ type modelIdType = [
   | `DietId(UUID.t)
   | `RestrictionId(UUID.t)
   | `NutritionFactsId(UUID.t)
+  | `MacroNutrientAmountId(UUID.t)
 ];
 
 /* pass as type id to domains */
@@ -19,6 +20,7 @@ type menuItemId('a) = [> | `MenuItemId(UUID.t)] as 'a;
 type dietId('a) = [> | `DietId(UUID.t)] as 'a;
 type restrictionId('a) = [> | `RestrictionId(UUID.t)] as 'a;
 type nutritionFactsId('a) = [> | `NutritionFactsId(UUID.t)] as 'a;
+type macroNutrientAmountId('a) = [> | `MacroNutrientAmountId(UUID.t)] as 'a;
 
 /* just something to look at */
 /* type questionId('a) =
@@ -37,6 +39,7 @@ type schemaType = [
   | `DietSchema
   | `RestrictionSchema
   | `NutritionFactsSchema
+  | `MacroNutrientAmountSchema
 ];
 
 /* Generate by Normalizr */
@@ -50,6 +53,7 @@ let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   | `DietId(uuid) => (`DietSchema, uuid)
   | `RestrictionId(uuid) => (`RestrictionSchema, uuid)
   | `NutritionFactsId(uuid) => (`NutritionFactsSchema, uuid)
+  | `MacroNutrientAmountId(uuid) => (`MacroNutrientAmountSchema, uuid)
   };
 
 /* can come from normalizr module */
