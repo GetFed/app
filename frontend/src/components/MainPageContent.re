@@ -9,7 +9,8 @@ let make = (~pathIds: PathIds.t, _children) => {
     | {myAccountId: Some(_)} => <MainPageContentMyAccountContainer />
     | {giftsId: Some(_)} => <MainPageContentHomeContainer />
     | {supportId: Some(_)} => <MainPageContentHomeContainer />
-    | {menuId: Some(_)} => <MainPageContentMenuContainer />
+    | {menuId: Some(None)} => <MainPageContentMenuContainer />
+    | {menuId: Some(Some(menuItemId))} => <MainPageContentMenuItemContainer menuItemId />
     | {subscriptionId: Some(_)} => <MainPageContentHomeContainer />
     | {adminId: Some(_)} => <MainPageContentHomeContainer />
     | _ => <MainPageContentHomeContainer />
