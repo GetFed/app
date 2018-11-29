@@ -11,6 +11,8 @@ type modelIdType = [
   | `MacroNutrientAmountId(UUID.t)
   | `MineralNutrientAmountId(UUID.t)
   | `NutrientId(UUID.t)
+  | `AttributeId(UUID.t)
+  | `IngredientId(UUID.t)
 ];
 
 /* pass as type id to domains */
@@ -25,6 +27,8 @@ type nutritionFactsId('a) = [> | `NutritionFactsId(UUID.t)] as 'a;
 type macroNutrientAmountId('a) = [> | `MacroNutrientAmountId(UUID.t)] as 'a;
 type mineralNutrientAmountId('a) = [> | `MineralNutrientAmountId(UUID.t)] as 'a;
 type nutrientId('a) = [> | `NutrientId(UUID.t)] as 'a;
+type attributeId('a) = [> | `AttributeId(UUID.t)] as 'a;
+type ingredientId('a) = [> | `IngredientId(UUID.t)] as 'a;
 
 /* just something to look at */
 /* type questionId('a) =
@@ -46,6 +50,8 @@ type schemaType = [
   | `MacroNutrientAmountSchema
   | `MineralNutrientAmountSchema
   | `NutrientSchema
+  | `AttributeSchema
+  | `IngredientSchema
 ];
 
 /* Generate by Normalizr */
@@ -62,6 +68,8 @@ let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   | `MacroNutrientAmountId(uuid) => (`MacroNutrientAmountSchema, uuid)
   | `MineralNutrientAmountId(uuid) => (`MineralNutrientAmountSchema, uuid)
   | `NutrientId(uuid) => (`NutrientSchema, uuid)
+  | `AttributeId(uuid) => (`AttributeSchema, uuid)
+  | `IngredientId(uuid) => (`IngredientSchema, uuid)
   };
 
 /* can come from normalizr module */

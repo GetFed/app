@@ -9,6 +9,8 @@ type t = [
   | `MacroNutrientAmount(MacroNutrientAmount.Model.Record.t)
   | `MineralNutrientAmount(MineralNutrientAmount.Model.Record.t)
   | `Nutrient(Nutrient.Model.Record.t)
+  | `Attribute(Attribute.Model.Record.t)
+  | `Ingredient(Ingredient.Model.Record.t)
 ];
 
 let modelTypeToRecordType =
@@ -24,4 +26,6 @@ let modelTypeToRecordType =
   | `MacroNutrientAmount(data) => (`MacroNutrientAmountSchema, data.data.id)
   | `MineralNutrientAmount(data) => (`MineralNutrientAmountSchema, data.data.id)
   | `Nutrient(data) => (`NutrientSchema, data.data.id)
+  | `Attribute(data) => (`AttributeSchema, data.data.id)
+  | `Ingredient(data) => (`IngredientSchema, data.data.id)
   };

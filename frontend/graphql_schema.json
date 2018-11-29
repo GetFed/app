@@ -393,7 +393,7 @@
             },
             {
               "kind": "OBJECT",
-              "name": "AttributeType",
+              "name": "Attribute",
               "ofType": null
             },
             {
@@ -2091,7 +2091,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "AttributeTypeConnection",
+                  "name": "AttributeConnection",
                   "ofType": null
                 }
               },
@@ -2727,7 +2727,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "AttributeTypeConnection",
+          "name": "AttributeConnection",
           "description": "A connection to a list of items.",
           "fields": [
             {
@@ -2822,7 +2822,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "AttributeTypeEdge",
+                    "name": "AttributeEdge",
                     "ofType": null
                   }
                 }
@@ -2838,7 +2838,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "AttributeTypeEdge",
+          "name": "AttributeEdge",
           "description": "An edge in a connection.",
           "fields": [
             {
@@ -2850,7 +2850,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "AttributeType",
+                  "name": "Attribute",
                   "ofType": null
                 }
               },
@@ -2881,8 +2881,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "AttributeType",
-          "description": "AttributeType type",
+          "name": "Attribute",
+          "description": "Attribute type",
           "fields": [
             {
               "name": "id",

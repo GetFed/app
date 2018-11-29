@@ -108,6 +108,28 @@ module Wrapper = {
       };
     let apolloEnabled = true;
   };
+
+  module Attribute = {
+    type model = Attribute.Model.Record.t;
+    let wrap = model => `Attribute(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `Attribute(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
+
+  module Ingredient = {
+    type model = Ingredient.Model.Record.t;
+    let wrap = model => `Ingredient(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `Ingredient(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
 };
 
 
@@ -124,6 +146,8 @@ module Converter = {
   module MacroNutrientAmount = NormalizrSetup.DomainTypeConverter(MacroNutrientAmount, MacroNutrientAmount.Container, Wrapper.MacroNutrientAmount);
   module MineralNutrientAmount = NormalizrSetup.DomainTypeConverter(MineralNutrientAmount, MineralNutrientAmount.Container, Wrapper.MineralNutrientAmount);
   module Nutrient = NormalizrSetup.DomainTypeConverter(Nutrient, Nutrient.Container, Wrapper.Nutrient);
+  module Attribute = NormalizrSetup.DomainTypeConverter(Attribute, Attribute.Container, Wrapper.Attribute);
+  module Ingredient = NormalizrSetup.DomainTypeConverter(Ingredient, Ingredient.Container, Wrapper.Ingredient);
 };
 
 /* module TeacherMutation = MutationNormalizr.GetRecord(Teacher.Container); */
