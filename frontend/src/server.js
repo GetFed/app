@@ -30,8 +30,8 @@ var mainApiOptions = (pathLoc) => ({
 });
 
 // server.use('/api', proxy(mainApiOptions('/')));
-server.use('/graphql', proxy(mainApiOptions('/graphql/')));
 server.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }));
+server.use('/graphql', proxy(mainApiOptions('/')));
 
 server
   .disable('x-powered-by')
