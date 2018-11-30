@@ -1,5 +1,6 @@
 'use strict';
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   modifyBabelOptions() {
@@ -86,6 +87,18 @@ module.exports = {
         path.resolve("./lib"),
       ],
     });
+
+    console.log("config = %j", config);
+
+    // below to turn on Bundle Analyzer
+    config.plugins = [
+      ...config.plugins,
+      ...(
+        process.env.RAZZLE_APP_ENV === "analyze"
+          ? [new BundleAnalyzerPlugin()]
+          : []
+      )
+    ];
 
     return config;
   },

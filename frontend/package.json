@@ -12,7 +12,8 @@
     "local-introspection": "rm -rf lib; send-introspection-query http://localhost:5000/graphql",
     "travis": "bsb -make-world && razzle build && cp ./build/public/static/js/bundle.*.js ./build/public/static/js/bundle.js && cp ./build/public/static/css/bundle.*.css ./build/public/static/css/bundle.css && cp ./template/index.html ./build/public/",
     "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js"
+    "start:prod": "NODE_ENV=production node build/server.js",
+    "analyze": "RAZZLE_APP_ENV=analyze razzle start; \"npm run bsb-watch\""
   },
   "dependencies": {
     "@accounts/client": "0.3.0-beta.30",
@@ -64,6 +65,7 @@
     "concurrently": "^3.5.0",
     "graphql_ppx": "^0.2.7",
     "razzle": "2.4.0",
-    "tailwindcss": "^0.7.2"
+    "tailwindcss": "^0.7.2",
+    "webpack-bundle-analyzer": "^3.0.3"
   }
 }

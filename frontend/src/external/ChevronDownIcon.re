@@ -1,5 +1,5 @@
-[@bs.module "react-icons/lib/fa"]
-external comp : ReasonReact.reactClass = "FaChevronDown";
+[@bs.module "react-icons/lib/fa/chevron-down"]
+external comp : ReasonReact.reactClass = "default";
 
 let make = (~style=?, children) =>
   ReasonReact.wrapJsForReason(
