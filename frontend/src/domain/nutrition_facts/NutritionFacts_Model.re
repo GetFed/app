@@ -7,7 +7,7 @@ type _data = {
   totalFatId: Schema.macroNutrientAmountId(Schema.modelIdType),
   transFatId: option(Schema.macroNutrientAmountId(Schema.modelIdType)),
   saturatedFatId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  colesterolId: Schema.macroNutrientAmountId(Schema.modelIdType),
+  cholesterolId: Schema.macroNutrientAmountId(Schema.modelIdType),
   sodiumId: Schema.macroNutrientAmountId(Schema.modelIdType),
   totalCarbohydrateId: Schema.macroNutrientAmountId(Schema.modelIdType),
   dietaryFiberId: option(Schema.macroNutrientAmountId(Schema.modelIdType)),
@@ -35,7 +35,7 @@ module GraphFragment = [%graphql
       totalFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       transFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       saturatedFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      colesterol{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      cholesterol{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       sodium{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       totalCarbohydrate{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       dietaryFiber{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
@@ -67,7 +67,7 @@ let _defaultData = id => {
   totalFatId: MacroNutrientAmount.Model.idToTypedId(id),
   transFatId: None,
   saturatedFatId: MacroNutrientAmount.Model.idToTypedId(id),
-  colesterolId: MacroNutrientAmount.Model.idToTypedId(id),
+  cholesterolId: MacroNutrientAmount.Model.idToTypedId(id),
   sodiumId: MacroNutrientAmount.Model.idToTypedId(id),
   totalCarbohydrateId: MacroNutrientAmount.Model.idToTypedId(id),
   dietaryFiberId: None,
@@ -100,7 +100,7 @@ module Record = {
       totalFatId: obj##totalFat |> MacroNutrientAmount.Model.objectToId,
       transFatId: obj##transFat |> Belt.Option.map(_, (data) => data |> MacroNutrientAmount.Model.objectToId),
       saturatedFatId: obj##saturatedFat |> MacroNutrientAmount.Model.objectToId,
-      colesterolId: obj##colesterol |> MacroNutrientAmount.Model.objectToId,
+      cholesterolId: obj##cholesterol |> MacroNutrientAmount.Model.objectToId,
       sodiumId: obj##sodium |> MacroNutrientAmount.Model.objectToId,
       totalCarbohydrateId: obj##totalCarbohydrate |> MacroNutrientAmount.Model.objectToId,
       dietaryFiberId: obj##dietaryFiber |> Belt.Option.map(_, (data) => data |> MacroNutrientAmount.Model.objectToId),

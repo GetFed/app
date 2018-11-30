@@ -77,7 +77,7 @@ export const {Type, Connection} = fullTypeDefinition(
           return {id: item._id, name: "transFat"};
         },
       },
-      colesterol: {
+      cholesterol: {
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);

@@ -2252,7 +2252,7 @@
               "deprecationReason": null
             },
             {
-              "name": "colesterol",
+              "name": "cholesterol",
               "description": null,
               "args": [],
               "type": {

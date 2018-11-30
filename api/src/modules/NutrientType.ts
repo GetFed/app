@@ -21,9 +21,6 @@ const nutrientToUnit = {
   protein: "g"
 };
 
-
-
-
 // idObj is id: String
 
 export const {Type, Connection} = fullTypeDefinition(
