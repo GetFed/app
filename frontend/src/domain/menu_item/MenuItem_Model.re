@@ -30,24 +30,24 @@ module GraphFragment = [%graphql
       restrictions {
         edges {
           node {
-            ...Restriction.Model.Fragment.RestrictionFields
+            ...Restriction.Model.Fragment.Fields
           }
         }
       }
       nutritionFacts {
-        ...NutritionFacts.Model.Fragment.NutritionFactsFields
+        ...NutritionFacts.Model.Fragment.Fields
       }
       attributes {
         edges {
           node {
-            ...Attribute.Model.Fragment.AttributeFields
+            ...Attribute.Model.Fragment.Fields
           }
         }
       }
       ingredients {
         edges {
           node {
-            ...Ingredient.Model.Fragment.IngredientFields
+            ...Ingredient.Model.Fragment.Fields
           }
         }
       }

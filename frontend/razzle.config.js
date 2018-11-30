@@ -88,8 +88,6 @@ module.exports = {
       ],
     });
 
-    console.log("config = %j", config);
-
     // below to turn on Bundle Analyzer
     config.plugins = [
       ...config.plugins,

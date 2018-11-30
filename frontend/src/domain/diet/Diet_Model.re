@@ -20,7 +20,7 @@ module GraphFragment = [%graphql
       restrictions {
         edges {
           node {
-            ...Restriction.Model.Fragment.RestrictionFields
+            ...Restriction.Model.Fragment.Fields
           }
         }
       }

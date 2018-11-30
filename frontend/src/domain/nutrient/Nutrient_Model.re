@@ -14,6 +14,8 @@ module GraphFragment = [%graphql
   {|
     fragment nutrientFields on Nutrient {
       id
+      name
+      unit
     }
   |}
 ];

@@ -18,7 +18,7 @@ module GraphFragment = [%graphql
       items{
         edges{
           node{
-            ...MenuItem.Model.Fragment.MenuItemFields
+            ...MenuItem.Model.Fragment.Fields
           }
         }
       }
