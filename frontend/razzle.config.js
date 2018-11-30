@@ -95,7 +95,7 @@ module.exports = {
       ...config.plugins,
       ...(
         process.env.RAZZLE_APP_ENV === "analyze"
-          ? [new BundleAnalyzerPlugin()]
+          ? [new BundleAnalyzerPlugin({analyzerMode: 'static'})]
           : []
       )
     ];

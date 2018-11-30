@@ -18,6 +18,5 @@ const config = {
   },
 };
 
-// console.log("process.env.RAZZLE_APP_ENV = %j", process.env.RAZZLE_APP_ENV);
-
-export default config[process.env.RAZZLE_APP_ENV || "local"];
+const environment = process.env.RAZZLE_APP_ENV || "local";
+export default config[environment === "analyze" ? "local" : environment];

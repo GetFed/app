@@ -1,5 +1,5 @@
 {
-  "name": "razzle-examples-with-reason-react",
+  "name": "fed-app",
   "version": "2.0.0-alpha.4",
   "license": "MIT",
   "homepage": "https://gtdev87.github.io/r_o/",
@@ -13,7 +13,8 @@
     "travis": "bsb -make-world && razzle build && cp ./build/public/static/js/bundle.*.js ./build/public/static/js/bundle.js && cp ./build/public/static/css/bundle.*.css ./build/public/static/css/bundle.css && cp ./template/index.html ./build/public/",
     "test": "razzle test --env=jsdom",
     "start:prod": "NODE_ENV=production node build/server.js",
-    "analyze": "RAZZLE_APP_ENV=analyze razzle start; \"npm run bsb-watch\""
+    "analyze": "RAZZLE_APP_ENV=analyze razzle start",
+    "analyze-prod": "RAZZLE_APP_ENV=analyze razzle start:prod"
   },
   "dependencies": {
     "@accounts/client": "0.3.0-beta.30",
