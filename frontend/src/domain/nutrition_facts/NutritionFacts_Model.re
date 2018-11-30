@@ -1,5 +1,7 @@
 type _data = {
   id: UUID.t,
+  calories: float,
+  servingSize: float,
   /* UI */
 };
 
@@ -14,6 +16,26 @@ module GraphFragment = [%graphql
   {|
     fragment nutritionFactsFields on NutritionFacts {
       id
+      calories
+      servingSize
+      servingsPerContainer
+      caloriesFromFat
+      totalFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      transFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      saturatedFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      colesterol{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      sodium{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      totalCarbohydrate{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      dietaryFiber{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      sugar{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      protein{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      minerals{
+        edges{
+          node{
+            ...MineralNutrientAmount.Model.Fragment.MineralNutrientAmountFields
+          }
+        }
+      }
     }
   |}
 ];
@@ -26,6 +48,8 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  calories: 0.,
+  servingSize: 0.,
   /* UI */
 };
 
@@ -45,6 +69,8 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      calories: obj##calories,
+      servingSize: obj##servingSize,
     };
   };
 

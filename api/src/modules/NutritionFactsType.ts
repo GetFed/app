@@ -2,6 +2,8 @@ import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLID,
+  GraphQLInt,
+  GraphQLFloat,
   GraphQLString
 } from 'graphql';
 
@@ -29,21 +31,21 @@ export const {Type, Connection} = fullTypeDefinition(
         },
       },
       servingSize: {
-        type: GraphQLNonNull(GraphQLString),
+        type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
           return item.nutrition_facts.servingSize;
         },
       },
       servingsPerContainer: {
-        type: GraphQLNonNull(GraphQLString),
+        type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
           return "1";
         },
       },
       calories: {
-        type: GraphQLNonNull(GraphQLString),
+        type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
           console.log("item = %j", item);
@@ -51,7 +53,7 @@ export const {Type, Connection} = fullTypeDefinition(
         },
       },
       caloriesFromFat: {
-        type: GraphQLString,
+        type: GraphQLFloat,
         resolve: async (idObj, args, context) => null,
       },
       totalFat: {

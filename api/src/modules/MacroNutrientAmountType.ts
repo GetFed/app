@@ -2,9 +2,11 @@ import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLID,
+  GraphQLFloat,
   GraphQLString
 } from 'graphql';
 
+import { Loader as ItemLoader } from '../model/ItemModel';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
@@ -25,6 +27,15 @@ export const {Type, Connection} = fullTypeDefinition(
       nutrient: {
         type: GraphQLNonNull(Nutrient.Type),
         resolve: async (idObj, args, context) => idObj.name,
+      },
+      amount: {
+        type: GraphQLNonNull(GraphQLFloat),
+        resolve: async (idObj, args, context) => {
+          const item = await ItemLoader.load(context, idObj.id);
+          console.log("item = %j", item);
+          console.log("idObj = %j", idObj);
+          return item.nutrition_facts[idObj.name];
+        },
       },
     }),
     interfaces: () => [nodeInterface],
