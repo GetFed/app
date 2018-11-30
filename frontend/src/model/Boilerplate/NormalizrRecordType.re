@@ -1,39 +1,7 @@
-type t = [
-  | `Teacher(Teacher.Model.Record.t)
-  | `Customer(Customer.Model.Record.t)
-  | `Menu(Menu.Model.Record.t)
-  | `MenuItem(MenuItem.Model.Record.t)
-  | `Diet(Diet.Model.Record.t)
-  | `Restriction(Restriction.Model.Record.t)
-  | `NutritionFacts(NutritionFacts.Model.Record.t)
-  | `MacroNutrientAmount(MacroNutrientAmount.Model.Record.t)
-  | `MineralNutrientAmount(MineralNutrientAmount.Model.Record.t)
-  | `Nutrient(Nutrient.Model.Record.t)
-  | `Attribute(Attribute.Model.Record.t)
-  | `Ingredient(Ingredient.Model.Record.t)
-];
-
-
-let modelTypeToRecordType =
-    (recordType: t): (Schema.schemaType, UUID.t) =>
-  switch (recordType) {
-  | `Teacher(data) => (`TeacherSchema, data.data.id)
-  | `Customer(data) => (`CustomerSchema, data.data.id)
-  | `Menu(data) => (`MenuSchema, data.data.id)
-  | `MenuItem(data) => (`MenuItemSchema, data.data.id)
-  | `Diet(data) => (`DietSchema, data.data.id)
-  | `Restriction(data) => (`RestrictionSchema, data.data.id)
-  | `NutritionFacts(data) => (`NutritionFactsSchema, data.data.id)
-  | `MacroNutrientAmount(data) => (`MacroNutrientAmountSchema, data.data.id)
-  | `MineralNutrientAmount(data) => (`MineralNutrientAmountSchema, data.data.id)
-  | `Nutrient(data) => (`NutrientSchema, data.data.id)
-  | `Attribute(data) => (`AttributeSchema, data.data.id)
-  | `Ingredient(data) => (`IngredientSchema, data.data.id)
-  };
-
 module Wrapper = {
   module Teacher = {
     type model = Teacher.Model.Record.t;
+    type record = [`Teacher(Teacher.Model.Record.t)];
     let wrap = model => `Teacher(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -45,6 +13,7 @@ module Wrapper = {
 
   module Customer = {
     type model = Customer.Model.Record.t;
+    type record = [`Customer(Customer.Model.Record.t)];
     let wrap = model => `Customer(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -56,6 +25,7 @@ module Wrapper = {
 
   module Menu = {
     type model = Menu.Model.Record.t;
+    type record = [`Menu(Menu.Model.Record.t)];
     let wrap = model => `Menu(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -67,6 +37,7 @@ module Wrapper = {
 
   module MenuItem = {
     type model = MenuItem.Model.Record.t;
+    type record = [`MenuItem(MenuItem.Model.Record.t)];
     let wrap = model => `MenuItem(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -78,6 +49,7 @@ module Wrapper = {
 
   module Diet = {
     type model = Diet.Model.Record.t;
+    type record = [`Diet(Diet.Model.Record.t)];
     let wrap = model => `Diet(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -89,6 +61,7 @@ module Wrapper = {
 
   module Restriction = {
     type model = Restriction.Model.Record.t;
+    type record = [`Restriction(Restriction.Model.Record.t)];
     let wrap = model => `Restriction(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -100,6 +73,7 @@ module Wrapper = {
 
   module NutritionFacts = {
     type model = NutritionFacts.Model.Record.t;
+    type record = [`NutritionFacts(NutritionFacts.Model.Record.t)];
     let wrap = model => `NutritionFacts(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -111,6 +85,7 @@ module Wrapper = {
 
   module MacroNutrientAmount = {
     type model = MacroNutrientAmount.Model.Record.t;
+    type record = [`MacroNutrientAmount(MacroNutrientAmount.Model.Record.t)];
     let wrap = model => `MacroNutrientAmount(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -122,6 +97,7 @@ module Wrapper = {
 
   module MineralNutrientAmount = {
     type model = MineralNutrientAmount.Model.Record.t;
+    type record = [`MineralNutrientAmount(MineralNutrientAmount.Model.Record.t)];
     let wrap = model => `MineralNutrientAmount(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -133,6 +109,8 @@ module Wrapper = {
 
   module Nutrient = {
     type model = Nutrient.Model.Record.t;
+    type record = [`Nutrient(Nutrient.Model.Record.t)];
+
     let wrap = model => `Nutrient(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -144,6 +122,7 @@ module Wrapper = {
 
   module Attribute = {
     type model = Attribute.Model.Record.t;
+    type record = [`Attribute(Attribute.Model.Record.t)];
     let wrap = model => `Attribute(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -155,6 +134,7 @@ module Wrapper = {
 
   module Ingredient = {
     type model = Ingredient.Model.Record.t;
+    type record = [`Ingredient(Ingredient.Model.Record.t)];
     let wrap = model => `Ingredient(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -164,3 +144,35 @@ module Wrapper = {
     let apolloEnabled = true;
   };
 };
+
+
+type t = [
+  | Wrapper.Teacher.record
+  | Wrapper.Customer.record
+  | Wrapper.Menu.record
+  | Wrapper.MenuItem.record
+  | Wrapper.Diet.record
+  | Wrapper.Restriction.record
+  | Wrapper.NutritionFacts.record
+  | Wrapper.MacroNutrientAmount.record
+  | Wrapper.MineralNutrientAmount.record
+  | Wrapper.Nutrient.record
+  | Wrapper.Attribute.record
+  | Wrapper.Ingredient.record
+];
+
+let modelTypeToRecordType = (recordType: t): (Schema.schemaType, UUID.t) =>
+  switch (recordType) {
+  | `Teacher(data) => (Schema.Teacher.schema, data.data.id)
+  | `Customer(data) => (Schema.Customer.schema, data.data.id)
+  | `Menu(data) => (Schema.Menu.schema, data.data.id)
+  | `MenuItem(data) => (Schema.MenuItem.schema, data.data.id)
+  | `Diet(data) => (Schema.Diet.schema, data.data.id)
+  | `Restriction(data) => (Schema.Restriction.schema, data.data.id)
+  | `NutritionFacts(data) => (Schema.NutritionFacts.schema, data.data.id)
+  | `MacroNutrientAmount(data) => (Schema.MacroNutrientAmount.schema, data.data.id)
+  | `MineralNutrientAmount(data) => (Schema.MineralNutrientAmount.schema, data.data.id)
+  | `Nutrient(data) => (Schema.Nutrient.schema, data.data.id)
+  | `Attribute(data) => (Schema.Attribute.schema, data.data.id)
+  | `Ingredient(data) => (Schema.Ingredient.schema, data.data.id)
+  };
