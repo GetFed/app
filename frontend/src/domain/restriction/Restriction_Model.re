@@ -1,5 +1,6 @@
 type _data = {
   id: UUID.t,
+  name: string,
   image: option(string),
   /* UI */
 };
@@ -15,6 +16,7 @@ module GraphFragment = [%graphql
   {|
     fragment restrictionFields on Restriction {
       id
+      name
       image
     }
   |}
@@ -28,6 +30,7 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  name: "",
   image: None,
   /* UI */
 };
@@ -48,6 +51,7 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      name: obj##name,
       image: obj##image,
     };
   };

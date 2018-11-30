@@ -37,7 +37,7 @@ export const {Type, Connection} = fullTypeDefinition(
       },
       name: {
         type: GraphQLNonNull(GraphQLString),
-        resolve: async (idObj, args, context) => idObj,
+        resolve: async (idObj, args, context) => idObj.toUpperCase(),
       },
       image: {
         type: GraphQLString,
