@@ -47,7 +47,7 @@ module Container = (
           | None => ReasonReact.string("No data Loaded")
           | Some(comp) => comp
           }
-        | Some(data) => children(~data)
+        | Some(data) => children(data)
         },
     };
   }
@@ -74,7 +74,7 @@ module Container = (
     render: _ =>
       <InnerContainer fragmentType=Model.fragmentType id fragmentName=Model.fragmentName>
         ...{(~data : Model.Fragment.Fields.t) =>
-          children(~data=(data |> Model.Record.fromObject))}
+          children(data |> Model.Record.fromObject)}
       </InnerContainer>,
   };
 };

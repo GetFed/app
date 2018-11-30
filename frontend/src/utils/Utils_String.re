@@ -18,3 +18,6 @@ let stringToDivHtml = string =>
 
 let toMoney = (number : float) : string =>
   number |> Js.Float.toFixedWithPrecision(_, ~digits=2);
+
+let nutritionPrecision = (number : float) : string =>
+  number |> Js.Float.toFixedWithPrecision(_, ~digits=0);

@@ -1,13 +1,14 @@
 type _data = {
   id: UUID.t,
-  itemIds: list(option(Schema.menuItemId(Schema.modelIdType))),
+  itemIds: list(option(Schema.MenuItem.idAsType(Schema.modelIdType))),
   /* UI */
 };
 
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-type idType = Schema.menuId(Schema.modelIdType);
+module ModelSchema = Schema.Menu;
+type idType = ModelSchema.idAsType(Schema.modelIdType);
 
 let idToTypedId = (id: UUID.t): idType => `MenuId(id);
 

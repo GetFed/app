@@ -1,57 +1,117 @@
+module Teacher = {
+  type idType = [`TeacherId(UUID.t)];
+  type idAsType('a) = [> | `TeacherId(UUID.t)] as 'a;
+  type schema = [`TeacherSchema];
+};
+
+module User = {
+  type idType = [`UserId(UUID.t)];
+  type idAsType('a) = [> | `UserId(UUID.t)] as 'a;
+  type schema = [`UserSchema];
+};
+
+module Customer = {
+  type idType = [`CustomerId(UUID.t)];
+  type idAsType('a) = [> | `CustomerId(UUID.t)] as 'a;
+  type schema = [`CustomerSchema];
+};
+
+module Menu = {
+  type idType = [`MenuId(UUID.t)];
+  type idAsType('a) = [> | `MenuId(UUID.t)] as 'a;
+  type schema = [`MenuSchema];
+};
+
+module MenuItem = {
+  type idType = [`MenuItemId(UUID.t)];
+  type idAsType('a) = [> | `MenuItemId(UUID.t)] as 'a;
+  type schema = [`MenuItemSchema];
+};
+
+module Diet = {
+  type idType = [`DietId(UUID.t)];
+  type idAsType('a) = [> | `DietId(UUID.t)] as 'a;
+  type schema = [`DietSchema];
+};
+
+module Restriction = {
+  type idType = [`RestrictionId(UUID.t)];
+  type idAsType('a) = [> | `RestrictionId(UUID.t)] as 'a;
+  type schema = [`RestrictionSchema];
+};
+
+module NutritionFacts = {
+  type idType = [`NutritionFactsId(UUID.t)];
+  type idAsType('a) = [> | `NutritionFactsId(UUID.t)] as 'a;
+  type schema = [`NutritionFactsSchema];
+};
+
+module MacroNutrientAmount = {
+  type idType = [`MacroNutrientAmountId(UUID.t)];
+  type idAsType('a) = [> | `MacroNutrientAmountId(UUID.t)] as 'a;
+  type schema = [`MacroNutrientAmountSchema];
+};
+
+module MineralNutrientAmount = {
+  type idType = [`MineralNutrientAmountId(UUID.t)];
+  type idAsType('a) = [> | `MineralNutrientAmountId(UUID.t)] as 'a;
+  type schema = [`MineralNutrientAmountSchema];
+};
+
+module Nutrient = {
+  type idType = [`NutrientId(UUID.t)];
+  type idAsType('a) = [> | `NutrientId(UUID.t)] as 'a;
+  type schema = [`NutrientSchema];
+};
+
+module Attribute = {
+  type idType = [`AttributeId(UUID.t)];
+  type idAsType('a) = [> | `AttributeId(UUID.t)] as 'a;
+  type schema = [`AttributeSchema];
+};
+
+module Ingredient = {
+  type idType = [`IngredientId(UUID.t)];
+  type idAsType('a) = [> | `IngredientId(UUID.t)] as 'a;
+  type schema = [`IngredientSchema];
+};
+
 /* need to exist before everything */
 type modelIdType = [
-  | `TeacherId(UUID.t)
-  | `UserId(UUID.t)
-  | `CustomerId(UUID.t)
-  | `MenuId(UUID.t)
-  | `MenuItemId(UUID.t)
-  | `DietId(UUID.t)
-  | `RestrictionId(UUID.t)
-  | `NutritionFactsId(UUID.t)
-  | `MacroNutrientAmountId(UUID.t)
-  | `MineralNutrientAmountId(UUID.t)
-  | `NutrientId(UUID.t)
-  | `AttributeId(UUID.t)
-  | `IngredientId(UUID.t)
+  | Teacher.idType
+  | User.idType
+  | Customer.idType
+  | Menu.idType
+  | MenuItem.idType
+  | Diet.idType
+  | Restriction.idType
+  | NutritionFacts.idType
+  | MacroNutrientAmount.idType
+  | MineralNutrientAmount.idType
+  | Nutrient.idType
+  | Attribute.idType
+  | Ingredient.idType
 ];
 
 /* pass as type id to domains */
-type teacherId('a) = [> | `TeacherId(UUID.t)] as 'a;
-type customerId('a) = [> | `CustomerId(UUID.t)] as 'a;
-type userId('a) = [> | `UserId(UUID.t)] as 'a;
-type menuId('a) = [> | `MenuId(UUID.t)] as 'a;
-type menuItemId('a) = [> | `MenuItemId(UUID.t)] as 'a;
-type dietId('a) = [> | `DietId(UUID.t)] as 'a;
-type restrictionId('a) = [> | `RestrictionId(UUID.t)] as 'a;
-type nutritionFactsId('a) = [> | `NutritionFactsId(UUID.t)] as 'a;
-type macroNutrientAmountId('a) = [> | `MacroNutrientAmountId(UUID.t)] as 'a;
-type mineralNutrientAmountId('a) = [> | `MineralNutrientAmountId(UUID.t)] as 'a;
-type nutrientId('a) = [> | `NutrientId(UUID.t)] as 'a;
-type attributeId('a) = [> | `AttributeId(UUID.t)] as 'a;
-type ingredientId('a) = [> | `IngredientId(UUID.t)] as 'a;
-
-/* just something to look at */
-/* type questionId('a) =
-  | LongAnswer([> | `LongAnswerQuestionId(UUID.t)] as 'a)
-  | MultipleChoice([> | `MultipleChoiceQuestionId(UUID.t)] as 'a); */
 
 /* Id only file above */
 
 /* can belong to domain */
 type schemaType = [
-  | `TeacherSchema
-  | `CustomerSchema
-  | `UserSchema
-  | `MenuSchema
-  | `MenuItemSchema
-  | `DietSchema
-  | `RestrictionSchema
-  | `NutritionFactsSchema
-  | `MacroNutrientAmountSchema
-  | `MineralNutrientAmountSchema
-  | `NutrientSchema
-  | `AttributeSchema
-  | `IngredientSchema
+  | Teacher.schema
+  | Customer.schema
+  | User.schema
+  | Menu.schema
+  | MenuItem.schema
+  | Diet.schema
+  | Restriction.schema
+  | NutritionFacts.schema
+  | MacroNutrientAmount.schema
+  | MineralNutrientAmount.schema
+  | Nutrient.schema
+  | Attribute.schema
+  | Ingredient.schema
 ];
 
 /* Generate by Normalizr */

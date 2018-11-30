@@ -2,13 +2,15 @@ type _data = {
   id: UUID.t,
   name: string,
   /* UI */
-  restrictionIds: option(list(option(Schema.restrictionId(Schema.modelIdType)))),
+  restrictionIds: option(list(option(Schema.Restriction.idAsType(Schema.modelIdType)))),
 };
 
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-type idType = Schema.dietId(Schema.modelIdType);
+
+module ModelSchema = Schema.Diet;
+type idType = ModelSchema.idAsType(Schema.modelIdType);
 
 let idToTypedId = (id: UUID.t): idType => `DietId(id);
 

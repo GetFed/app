@@ -4,10 +4,10 @@ type _data = {
   price: float,
   description: string,
   photo: string,
-  restrictionIds: option(list(option(Schema.restrictionId(Schema.modelIdType)))),
-  ingredientIds: list(option(Schema.ingredientId(Schema.modelIdType))),
-  attributeIds: list(option(Schema.attributeId(Schema.modelIdType))),
-  nutritionFactsId: Schema.nutritionFactsId(Schema.modelIdType)
+  restrictionIds: option(list(option(Schema.Restriction.idAsType(Schema.modelIdType)))),
+  ingredientIds: list(option(Schema.Ingredient.idAsType(Schema.modelIdType))),
+  attributeIds: list(option(Schema.Attribute.idAsType(Schema.modelIdType))),
+  nutritionFactsId: Schema.NutritionFacts.idAsType(Schema.modelIdType)
 
   /* UI */
 };
@@ -15,9 +15,10 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-type idType = Schema.menuItemId(Schema.modelIdType);
+module ModelSchema = Schema.MenuItem;
+type idType = ModelSchema.idAsType(Schema.modelIdType);
 
-let idToTypedId = (id: UUID.t): idType => `MenuId(id);
+let idToTypedId = (id: UUID.t): idType => `MenuItemId(id);
 
 module GraphFragment = [%graphql
   {|

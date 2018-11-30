@@ -59,7 +59,8 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, _children) => {
   ...component,
   render: _self =>
     {
-      Js.log("menuItem.data");
+      Js.log("menuItem.data.nutritionFactsId");
+      Js.log(menuItem.data.nutritionFactsId);
       <div className=menuItemContentClass>
         <div className=menuItemLayoutWrapperImageClass>
           <img className=(menuItemLayoutImageClass ++ " object-contain") src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />

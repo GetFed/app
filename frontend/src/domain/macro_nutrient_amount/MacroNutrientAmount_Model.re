@@ -1,14 +1,15 @@
 type _data = {
   id: UUID.t,
   amount: float,
-  nutrientId: Schema.nutrientId(Schema.modelIdType),
+  nutrientId: Schema.Nutrient.idAsType(Schema.modelIdType),
   /* UI */
 };
 
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-type idType = Schema.macroNutrientAmountId(Schema.modelIdType);
+module ModelSchema = Schema.MacroNutrientAmount;
+type idType = ModelSchema.idAsType(Schema.modelIdType);
 
 let idToTypedId = (id: UUID.t): idType => `MacroNutrientAmountId(id);
 

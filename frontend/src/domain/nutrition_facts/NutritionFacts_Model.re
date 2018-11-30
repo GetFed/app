@@ -4,23 +4,24 @@ type _data = {
   servingSize: float,
   servingsPerContainer: float,
   caloriesFromFat: option(float),
-  totalFatId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  transFatId: option(Schema.macroNutrientAmountId(Schema.modelIdType)),
-  saturatedFatId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  cholesterolId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  sodiumId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  totalCarbohydrateId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  dietaryFiberId: option(Schema.macroNutrientAmountId(Schema.modelIdType)),
-  sugarId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  proteinId: Schema.macroNutrientAmountId(Schema.modelIdType),
-  mineralsIds: list(option(Schema.mineralNutrientAmountId(Schema.modelIdType))),
+  totalFatId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  transFatId: option(Schema.MacroNutrientAmount.idAsType(Schema.modelIdType)),
+  saturatedFatId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  cholesterolId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  sodiumId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  totalCarbohydrateId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  dietaryFiberId: option(Schema.MacroNutrientAmount.idAsType(Schema.modelIdType)),
+  sugarId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  proteinId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  mineralsIds: list(option(Schema.MineralNutrientAmount.idAsType(Schema.modelIdType))),
   /* UI */
 };
 
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-type idType = Schema.nutritionFactsId(Schema.modelIdType);
+module ModelSchema = Schema.NutritionFacts;
+type idType = ModelSchema.idAsType(Schema.modelIdType);
 
 let idToTypedId = (id: UUID.t): idType => `NutritionFactsId(id);
 

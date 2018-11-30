@@ -86,7 +86,7 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
               Belt.Option.mapWithDefault(authUserId, fedSigninLink(openModal),
                 (userId) =>
                   <Customer.Container id=me##id>
-                    ...{(~data as customer) =>
+                    ...{(customer) =>
                       <div key="container">
                         <FedMenuItem selected=(false)>
                           <div key="signout"  onClick=((_) => accountSend(Accounts.Account(Logout)))>

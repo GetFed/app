@@ -45,7 +45,7 @@ module type Container {
   let getRecordById: idType => option(record);
   let make:
     (~id: string,
-    (~data: record) =>
+    (record) =>
     ReasonReact.reactElement) =>
     ReasonReact.componentSpec(
       ReasonReact.stateless,

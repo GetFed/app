@@ -6,7 +6,8 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-type idType = Schema.nutrientId(Schema.modelIdType);
+module ModelSchema = Schema.Nutrient;
+type idType = ModelSchema.idAsType(Schema.modelIdType);
 
 let idToTypedId = (id: UUID.t): idType => `NutrientId(id);
 

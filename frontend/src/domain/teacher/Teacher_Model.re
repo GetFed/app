@@ -6,7 +6,8 @@ type _data = {
 type _local = Teacher_Local.Model.Record.t;
 type _record = RecordType.t(_data, _local);
 
-type idType = Schema.teacherId(Schema.modelIdType);
+module ModelSchema = Schema.Teacher;
+type idType = ModelSchema.idAsType(Schema.modelIdType);
 
 let idToTypedId = (id: UUID.t): idType => `TeacherId(id);
 
