@@ -21,7 +21,7 @@ let make = (~data as diet : Diet.Model.Record.t, ~chevron=None, ~onClick=((_) =>
   ...component,
   render: _self =>
     <FedButton onClick>
-      <div className=dietButtonClass>
+      <div key="dietButton" className=dietButtonClass>
         <div className=dietButtonTextClass>
           {ReasonReact.string(diet.data.name)}
         </div>

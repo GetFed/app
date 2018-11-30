@@ -56,8 +56,6 @@ let menuItemLayoutDescriptionClass = [%bs.raw {| css(tw`
   text-xs
 `)|}];
 
-
-
 let menuItemLayoutFooterClass = [%bs.raw {| css(tw`
   text-green-darker
   flex
@@ -75,7 +73,7 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, ~numberInCart=0, _child
   render: _self =>
     <div className=menuItemLayoutClass>
       <A href=("/menu/" ++ menuItem.data.id)>
-        <div className=menuItemLayoutWrapperImageClass>
+        <div key="menuLink" className=menuItemLayoutWrapperImageClass>
           <img className=(menuItemLayoutImageClass ++ " object-contain") src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />
         </div>
       </A>

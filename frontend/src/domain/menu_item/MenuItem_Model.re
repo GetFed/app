@@ -5,6 +5,9 @@ type _data = {
   description: string,
   photo: string,
   restrictionIds: option(list(option(Schema.restrictionId(Schema.modelIdType)))),
+  ingredientIds: list(option(Schema.ingredientId(Schema.modelIdType))),
+  attributeIds: list(option(Schema.attributeId(Schema.modelIdType))),
+  nutritionFactsId: Schema.nutritionFactsId(Schema.modelIdType)
 
   /* UI */
 };
@@ -34,6 +37,20 @@ module GraphFragment = [%graphql
       nutritionFacts {
         ...NutritionFacts.Model.Fragment.NutritionFactsFields
       }
+      attributes {
+        edges {
+          node {
+            ...Attribute.Model.Fragment.AttributeFields
+          }
+        }
+      }
+      ingredients {
+        edges {
+          node {
+            ...Ingredient.Model.Fragment.IngredientFields
+          }
+        }
+      }
     }
   |}
 ];
@@ -51,6 +68,9 @@ let _defaultData = id => {
   photo: "",
   price: 0.,
   restrictionIds: None,
+  ingredientIds: [],
+  attributeIds: [],
+  nutritionFactsId: NutritionFacts.Model.idToTypedId(id),
   /* UI */
 };
 
@@ -74,9 +94,16 @@ module Record = {
       price: obj##price,
       photo: obj##photo,
       description: obj##description,
+      nutritionFactsId: obj##nutritionFacts |> NutritionFacts.Model.objectToId,
       restrictionIds:
         obj##restrictions
-        |> Belt.Option.map(_, (res) => ModelUtils.getConnectionList(res, Restriction.Model.objectToId))
+        |> Belt.Option.map(_, (res) => ModelUtils.getConnectionList(res, Restriction.Model.objectToId)),
+      ingredientIds:
+        obj##ingredients
+        |> ModelUtils.getConnectionList(_, Ingredient.Model.objectToId),
+      attributeIds:
+        obj##attributes
+        |> ModelUtils.getConnectionList(_, Attribute.Model.objectToId),
     };
   };
 

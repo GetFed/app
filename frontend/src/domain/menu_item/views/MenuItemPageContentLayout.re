@@ -43,18 +43,21 @@ let component = ReasonReact.statelessComponent("MenuItemPageContentLayout");
 let make = (~data as menuItem : MenuItem.Model.Record.t, _children) => {
   ...component,
   render: _self =>
-    <div className=menuItemContentClass>
-      <div className=menuItemLayoutWrapperImageClass>
-        <img className=(menuItemLayoutImageClass ++ " object-contain") src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />
+    {
+      Js.log("menuItem.data");
+      <div className=menuItemContentClass>
+        <div className=menuItemLayoutWrapperImageClass>
+          <img className=(menuItemLayoutImageClass ++ " object-contain") src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />
+        </div>
+        <div className=menuItemLayoutNameClass>
+          {ReasonReact.string(menuItem.data.name)}
+        </div>
+        <div className=menuItemLayoutDescriptionClass>
+          {ReasonReact.string(menuItem.data.description)}
+        </div>
+        <div className=menuItemLayoutButtonClass>
+          <ItemCartAddButtons />
+        </div>
       </div>
-      <div className=menuItemLayoutNameClass>
-        {ReasonReact.string(menuItem.data.name)}
-      </div>
-      <div className=menuItemLayoutDescriptionClass>
-        {ReasonReact.string(menuItem.data.description)}
-      </div>
-      <div className=menuItemLayoutButtonClass>
-        <ItemCartAddButtons />
-      </div>
-    </div>
+    }
 };

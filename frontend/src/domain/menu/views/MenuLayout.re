@@ -55,7 +55,7 @@ let make = (~data as menu : Menu.Model.Record.t, ~restrictions: list(Restriction
           }
         )
         |> Belt.List.map(_, (menuItem) =>
-          <div className=menuLayoutResonsiveMenuItemClass>
+          <div key=menuItem.data.id className=menuLayoutResonsiveMenuItemClass>
             <div className=menuLayoutMenuItemClass>
               <MenuItemCardLayout data=menuItem/>
             </div>

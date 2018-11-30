@@ -23,7 +23,7 @@ let make = (
   render: _self => {
     <Query.Restrictions.Container>
       ...{(~restrictions)=> {
-        <div className=fedFilterRestrictionSectionClass>
+        <div key="restrictions" className=fedFilterRestrictionSectionClass>
           {
             restrictions
             |> Utils.List.removeOptionsFromList(_)

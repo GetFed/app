@@ -21,6 +21,7 @@ let make = (_children) => {
           <Query.Restrictions.Container>
             ...{(~restrictions)=> {
               <MainPageContentMenuLayout
+                key="MainPageContentMenuLayout"
                 diets=(diets |> Utils.List.removeOptionsFromList)
                 currentMenu
                 restrictions=(restrictions |> Utils.List.removeOptionsFromList)
