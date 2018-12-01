@@ -1,7 +1,7 @@
 module Wrapper = {
   module Teacher = {
     type model = Teacher.Model.Record.t;
-    type record = [`Teacher(Teacher.Model.Record.t)];
+    type record = [`Teacher(model)];
     let wrap = model => `Teacher(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -13,7 +13,7 @@ module Wrapper = {
 
   module Customer = {
     type model = Customer.Model.Record.t;
-    type record = [`Customer(Customer.Model.Record.t)];
+    type record = [`Customer(model)];
     let wrap = model => `Customer(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -25,7 +25,7 @@ module Wrapper = {
 
   module Menu = {
     type model = Menu.Model.Record.t;
-    type record = [`Menu(Menu.Model.Record.t)];
+    type record = [`Menu(model)];
     let wrap = model => `Menu(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -37,7 +37,7 @@ module Wrapper = {
 
   module MenuItem = {
     type model = MenuItem.Model.Record.t;
-    type record = [`MenuItem(MenuItem.Model.Record.t)];
+    type record = [`MenuItem(model)];
     let wrap = model => `MenuItem(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -49,7 +49,7 @@ module Wrapper = {
 
   module Diet = {
     type model = Diet.Model.Record.t;
-    type record = [`Diet(Diet.Model.Record.t)];
+    type record = [`Diet(model)];
     let wrap = model => `Diet(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -61,7 +61,7 @@ module Wrapper = {
 
   module Restriction = {
     type model = Restriction.Model.Record.t;
-    type record = [`Restriction(Restriction.Model.Record.t)];
+    type record = [`Restriction(model)];
     let wrap = model => `Restriction(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -73,7 +73,7 @@ module Wrapper = {
 
   module NutritionFacts = {
     type model = NutritionFacts.Model.Record.t;
-    type record = [`NutritionFacts(NutritionFacts.Model.Record.t)];
+    type record = [`NutritionFacts(model)];
     let wrap = model => `NutritionFacts(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -85,7 +85,7 @@ module Wrapper = {
 
   module MacroNutrientAmount = {
     type model = MacroNutrientAmount.Model.Record.t;
-    type record = [`MacroNutrientAmount(MacroNutrientAmount.Model.Record.t)];
+    type record = [`MacroNutrientAmount(model)];
     let wrap = model => `MacroNutrientAmount(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -97,7 +97,7 @@ module Wrapper = {
 
   module MineralNutrientAmount = {
     type model = MineralNutrientAmount.Model.Record.t;
-    type record = [`MineralNutrientAmount(MineralNutrientAmount.Model.Record.t)];
+    type record = [`MineralNutrientAmount(model)];
     let wrap = model => `MineralNutrientAmount(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -109,7 +109,7 @@ module Wrapper = {
 
   module Nutrient = {
     type model = Nutrient.Model.Record.t;
-    type record = [`Nutrient(Nutrient.Model.Record.t)];
+    type record = [`Nutrient(model)];
 
     let wrap = model => `Nutrient(model);
     let unwrap = recordType =>
@@ -122,7 +122,7 @@ module Wrapper = {
 
   module Attribute = {
     type model = Attribute.Model.Record.t;
-    type record = [`Attribute(Attribute.Model.Record.t)];
+    type record = [`Attribute(model)];
     let wrap = model => `Attribute(model);
     let unwrap = recordType =>
       switch (recordType) {
@@ -134,7 +134,7 @@ module Wrapper = {
 
   module Ingredient = {
     type model = Ingredient.Model.Record.t;
-    type record = [`Ingredient(Ingredient.Model.Record.t)];
+    type record = [`Ingredient(model)];
     let wrap = model => `Ingredient(model);
     let unwrap = recordType =>
       switch (recordType) {
