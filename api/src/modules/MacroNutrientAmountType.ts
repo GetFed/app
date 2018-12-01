@@ -32,9 +32,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj.id);
-          console.log("item = %j", item);
-          console.log("idObj = %j", idObj);
-          return item.nutrition_facts[idObj.name];
+          return item.nutrition_facts[idObj.name] || 0;
         },
       },
     }),

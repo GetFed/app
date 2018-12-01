@@ -34,7 +34,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
-          return item.nutrition_facts.servingSize;
+          return item.nutrition_facts.servingSize || 0;
         },
       },
       servingsPerContainer: {
@@ -49,7 +49,7 @@ export const {Type, Connection} = fullTypeDefinition(
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
           console.log("item = %j", item);
-          return item.nutrition_facts.calories;
+          return item.nutrition_facts.calories || 0;
         },
       },
       caloriesFromFat: {

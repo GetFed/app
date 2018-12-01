@@ -1,8 +1,8 @@
 module Teacher = {
+  type schemaType = [`TeacherSchema];
   let schema = `TeacherSchema;
   type idType = [`TeacherId(UUID.t)];
   type idAsType('a) = [> | `TeacherId(UUID.t)] as 'a;
-  type schemaType = [`TeacherSchema];
 };
 
 module User = {
@@ -105,38 +105,6 @@ type modelIdType = [
   | Attribute.idType
   | Ingredient.idType
 ];
-/* 
-
-module type SchemaType = {
-  type idType = [`None];
-  type idAsType('a);
-  type schema = [`None];
-};
-
-module type FullSchema = {
-  type id;
-  type schema;
-};
-
-module EmptySchema = {
-  type id;
-  type schema;
-};
-
-module ProcessSchema = (
-  PrevFullSchema : FullSchema,
-  Schema : SchemaType
-) : (
-      FullSchema
-        with type id = [PrevFullSchema.id | Schema.idType]
-        and type schema = [PrevFullSchema.schema | Schema.schema]
-    ) => {
-  type id = [PrevFullSchema.id | Schema.idType];
-  type schema = [PrevFullSchema.schema | Schema.schema];
-};
-
-module NewSchema = ProcessSchema(EmptySchema, Ingredient);
-module NewSchema2 = ProcessSchema(NewSchema, Ingredient); */
 
 /* pass as type id to domains */
 
