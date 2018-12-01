@@ -1,6 +1,7 @@
 type _data = {
   id: UUID.t,
   amount: float,
+  name: string,
   nutrientId: Schema.Nutrient.idAsType(Schema.modelIdType),
   /* UI */
 };
@@ -18,6 +19,7 @@ module GraphFragment = [%graphql
     fragment macroNutrientAmountFields on MacroNutrientAmount {
       id
       amount
+      name
       nutrient {
         ...Nutrient.Model.Fragment.Fields
       }
@@ -34,6 +36,7 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 let _defaultData = id => {
   id: id,
   amount: 0.,
+  name: "",
   nutrientId: Nutrient.Model.idToTypedId(""),
   /* UI */
 };
@@ -55,6 +58,7 @@ module Record = {
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
       amount: obj##amount,
+      name: obj##name,
       nutrientId: obj##nutrient |> Nutrient.Model.objectToId,
     };
   };

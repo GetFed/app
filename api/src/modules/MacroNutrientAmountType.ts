@@ -22,7 +22,11 @@ export const {Type, Connection} = fullTypeDefinition(
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => idObj.id,
+        resolve: async (idObj, args, context) => `${idObj.id} ${idObj.name}`,
+      },
+      name: {
+        type: GraphQLNonNull(GraphQLString),
+        resolve: async (idObj, args, context) => idObj.name,
       },
       nutrient: {
         type: GraphQLNonNull(Nutrient.Type),

@@ -27,7 +27,7 @@ let make = (~data as nutritionFacts : NutritionFacts.Model.Record.t, _children) 
         )}
       </div>
       <div>
-        <div>{ReasonReact.string("Calories ")}</div>
+        <div>{ReasonReact.string("Calories: ")}</div>
         {ReasonReact.string(
           Utils.String.nutritionPrecision(nutritionFacts.data.calories)
         )}
@@ -36,21 +36,21 @@ let make = (~data as nutritionFacts : NutritionFacts.Model.Record.t, _children) 
         nutritionFacts.data.caloriesFromFat
         |> Belt.Option.mapWithDefault(_, <div/>, (caloriesFromFat) => {
           <div>
-            <div>{ReasonReact.string("Calories from Fat")}</div>
+            <div>{ReasonReact.string("Calories from Fat: ")}</div>
             {
-              ReasonReact.string(
-                Utils.String.nutritionPrecision(caloriesFromFat)
-              )
+              ReasonReact.string(Utils.String.nutritionPrecision(caloriesFromFat))
             }
           </div>
         })
       }
-      /* <div>
+      <div>
         <div>{ReasonReact.string("Total Fat ")}</div>
         {
-          nutritionFacts.data.totalFat
+          nutritionFacts.data.totalFatId
+          |> MacroNutrientAmount.Container.getRecordById
+          |> Belt.Option.mapWithDefault(_, <div />,
+               (macroNutrientAmount) => <MacroNutrientAmountLayout data=macroNutrientAmount />)
         }
-      </div> */
-      
+      </div>
     </div>,
 };
