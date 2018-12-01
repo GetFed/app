@@ -13,7 +13,7 @@ type _data = {
   dietaryFiberId: option(Schema.MacroNutrientAmount.idAsType(Schema.modelIdType)),
   sugarId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
   proteinId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  mineralsIds: list(option(Schema.MineralNutrientAmount.idAsType(Schema.modelIdType))),
+  mineralIds: list(option(Schema.MineralNutrientAmount.idAsType(Schema.modelIdType))),
   /* UI */
 };
 
@@ -74,7 +74,7 @@ let _defaultData = id => {
   dietaryFiberId: None,
   sugarId: MacroNutrientAmount.Model.idToTypedId(id),
   proteinId: MacroNutrientAmount.Model.idToTypedId(id),
-  mineralsIds: [],
+  mineralIds: [],
   /* UI */
 };
 
@@ -107,7 +107,7 @@ module Record = {
       dietaryFiberId: obj##dietaryFiber |> Belt.Option.map(_, (data) => data |> MacroNutrientAmount.Model.objectToId),
       sugarId: obj##sugar |> MacroNutrientAmount.Model.objectToId,
       proteinId: obj##protein |> MacroNutrientAmount.Model.objectToId,
-      mineralsIds: obj##minerals |> ModelUtils.getConnectionList(_, MineralNutrientAmount.Model.objectToId),
+      mineralIds: obj##minerals |> ModelUtils.getConnectionList(_, MineralNutrientAmount.Model.objectToId),
     };
   };
 

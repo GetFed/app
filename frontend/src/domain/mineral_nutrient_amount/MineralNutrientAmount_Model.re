@@ -1,5 +1,6 @@
 type _data = {
   id: UUID.t,
+  name: string,
   percentageDailyValue: float,
   nutrientId: Schema.Nutrient.idAsType(Schema.modelIdType),
   /* UI */
@@ -17,6 +18,7 @@ module GraphFragment = [%graphql
   {|
     fragment mineralNutrientAmountFields on MineralNutrientAmount {
       id
+      name
       percentageDailyValue
       nutrient {
         ...Nutrient.Model.Fragment.Fields
@@ -33,6 +35,7 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  name: "",
   percentageDailyValue: 0.,
   nutrientId: Nutrient.Model.idToTypedId(""),
   /* UI */
@@ -54,6 +57,7 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      name: obj##name,
       percentageDailyValue: obj##percentageDailyValue,
       nutrientId: obj##nutrient |> Nutrient.Model.objectToId,
     };

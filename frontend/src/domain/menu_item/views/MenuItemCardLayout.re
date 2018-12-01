@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("MenuItemLayout");
+let component = ReasonReact.statelessComponent("MenuItemCardLayout");
 
 let css = Css.css;
 let cx = Css.cx;
@@ -8,10 +8,6 @@ let menuItemLayoutClass = [%bs.raw {| css(tw`
   overflow-hidden
   shadow-lg
   flex
-  h-full
-
-
-  
   sm:flex-col
 `)|}];
 
