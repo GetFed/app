@@ -11,4 +11,7 @@ module Converter = {
   module Nutrient = NormalizrSetup.DomainTypeConverter(Nutrient, Nutrient.Container, NormalizrRecordType.Wrapper.Nutrient);
   module Attribute = NormalizrSetup.DomainTypeConverter(Attribute, Attribute.Container, NormalizrRecordType.Wrapper.Attribute);
   module Ingredient = NormalizrSetup.DomainTypeConverter(Ingredient, Ingredient.Container, NormalizrRecordType.Wrapper.Ingredient);
+  module FoodProduct = NormalizrSetup.DomainTypeConverter(FoodProduct, FoodProduct.Container, NormalizrRecordType.Wrapper.FoodProduct);
+  module Food = NormalizrSetup.DomainTypeConverter(Food, Food.Container, NormalizrRecordType.Wrapper.Food);
+  module ProductBase = NormalizrSetup.DomainTypeConverter(ProductBase, ProductBase.Container, NormalizrRecordType.Wrapper.ProductBase);
 };

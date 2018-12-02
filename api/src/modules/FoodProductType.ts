@@ -6,17 +6,28 @@ import {
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
-const TYPE_NAME = 'MarketItem';
+import * as ProductBase from './ProductBaseType';
+import * as Food from './FoodType';
+
+const TYPE_NAME = 'FoodProduct';
 
 // idObj is id: String
 
 export const {Type, Connection} = fullTypeDefinition(
   new GraphQLObjectType({
     name: TYPE_NAME,
-    description: 'Market Item type',
+    description: 'Food Product type',
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
+        resolve: async (idObj, args, context) => idObj,
+      },
+      product: {
+        type: GraphQLNonNull(ProductBase.Type),
+        resolve: async (idObj, args, context) => idObj,
+      },
+      food: {
+        type: GraphQLNonNull(Food.Type),
         resolve: async (idObj, args, context) => idObj,
       },
     }),

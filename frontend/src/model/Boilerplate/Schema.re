@@ -1,92 +1,113 @@
 module Teacher = {
   type schemaType = [`TeacherSchema];
-  let schema = `TeacherSchema;
   type idType = [`TeacherId(UUID.t)];
-  type idAsType('a) = [> | `TeacherId(UUID.t)] as 'a;
+  let schema: [> schemaType] = `TeacherSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module User = {
-  let schema = `UserSchema;
-  type idType = [`UserId(UUID.t)];
-  type idAsType('a) = [> | `UserId(UUID.t)] as 'a;
   type schemaType = [`UserSchema];
+  type idType = [`UserId(UUID.t)];
+  let schema: [> schemaType] = `UserSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module Customer = {
-  let schema = `CustomerSchema;
-  type idType = [`CustomerId(UUID.t)];
-  type idAsType('a) = [> | `CustomerId(UUID.t)] as 'a;
   type schemaType = [`CustomerSchema];
+  type idType = [`CustomerId(UUID.t)];
+  let schema: [> schemaType] = `CustomerSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module Menu = {
-  let schema = `MenuSchema;
-  type idType = [`MenuId(UUID.t)];
-  type idAsType('a) = [> | `MenuId(UUID.t)] as 'a;
   type schemaType = [`MenuSchema];
+  type idType = [`MenuId(UUID.t)];
+  let schema: [> schemaType] = `MenuSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module MenuItem = {
-  let schema = `MenuItemSchema;
-  type idType = [`MenuItemId(UUID.t)];
-  type idAsType('a) = [> | `MenuItemId(UUID.t)] as 'a;
   type schemaType = [`MenuItemSchema];
+  type idType = [`MenuItemId(UUID.t)];
+  let schema: [> schemaType] = `MenuItemSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module Diet = {
-  let schema = `DietSchema;
-  type idType = [`DietId(UUID.t)];
-  type idAsType('a) = [> | `DietId(UUID.t)] as 'a;
   type schemaType = [`DietSchema];
+  type idType = [`DietId(UUID.t)];
+  let schema: [> schemaType] = `DietSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module Restriction = {
-  let schema = `RestrictionSchema;
-  type idType = [`RestrictionId(UUID.t)];
-  type idAsType('a) = [> | `RestrictionId(UUID.t)] as 'a;
   type schemaType = [`RestrictionSchema];
+  type idType = [`RestrictionId(UUID.t)];
+  let schema: [> schemaType] = `RestrictionSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module NutritionFacts = {
-  let schema = `NutritionFactsSchema;
-  type idType = [`NutritionFactsId(UUID.t)];
-  type idAsType('a) = [> | `NutritionFactsId(UUID.t)] as 'a;
   type schemaType = [`NutritionFactsSchema];
+  type idType = [`NutritionFactsId(UUID.t)];
+  let schema: [> schemaType] = `NutritionFactsSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module MacroNutrientAmount = {
-  let schema = `MacroNutrientAmountSchema;
-  type idType = [`MacroNutrientAmountId(UUID.t)];
-  type idAsType('a) = [> | `MacroNutrientAmountId(UUID.t)] as 'a;
   type schemaType = [`MacroNutrientAmountSchema];
+  type idType = [`MacroNutrientAmountId(UUID.t)];
+  let schema: [> schemaType] = `MacroNutrientAmountSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module MineralNutrientAmount = {
-  let schema = `MineralNutrientAmountSchema;
-  type idType = [`MineralNutrientAmountId(UUID.t)];
-  type idAsType('a) = [> | `MineralNutrientAmountId(UUID.t)] as 'a;
   type schemaType = [`MineralNutrientAmountSchema];
+  type idType = [`MineralNutrientAmountId(UUID.t)];
+  let schema: [> schemaType] = `MineralNutrientAmountSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module Nutrient = {
-  let schema = `NutrientSchema;
-  type idType = [`NutrientId(UUID.t)];
-  type idAsType('a) = [> | `NutrientId(UUID.t)] as 'a;
   type schemaType = [`NutrientSchema];
+  type idType = [`NutrientId(UUID.t)];
+  let schema: [> schemaType] = `NutrientSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module Attribute = {
-  let schema = `AttributeSchema;
-  type idType = [`AttributeId(UUID.t)];
-  type idAsType('a) = [> | `AttributeId(UUID.t)] as 'a;
   type schemaType = [`AttributeSchema];
+  type idType = [`AttributeId(UUID.t)];
+  let schema: [> schemaType] = `AttributeSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 module Ingredient = {
-  let schema = `IngredientSchema;
-  type idType = [`IngredientId(UUID.t)];
-  type idAsType('a) = [> | `IngredientId(UUID.t)] as 'a;
   type schemaType = [`IngredientSchema];
+  type idType = [`IngredientId(UUID.t)];
+  let schema: [> schemaType] = `IngredientSchema;
+  type idAsType('a) = [> | idType] as 'a;
+};
+
+module FoodProduct = {
+  type schemaType = [`FoodProductSchema];
+  type idType = [`FoodProductId(UUID.t)];
+  let schema: [> schemaType] = `FoodProductSchema;
+  type idAsType('a) = [> | idType] as 'a;
+};
+
+module Food = {
+  type schemaType = [`FoodSchema];
+  type idType = [`FoodId(UUID.t)];
+  let schema: [> schemaType] = `FoodSchema;
+  type idAsType('a) = [> | idType] as 'a;
+};
+
+module ProductBase = {
+  type schemaType = [`ProductBaseSchema];
+  type idType = [`ProductBaseId(UUID.t)];
+  let schema: [> schemaType] = `ProductBaseSchema;
+  type idAsType('a) = [> | idType] as 'a;
 };
 
 /* need to exist before everything */
@@ -104,6 +125,9 @@ type modelIdType = [
   | Nutrient.idType
   | Attribute.idType
   | Ingredient.idType
+  | FoodProduct.idType
+  | Food.idType
+  | ProductBase.idType
 ];
 
 /* pass as type id to domains */
@@ -125,6 +149,9 @@ type schemaType = [
   | Nutrient.schemaType
   | Attribute.schemaType
   | Ingredient.schemaType
+  | FoodProduct.schemaType
+  | Food.schemaType
+  | ProductBase.schemaType
 ];
 
 /* Generate by Normalizr */
@@ -143,6 +170,9 @@ let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   | `NutrientId(uuid) => (Nutrient.schema, uuid)
   | `AttributeId(uuid) => (Attribute.schema, uuid)
   | `IngredientId(uuid) => (Ingredient.schema, uuid)
+  | `FoodProductId(uuid) => (FoodProduct.schema, uuid)
+  | `FoodId(uuid) => (Food.schema, uuid)
+  | `ProductBaseId(uuid) => (ProductBase.schema, uuid)
   };
 
 /* can come from normalizr module */

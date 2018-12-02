@@ -1,3 +1,3 @@
-module Model = MenuItem_Model;
-module Action = MenuItem_Action;
+module Model = Food_Model;
+module Action = Food_Action;
 module Container = ApolloFragment.Container(ApolloClient.ReadFragment, Model);

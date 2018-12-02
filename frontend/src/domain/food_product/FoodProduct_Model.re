@@ -1,40 +1,51 @@
 type _data = {
   id: UUID.t,
+  productId: Schema.ProductBase.idAsType(Schema.modelIdType),
+  foodId: Schema.Food.idAsType(Schema.modelIdType),
   /* UI */
 };
 
-type _local = Teacher_Local.Model.Record.t;
+type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "Teacher";
-let fragmentName = "teacherFields";
-module ModelSchema = Schema.Teacher;
+let fragmentType = "FoodProduct";
+let fragmentName = "foodProductFields";
+module ModelSchema = Schema.FoodProduct;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
-let idToTypedId = (id: UUID.t): idType => `TeacherId(id);
+let idToTypedId = (id: UUID.t): idType => `FoodProductId(id);
 
 module GraphFragment = [%graphql
   {|
-    fragment teacherFields on User {
+    fragment foodProductFields on FoodProduct {
       id
+      food{
+        ...Food.Model.Fragment.Fields
+      }
+      product{
+        ...ProductBase.Model.Fragment.Fields
+      }
     }
   |}
 ];
 
 module Fragment = {
   include GraphFragment;
-  module Fields = GraphFragment.TeacherFields;
+  module Fields = GraphFragment.FoodProductFields;
 };
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
-  /* UI */
+  productId: `ProductBaseId(id),
+  foodId: `FoodId(id),
+  
+      /* UI */
 };
 
 let _defaultRecordId = id: _record => {
   data: _defaultData(id),
-  local: Teacher_Local.Model.Record.default(id),
+  local: (),
 };
 
 let _defaultRecord = (): _record => _defaultRecordId(UUID.generateUUID());
@@ -48,6 +59,8 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      productId: obj##product |> ProductBase.Model.objectToId,
+      foodId: obj##food |> Food.Model.objectToId,
     };
   };
 
@@ -57,8 +70,6 @@ module Record = {
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),
-    local: Teacher_Local.Model.Record.default(obj##id),
+    local: (),
   };
 };
-
-

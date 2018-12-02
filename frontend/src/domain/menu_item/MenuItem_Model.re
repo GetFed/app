@@ -1,13 +1,10 @@
 type _data = {
   id: UUID.t,
   name: string,
-  price: float,
   description: string,
   photo: string,
-  restrictionIds: option(list(option(Schema.Restriction.idAsType(Schema.modelIdType)))),
-  ingredientIds: list(option(Schema.Ingredient.idAsType(Schema.modelIdType))),
-  attributeIds: list(option(Schema.Attribute.idAsType(Schema.modelIdType))),
-  nutritionFactsId: Schema.NutritionFacts.idAsType(Schema.modelIdType)
+  productId: Schema.FoodProduct.idAsType(Schema.modelIdType)
+  
 
   /* UI */
 };
@@ -15,6 +12,8 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
+let fragmentType = "MenuItem";
+let fragmentName = "menuItemFields";
 module ModelSchema = Schema.MenuItem;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -26,31 +25,9 @@ module GraphFragment = [%graphql
       id
       name
       description
-      price
       photo
-      restrictions {
-        edges {
-          node {
-            ...Restriction.Model.Fragment.Fields
-          }
-        }
-      }
-      nutritionFacts {
-        ...NutritionFacts.Model.Fragment.Fields
-      }
-      attributes {
-        edges {
-          node {
-            ...Attribute.Model.Fragment.Fields
-          }
-        }
-      }
-      ingredients {
-        edges {
-          node {
-            ...Ingredient.Model.Fragment.Fields
-          }
-        }
+      product{
+        ...FoodProduct.Model.Fragment.Fields
       }
     }
   |}
@@ -67,11 +44,8 @@ let _defaultData = id => {
   name: "",
   description: "",
   photo: "",
-  price: 0.,
-  restrictionIds: None,
-  ingredientIds: [],
-  attributeIds: [],
-  nutritionFactsId: NutritionFacts.Model.idToTypedId(id),
+  productId: `FoodProductId(id),
+  
   /* UI */
 };
 
@@ -92,19 +66,9 @@ module Record = {
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
       name: obj##name,
-      price: obj##price,
       photo: obj##photo,
       description: obj##description,
-      nutritionFactsId: obj##nutritionFacts |> NutritionFacts.Model.objectToId,
-      restrictionIds:
-        obj##restrictions
-        |> Belt.Option.map(_, (res) => ModelUtils.getConnectionList(res, Restriction.Model.objectToId)),
-      ingredientIds:
-        obj##ingredients
-        |> ModelUtils.getConnectionList(_, Ingredient.Model.objectToId),
-      attributeIds:
-        obj##attributes
-        |> ModelUtils.getConnectionList(_, Attribute.Model.objectToId),
+      productId: obj##product |> FoodProduct.Model.objectToId,
     };
   };
 
@@ -118,6 +82,4 @@ module Record = {
   };
 };
 
-let fragmentType = "MenuItem";
 
-let fragmentName = "menuItemFields";

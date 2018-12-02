@@ -38,22 +38,24 @@ let make = (~data as menu : Menu.Model.Record.t, ~restrictions: list(Restriction
         |> Belt.List.map(_, (menuItemId) => menuItemId |> MenuItem.Container.getRecordById)
         |> Utils.List.removeOptionsFromList
         |> Belt.List.keep(_, (menuItem) =>
-          switch(menuItem.data.restrictionIds){
-          | None => true
-          | Some(menuRestrictionIds) => {
-              Js.log("menuRestrictionIds = ");
-              Js.log(menuRestrictionIds);
-              Js.log("menuItem.data.restrictionIds = ");
-              Js.log(menuItem.data.restrictionIds);
-              !(
-                menuRestrictionIds
-                |> Utils.List.removeOptionsFromList
-                |> Belt.List.some(_, (menuRestrictionId) =>
-                  restrictions |> Belt.List.getBy(_, (res) => res == menuRestrictionId) != None
+          menuItem.data.productId
+          |> FoodProduct.Container.getRecordById
+          |> Belt.Option.mapWithDefault(_, true, (foodProduct) =>
+            foodProduct.data.foodId
+            |> Food.Container.getRecordById
+            |> Belt.Option.mapWithDefault(_, true, (food) =>
+              food.data.restrictionIds
+              |> Belt.Option.mapWithDefault(_, true, (restrictionIds) =>
+                !(
+                  restrictionIds
+                  |> Utils.List.removeOptionsFromList
+                  |> Belt.List.some(_, (menuRestrictionId) =>
+                    restrictions |> Belt.List.getBy(_, (res) => res == menuRestrictionId) != None
+                  )
                 )
               )
-            }
-          }
+            )
+          )
         )
         |> Belt.List.map(_, (menuItem) =>
           <div key=menuItem.data.id className=menuLayoutResonsiveMenuItemClass>

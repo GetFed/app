@@ -12,6 +12,8 @@ type _record = RecordType.t(_data, _local);
 module ModelSchema = Schema.MineralNutrientAmount;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
+let fragmentType = "MineralNutrientAmount";
+let fragmentName = "mineralNutrientAmountFields";
 let idToTypedId = (id: UUID.t): idType => `MineralNutrientAmountId(id);
 
 module GraphFragment = [%graphql
@@ -73,6 +75,4 @@ module Record = {
   };
 };
 
-let fragmentType = "MineralNutrientAmount";
 
-let fragmentName = "mineralNutrientAmountFields";

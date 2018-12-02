@@ -59,8 +59,6 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, _children) => {
   ...component,
   render: _self =>
     {
-      Js.log("menuItem.data.nutritionFactsId");
-      Js.log(menuItem.data.nutritionFactsId);
       <div className=menuItemContentClass>
         <div className=menuItemLayoutWrapperImageClass>
           <img className=(menuItemLayoutImageClass ++ " object-contain") src=(Utils.Fed.legacyFedUrl(menuItem.data.photo)) />
@@ -74,41 +72,18 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, _children) => {
         <div className=menuItemLayoutButtonClass>
           <ItemCartAddButtons />
         </div>
-        <div className=menuItemAttributesClass>
-          {
-            menuItem.data.attributeIds
-            |> Utils.List.removeOptionsFromList
-            |> Belt.List.map(_, Attribute.Container.getRecordById)
-            |> Utils.List.removeOptionsFromList
-            |> Belt.List.map(_, (attribute) =>
-                 <div className=menuItemTextSpaceClass><AttributeText data=attribute/></div>)
-            |> Utils.ReasonReact.listToReactArray
-          }
-        </div>
         {
-          menuItem.data.restrictionIds
-          |> Belt.Option.mapWithDefault(_, <div />, (restrictionIds) =>
-              <div className=menuItemRestrictionClass>
-                {ReasonReact.string("CONTAINS: ")}
-                {
-                  restrictionIds
-                  |> Utils.List.removeOptionsFromList
-                  |> Belt.List.map(_, Restriction.Container.getRecordById)
-                  |> Utils.List.removeOptionsFromList
-                  |> Belt.List.map(_, (restriction) => 
-                       <div className=menuItemTextSpaceClass><RestrictionText data=restriction/></div>)
-                  |> Utils.ReasonReact.listToReactArray
-                }
-              </div>
-             )
+          menuItem.data.productId
+          |> FoodProduct.Container.getRecordById
+          |> Belt.Option.mapWithDefault(_, <div/>, (foodProduct) => {
+            foodProduct.data.foodId
+            |> Food.Container.getRecordById
+            |> Belt.Option.mapWithDefault(_, <div/>, (food) => {
+              <FoodAttributesLayout data=food />
+            })
+          })
         }
-        {
-          menuItem.data.nutritionFactsId
-          |> NutritionFacts.Container.getRecordById
-          |> Belt.Option.mapWithDefault(_, <div />, (nutritionFacts) =>
-               <NutritionFactLayout data=nutritionFacts />
-          )
-        }
+        
       </div>
     }
 };

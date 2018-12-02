@@ -6,9 +6,11 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
+let fragmentType = "Customer";
+
+let fragmentName = "customerFields";
 module ModelSchema = Schema.Customer;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
-
 let idToTypedId = (id: UUID.t): idType => `CustomerId(id);
 
 module GraphFragment = [%graphql
@@ -65,6 +67,4 @@ module Record = {
   };
 };
 
-let fragmentType = "Customer";
 
-let fragmentName = "customerFields";

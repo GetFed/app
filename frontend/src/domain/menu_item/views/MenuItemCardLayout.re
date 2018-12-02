@@ -84,10 +84,17 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, ~numberInCart=0, _child
             {ReasonReact.string(menuItem.data.description)}
           </div>
           <div className=cx(menuItemLayoutFooterClass, menuItemLayouteContentDescriptionSection)>
-            <div className=menuItemLayoutPriceClass>
-              {menuItem.data.price |> Utils.String.toMoney |> ((s) => "$" ++ s) |> ReasonReact.string}
-            </div>
-            <ItemCartAddButtons />
+            {
+              menuItem.data.productId
+              |> FoodProduct.Container.getRecordById
+              |> Belt.Option.mapWithDefault(_, <div/>, (foodProduct) => {
+                foodProduct.data.productId
+                |> ProductBase.Container.getRecordById
+                |> Belt.Option.mapWithDefault(_, <div/>, (product) => {
+                  <ProductBaseCounterLayout data=product />
+                })
+              })
+            }
           </div>
         </div>
       </div>

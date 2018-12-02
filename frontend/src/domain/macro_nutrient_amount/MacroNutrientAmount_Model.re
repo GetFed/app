@@ -9,6 +9,8 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
+let fragmentType = "MacroNutrientAmount";
+let fragmentName = "macroNutrientAmountFields";
 module ModelSchema = Schema.MacroNutrientAmount;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -73,6 +75,4 @@ module Record = {
   };
 };
 
-let fragmentType = "MacroNutrientAmount";
 
-let fragmentName = "macroNutrientAmountFields";

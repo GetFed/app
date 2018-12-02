@@ -143,6 +143,42 @@ module Wrapper = {
       };
     let apolloEnabled = true;
   };
+
+  module FoodProduct = {
+    type model = FoodProduct.Model.Record.t;
+    type record = [`FoodProduct(model)];
+    let wrap = model => `FoodProduct(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `FoodProduct(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
+
+  module Food = {
+    type model = Food.Model.Record.t;
+    type record = [`Food(model)];
+    let wrap = model => `Food(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `Food(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
+
+  module ProductBase = {
+    type model = ProductBase.Model.Record.t;
+    type record = [`ProductBase(model)];
+    let wrap = model => `ProductBase(model);
+    let unwrap = recordType =>
+      switch (recordType) {
+      | `ProductBase(model) => Some(model)
+      | _ => None
+      };
+    let apolloEnabled = true;
+  };
 };
 
 
@@ -159,6 +195,9 @@ type t = [
   | Wrapper.Nutrient.record
   | Wrapper.Attribute.record
   | Wrapper.Ingredient.record
+  | Wrapper.FoodProduct.record
+  | Wrapper.Food.record
+  | Wrapper.ProductBase.record
 ];
 
 let modelTypeToRecordType = (recordType: t): (Schema.schemaType, UUID.t) =>
@@ -175,4 +214,7 @@ let modelTypeToRecordType = (recordType: t): (Schema.schemaType, UUID.t) =>
   | `Nutrient(data) => (Schema.Nutrient.schema, data.data.id)
   | `Attribute(data) => (Schema.Attribute.schema, data.data.id)
   | `Ingredient(data) => (Schema.Ingredient.schema, data.data.id)
+  | `FoodProduct(data) => (Schema.FoodProduct.schema, data.data.id)
+  | `Food(data) => (Schema.Food.schema, data.data.id)
+  | `ProductBase(data) => (Schema.ProductBase.schema, data.data.id)
   };

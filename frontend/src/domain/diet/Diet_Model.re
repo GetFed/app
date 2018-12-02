@@ -8,7 +8,8 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-
+let fragmentType = "Diet";
+let fragmentName = "dietFields";
 module ModelSchema = Schema.Diet;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -76,6 +77,4 @@ module Record = {
   };
 };
 
-let fragmentType = "Diet";
 
-let fragmentName = "dietFields";
