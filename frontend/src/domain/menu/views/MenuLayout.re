@@ -11,7 +11,6 @@ let menuLayoutClass = [%bs.raw {| css(tw`
 
 let menuLayoutResonsiveMenuItemClass = [%bs.raw {| css(tw`
   w-full
-  h-full
   sm:w-1/2
   md:w-1/3
   mb-4
