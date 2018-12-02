@@ -173,6 +173,7 @@ let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   | `FoodProductId(uuid) => (FoodProduct.schema, uuid)
   | `FoodId(uuid) => (Food.schema, uuid)
   | `ProductBaseId(uuid) => (ProductBase.schema, uuid)
+  | `IngredientId(uuid) => (ProductBase.schema, uuid)
   };
 
 /* can come from normalizr module */

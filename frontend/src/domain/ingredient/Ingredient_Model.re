@@ -1,5 +1,6 @@
 type _data = {
   id: UUID.t,
+  name: string,
   /* UI */
 };
 
@@ -17,6 +18,7 @@ module GraphFragment = [%graphql
   {|
     fragment ingredientFields on Ingredient {
       id
+      name
     }
   |}
 ];
@@ -29,6 +31,7 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  name: "",
   /* UI */
 };
 
@@ -48,6 +51,7 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      name: obj##name,
     };
   };
 
