@@ -27,10 +27,14 @@ let make = (~pathIds, _children) => {
           modalContents={ modalId => {
             switch(modalId){
             | LOGIN =>
-                <LoginLayout accountSend afterLoginClick=(() => self.send(CloseModal)) />
+                <LoginLayout accountSend successClick=(() => self.send(CloseModal)) />
             | SUBSCRIBE =>
-                <LoginLayout accountSend afterLoginClick=(
-                  () => ReasonReact.Router.push("/subscribe"))
+                <LoginLayout accountSend successClick=(
+                  () => {
+                      /* TODO This is a dirty dirty race condition */
+                      ReasonReact.Router.push("/subscribe");
+                      self.send(CloseModal);
+                    })
                 />
             }
           } 

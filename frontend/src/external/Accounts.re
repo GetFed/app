@@ -52,7 +52,7 @@ type accountAction =
 
 type action =
   | Account(accountAction)
-  | AccountWithPromise(accountAction, Js.Promise.t(bool));
+  | AccountWithPromise(accountAction, (option(string)) => Js.Promise.t(bool));
 
 let component = ReasonReact.reducerComponent("Accounts");
 
@@ -60,16 +60,19 @@ let getUserPromise = (promise, send) =>
   promise
   |> Js.Promise.then_((_) => accountClient##getUser())
   |> Js.Promise.then_(u => {
-    u
-    |> Js.Nullable.toOption(_)
-    |> Belt.Option.map(_, (u) => u##id)
-    |> (id) => Account(UpdateUserId(id))
+    let userId =
+      u
+      |> Js.Nullable.toOption(_)
+      |> Belt.Option.map(_, (u) => u##id);
+
+    Account(UpdateUserId(userId))
     |> send
     |> Js.Promise.resolve
+    |> Js.Promise.then_(_ => Js.Promise.resolve(userId));
   });
 
-let accountUpdater = (accountAction: accountAction, promise: Js.Promise.t(bool)) => {
-  let additionalStep = (a) => (a |> Js.Promise.then_((_) => promise)) |> ignore;
+let accountUpdater = (accountAction: accountAction, promiseFn: ((option(string)) => Js.Promise.t(bool))) => {
+  let additionalStep = (promise) => (promise |> Js.Promise.then_(promiseFn) |> ignore);
   switch (accountAction) {
   | UpdateUserId(id) => ReasonReact.Update({id: id})
   | RefreshSession => ReasonReact.SideEffects(({send}) => accountClient##refreshSession() |> getUserPromise(_, send) |> additionalStep)
@@ -83,7 +86,7 @@ let accountUpdater = (accountAction: accountAction, promise: Js.Promise.t(bool))
   | TwoFactorSet(f1, f2) => ReasonReact.SideEffects(({send}) => accountClient##twoFactorSet(f1, f2) |> getUserPromise(_, send) |> additionalStep)
   | VerifyEmail(verify) => ReasonReact.SideEffects(({send}) => accountClient##verifyEmail(verify) |> getUserPromise(_, send) |> additionalStep)
   }
-}
+};
 
 let make = (
   children: ((~accountSend: action => unit, ~userId: option(string)) => ReasonReact.reactElement)
@@ -92,20 +95,13 @@ let make = (
   initialState: () => ({id: None}),
   reducer: (action: action, _state: state) =>
     switch(action){
-    | Account(accountAction) => accountUpdater(accountAction, Js.Promise.resolve(true))
-    | AccountWithPromise(accountAction, promise) => accountUpdater(accountAction, promise)
+    | Account(accountAction) => accountUpdater(accountAction, (userId) => Js.Promise.resolve(true))
+    | AccountWithPromise(accountAction, promiseFn) => accountUpdater(accountAction, promiseFn)
     },
   didMount: self => 
     Js.Promise.make((~resolve, ~reject) => resolve(. 1)) |> getUserPromise(_, self.send) |> ignore,
   render: self =>
     <div>
-      {
-        children(
-          ~accountSend=(
-            action => self.send(action)
-          ),
-          ~userId=self.state.id
-        )
-      }
+      {children(~accountSend=(action => self.send(action)), ~userId=self.state.id)}
     </div>
 };

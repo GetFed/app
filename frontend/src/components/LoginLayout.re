@@ -15,7 +15,7 @@ type action =
 
 let component = ReasonReact.reducerComponent("LoginLayout");
 
-let make = (~accountSend, ~afterLoginClick, _children) => {
+let make = (~accountSend, ~successClick, _children) => {
   ...component,
   initialState: () => {email: "", password: ""},
   reducer: (action, state) =>
@@ -25,8 +25,8 @@ let make = (~accountSend, ~afterLoginClick, _children) => {
     },
   render: self =>
     <div className=loginLayoutClass>
-      <TextInput value=self.state.email onTextChange=((email) => self.send(UpdateEmail(email)) |> Js.Promise.resolve) placeholder="Email"/>
-      <TextInput value=self.state.password onTextChange=((password) => self.send(UpdatePassword(password)) |> Js.Promise.resolve) type_="password" placeholder="Password"/>
+      <TextInput value=self.state.email onTextChange=((email) => self.send(UpdateEmail(email)) |> Js.Promise.resolve) placeholder="Email" />
+      <TextInput value=self.state.password onTextChange=((password) => self.send(UpdatePassword(password)) |> Js.Promise.resolve) type_="password" placeholder="Password" />
       <Button
         onClick=(() =>
           {
@@ -36,10 +36,12 @@ let make = (~accountSend, ~afterLoginClick, _children) => {
                 "user": { "email": self.state.email },
                 "code": ""
               }),
-              Js.Promise.make((~resolve, ~reject) => {
-                afterLoginClick();
-                resolve(. true);
-              })
+              (userId : option(string)) =>
+                Js.Promise.make((~resolve, ~reject) => {
+                  /* OVER HERE HANDLE ERRORS FOR LOGIN */
+                  userId !== None ? successClick() : ();
+                  resolve(. true);
+                })
             ))
           })
         theme=CTA
