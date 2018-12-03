@@ -92,7 +92,8 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(Ingredient.Connection.connectionType),
         resolve: async (idObj: string, args, context) => {
           const item = await ItemLoader.load(context, idObj);
-          return connectionFromArray(item.ingredients, args);
+          const ingredients = (item.ingredients|| []).filter((i) => i)
+          return connectionFromArray(ingredients, args);
         },
       },
       photo: {
