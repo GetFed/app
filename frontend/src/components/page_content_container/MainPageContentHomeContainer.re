@@ -55,28 +55,27 @@ let make = (_children) => {
   ...component,
   render: _self =>
     <div className=mainPageContentHomeClass>
-      
       <div className=(backgroundImageClass ++ " bg-image")>
-        <div className=mainPageContentHomeEmptySpaceClass/>
+        <div className=mainPageContentHomeEmptySpaceClass />
         <div className=mainPageContentHomeMiddleAreaClass>
-        <div className=mainPageContentHomeTextAreaClass>
-          <div className=mainPageContentHomeTextEatEverydayClass>
-            <div className="text-shadow">
-              {ReasonReact.string("Eat Well, ")}
+          <div className=mainPageContentHomeTextAreaClass>
+            <div className=mainPageContentHomeTextEatEverydayClass>
+              <div className="text-shadow">
+                {ReasonReact.string("Eat Well, ")}
+              </div>
+              <div className="text-shadow">
+                {ReasonReact.string("Everyday")}
+              </div>
             </div>
-            <div className="text-shadow">
-              {ReasonReact.string("Everyday")}
-            </div>
-          </div>
           </div>
           <div className=mainPageContentHomeTextAreaClass>
-          <div className=mainPageContentHomeTextGourmetClass>
-            <div className="text-shadow">
-              {ReasonReact.string("Gourmet meal plans")}
-            </div>
-            <div className="text-shadow">
-              {ReasonReact.string("fit for every lifestyle")}
-            </div>
+            <div className=mainPageContentHomeTextGourmetClass>
+              <div className="text-shadow">
+                {ReasonReact.string("Gourmet meal plans")}
+              </div>
+              <div className="text-shadow">
+                {ReasonReact.string("fit for every lifestyle")}
+              </div>
             </div>
           </div>
         </div>

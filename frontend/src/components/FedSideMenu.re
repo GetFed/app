@@ -43,7 +43,7 @@ let fedSigninLink = (openModal) =>
   </FedMenuItem>
 ;
 
-let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
+let make = (~pathIds, ~accountSend, ~authUserId, ~updateMain, _children) => {
   ...component,
   render: _self => {
     let menuLink = idToMenuLink(pathIds);
@@ -68,7 +68,9 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
         {
           authUserId == None
             ? <FedMenuItem selected=(menuLink == SUBSCRIPTION)>
-                <FedMenuLink key="subscribe"  href="/subscribe" text="SUBSCRIBE" /> 
+                <div key="subscribe"  onClick=((_) => updateMain(Page_Actions.OpenSubscribeModal))>
+                  {ReasonReact.string("SUBSCRIBE")}
+                </div>
               </FedMenuItem>
             : <div key="none" />
         }
@@ -80,10 +82,10 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~openModal, _children) => {
         <FedMenuItem selected=(menuLink == SUPPORT)>
           <FedMenuLink key="support"  href="/support" text="SUPPORT" /> 
         </FedMenuItem>
-        <Query.Me.Container key="me-container" userId=authUserId loadingComponent=fedSigninLink(openModal)>
+        <Query.Me.Container key="me-container" userId=authUserId loadingComponent=fedSigninLink(() => updateMain(Page_Actions.OpenLoginModal))>
           ...{(~me) =>
             Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) =>
-              Belt.Option.mapWithDefault(authUserId, fedSigninLink(openModal),
+              Belt.Option.mapWithDefault(authUserId, fedSigninLink(() => updateMain(Page_Actions.OpenLoginModal)),
                 (userId) =>
                   <Customer.Container id=me##id>
                     ...{(customer) =>

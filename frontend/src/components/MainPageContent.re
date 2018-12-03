@@ -11,7 +11,7 @@ let make = (~pathIds: PathIds.t, _children) => {
     | {supportId: Some(_)} => <MainPageContentHomeContainer />
     | {menuId: Some(None)} => <MainPageContentMenuContainer />
     | {menuId: Some(Some(menuItemId))} => <MainPageContentMenuItemContainer menuItemId />
-    | {subscriptionId: Some(_)} => <MainPageContentHomeContainer />
+    | {subscriptionId: Some(_)} => <MainPageContentSubscribeContainer />
     | {adminId: Some(_)} => <MainPageContentHomeContainer />
     | _ => <MainPageContentHomeContainer />
     }
