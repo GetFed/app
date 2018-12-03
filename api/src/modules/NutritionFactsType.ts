@@ -48,7 +48,6 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
-          console.log("item = %j", item);
           return item.nutrition_facts.calories || 0;
         },
       },

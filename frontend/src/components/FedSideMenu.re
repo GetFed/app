@@ -68,8 +68,8 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~updateMain, _children) => {
         {
           authUserId == None
             ? <FedMenuItem selected=(menuLink == SUBSCRIPTION)>
-                <div key="subscribe"  onClick=((_) => updateMain(Page_Actions.OpenSubscribeModal))>
-                  {ReasonReact.string("SUBSCRIBE")}
+                <div key="subscription"  onClick=((_) => updateMain(Page_Actions.OpenSubscribeModal))>
+                  {ReasonReact.string("SUBSCRIPTION")}
                 </div>
               </FedMenuItem>
             : <div key="none" />

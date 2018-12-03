@@ -32,7 +32,7 @@ let make = (~pathIds, _children) => {
                 <LoginLayout accountSend successClick=(
                   () => {
                       /* TODO This is a dirty dirty race condition */
-                      ReasonReact.Router.push("/subscribe");
+                      ReasonReact.Router.push("/subscription");
                       self.send(CloseModal);
                     })
                 />

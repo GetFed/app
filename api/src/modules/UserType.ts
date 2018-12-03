@@ -23,6 +23,7 @@ import * as Promo from './PromoType';
 import * as PublicProfile from './PublicProfileType';
 import * as RoleGroup from './RoleGroupType';
 import * as Session from './SessionType';
+import * as Subscription from './SubscriptionType';
 
 const hashids = new Hashids();
 
@@ -136,6 +137,22 @@ export const {Type, Connection} = fullTypeDefinition(
 
       roleGroup: {
         type: RoleGroup.Type,
+        resolve: async (idObj, args, context) =>  {
+          return null;
+        },
+      },
+
+      subscriptions: {
+        type: Subscription.Connection.connectionType,
+        args: connectionArgs,
+        resolve: async (idObj, args, context) =>  {
+          return null;
+        },
+      },
+
+      pastSubscriptions: {
+        type: Subscription.Connection.connectionType,
+        args: connectionArgs,
         resolve: async (idObj, args, context) =>  {
           return null;
         },

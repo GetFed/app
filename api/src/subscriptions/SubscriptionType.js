@@ -4,7 +4,7 @@ import { GraphQLObjectType } from 'graphql';
 import UserSubscriptions from './user';
 
 export default new GraphQLObjectType({
-  name: 'Subscription',
+  name: 'ApiSubscription',
   fields: {
     ...UserSubscriptions,
   },

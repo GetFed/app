@@ -93,6 +93,9 @@ export const {Type, Connection} = fullTypeDefinition(
         resolve: async (idObj: string, args, context) => {
           const item = await ItemLoader.load(context, idObj);
           const ingredients = (item.ingredients|| []).filter((i) => i)
+          if(item.ingredients.length !== ingredients.length){
+            console.log("item.name", item.name);
+          }
           return connectionFromArray(ingredients, args);
         },
       },

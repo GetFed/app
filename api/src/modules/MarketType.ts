@@ -32,7 +32,6 @@ export const {Type, Connection} = fullTypeDefinition(
         args: connectionArgs,
         resolve: async (idObj, args, context) => {
           const menu = await MenuLoader.load(context, idObj);
-          console.log("menu.items = %j", menu.items);
           return connectionFromArray(menu.items, args);
         },
       },

@@ -39,7 +39,7 @@ let pathToIds = (path: list(string)): t =>
   | ["support"] => {...default, supportId: Some(None)}
   | ["menu", menuId] => {...default, menuId: Some(stringEmptyStringOptional(menuId))}
   | ["menu"] => {...default, menuId: Some(None)}
-  | ["subscribe"] => {...default, subscriptionId: Some(None)}
+  | ["subscription"] => {...default, subscriptionId: Some(None)}
   | ["admin"] => {...default, adminId: Some(None)}
   | ["about-us"] => {...default, aboutUsId: Some(None)}
   | _ => default
