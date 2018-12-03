@@ -18,6 +18,7 @@ let loginButtons = [%bs.raw
 {| css(tw`
   flex
   justify-between
+  mb-16
 `)|}
 ];
 
@@ -29,6 +30,13 @@ let loginButton = [%bs.raw
 let loginTextInput = [%bs.raw
 {| css(tw`
   mb-4
+`)|}
+];
+
+let loginLayoutCenterTextClass = [%bs.raw
+{| css(tw`
+  flex
+  justify-center
 `)|}
 ];
 
@@ -59,6 +67,8 @@ let loginButtonOnClick = (state : state, accountSend, successClick) =>
         })
     ))
   };
+
+
 
 let make = (~accountSend, ~successClick, _children) => {
   ...component,
@@ -100,6 +110,16 @@ let make = (~accountSend, ~successClick, _children) => {
             >
               {ReasonReact.string("Join (x)")}
             </FedButton>
+          </div>
+        </div>
+        <div className=loginLayoutCenterTextClass>
+          <div>
+            <div className=loginLayoutCenterTextClass>
+              {ReasonReact.string("Forgot your password?")}
+            </div>
+            <a className=loginLayoutCenterTextClass>
+              {ReasonReact.string("Click here")}
+            </a>
           </div>
         </div>
       </div>
