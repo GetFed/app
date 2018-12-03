@@ -3,15 +3,6 @@ let tw = Css.tw;
 
 let loginLayoutClass = [%bs.raw
   {| css(tw`
-    w-full
-    h-full
-    flex
-    justify-center
-  `)|}
-];
-
-let loginLayoutInternalClass = [%bs.raw
-  {| css(tw`
     bg-white
     h-full
     w-64
@@ -78,42 +69,38 @@ let make = (~accountSend, ~successClick, _children) => {
     | UpdatePassword(password) => ReasonReact.Update({...state, password})
     },
   render: self =>
-    <div className=loginLayoutClass>
-      <div className=loginLayoutInternalClass>
-        <div>
-          <div className=loginTextInput>
-            <FedTextInput
-              value=self.state.email
-              onTextChange=((email) => self.send(UpdateEmail(email)) |> Js.Promise.resolve)
-              placeholder="Email"
-            />
+      <div className=loginLayoutClass>
+        <div className=loginTextInput>
+          <FedTextInput
+            value=self.state.email
+            onTextChange=((email) => self.send(UpdateEmail(email)) |> Js.Promise.resolve)
+            placeholder="Email"
+          />
+        </div>
+        <div className=loginTextInput>
+          <FedTextInput
+            value=self.state.password
+            onTextChange=((password) => self.send(UpdatePassword(password)) |> Js.Promise.resolve)
+            type_="password"
+            placeholder="Password"
+          />
+        </div>
+        <div className=loginButtons>
+          <div>
+            <FedButton
+              onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
+            >
+              {ReasonReact.string("Sign In")}
+            </FedButton>
           </div>
-          <div className=loginTextInput>
-            <FedTextInput
-              value=self.state.password
-              onTextChange=((password) => self.send(UpdatePassword(password)) |> Js.Promise.resolve)
-              type_="password"
-              placeholder="Password"
-            />
-          </div>
-          <div className=loginButtons>
-            <div>
-              <FedButton
-                onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
-              >
-                {ReasonReact.string("Sign In")}
-              </FedButton>
-            </div>
-            <div>
-              <FedButton
-                color=GREY
-                onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
-              >
-                {ReasonReact.string("Join (x)")}
-              </FedButton>
-            </div>
+          <div>
+            <FedButton
+              color=GREY
+              onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
+            >
+              {ReasonReact.string("Join (x)")}
+            </FedButton>
           </div>
         </div>
       </div>
-    </div>
   };
