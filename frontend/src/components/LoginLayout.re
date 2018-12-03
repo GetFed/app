@@ -5,7 +5,6 @@ let loginLayoutClass = [%bs.raw
   {| css(tw`
     w-full
     h-full
-    p-32
     flex
     justify-center
   `)|}
