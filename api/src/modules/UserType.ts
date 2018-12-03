@@ -52,11 +52,11 @@ export const {Type, Connection} = fullTypeDefinition(
         },
       },
 
-      addresses: {
-        type: Address.Connection.connectionType,
-        args: connectionArgs,
+      defaultAddress: {
+        type: Address.Type,
         resolve: async (idObj, args, context) => {
-          return null;
+          const user = await UserLoader.load(context, idObj);
+          return user.address_line_1 ? user._id : null;
         },
       },
 
@@ -64,15 +64,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLFloat,
         resolve: async (idObj, args, context) => {
           const user = await UserLoader.load(context, idObj);
-          return _.get(user, "email");
-        },
-      },
-
-      lastPurchaseDate: {
-        type: GraphQLDateTime,
-        resolve: async (idObj, args, context) => {
-          const user = await UserLoader.load(context, idObj);
-          return _.get(user, "lastPurchaseDate");
+          return _.get(user, "amount_spent");
         },
       },
 
@@ -80,14 +72,16 @@ export const {Type, Connection} = fullTypeDefinition(
         type: Restriction.Connection.connectionType,
         args: connectionArgs,
         resolve: async (idObj, args, context) => {
-          return null;
+          const user = await UserLoader.load(context, idObj);
+          return connectionFromArray(_.get(user, "restrictions") || [], args);
         },
       },
 
       credit: {
         type: GraphQLFloat,
         resolve: async (idObj, args, context) => {
-          return 0.0;
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "credit");
         },
       },
 
@@ -103,9 +97,9 @@ export const {Type, Connection} = fullTypeDefinition(
 
       phoneNumber: {
         type: GraphQLString,
-        args: connectionArgs,
         resolve: async (idObj, args, context) => {
-          return "";
+          const user = await UserLoader.load(context, idObj);
+          return _.get(user, "phone");
         },
       },
 
@@ -113,15 +107,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: Session.Connection.connectionType,
         args: connectionArgs,
         resolve: async (idObj, args, context) => {
-          return null;
-        },
-      },
-
-      discount: {
-        type: GraphQLFloat,
-        resolve: async (idObj, args, context) => {
-          const user = await UserLoader.load(context, idObj);
-          return _.get(user, "discount");
+          return null; /* come back in a min */
         },
       },
 
@@ -136,14 +122,15 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLString,
         resolve: async (idObj, args, context) =>  {
           const user = await UserLoader.load(context, idObj);
-          return _.get(user, "stripeId");
+          return _.get(user, "stripe_id");
         },
       },
 
       publicProfile: {
         type: PublicProfile.Type,
         resolve: async (idObj, args, context) =>  {
-          return null;
+          const user = await UserLoader.load(context, idObj);
+          return user._id; /* TODO don't expose ids here */
         },
       },
 

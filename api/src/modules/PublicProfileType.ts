@@ -20,7 +20,7 @@ export const {Type, Connection} = fullTypeDefinition(
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => "1",
+        resolve: async (idObj, args, context) => idObj,
       },
 
       firstName: {

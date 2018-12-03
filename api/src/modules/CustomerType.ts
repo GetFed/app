@@ -21,7 +21,7 @@ export const {Type, Connection} = fullTypeDefinition(
     fields: () => ({
       id: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => (`${idObj.id} ${idObj.userId} ${idObj.sessionId}`),
+        resolve: async (idObj, args, context) => `${idObj.id} ${idObj.userId} ${idObj.sessionId}`,
       },
       user: {
         type: UserType,

@@ -42,7 +42,7 @@ const schema = new mongoose.Schema(
       createdAt: 'createdAt',
       updatedAt: 'updatedAt',
     },
-    collection: 'user',
+    collection: 'users',
   }
 );
 
@@ -74,7 +74,7 @@ export interface IModel extends Document {
 }
 
 // this will make find, findOne typesafe
-const DataModel: Model<IModel> = mongoose.model('user', schema);
+const DataModel: Model<IModel> = mongoose.model('users', schema);
 export const Loader = createLoader(DataModel);
 
 export default DataModel;

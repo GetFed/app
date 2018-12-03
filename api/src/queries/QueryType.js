@@ -69,9 +69,9 @@ export default new GraphQLObjectType({
       },
       resolve: async (obj, args, context) => {
         const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
-        const users = UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
-
-        return UserLoader.loadMany(users, args, context);
+        const users = await UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
+        
+        return connectionFromArray(users.map((u) => u._id), args);
       },
     },
     currentMenu: {
