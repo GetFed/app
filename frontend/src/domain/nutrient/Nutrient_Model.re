@@ -1,5 +1,8 @@
 type _data = {
   id: UUID.t,
+  name: string,
+  unit: option(string),
+  recommendedDV: option(float),
   /* UI */
 };
 
@@ -18,6 +21,7 @@ module GraphFragment = [%graphql
       id
       name
       unit
+      recommendedDV
     }
   |}
 ];
@@ -30,6 +34,9 @@ let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {
   id: id,
+  name: "",
+  unit: None,
+  recommendedDV: None,
   /* UI */
 };
 
@@ -49,6 +56,9 @@ module Record = {
     type t = _data;
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
+      name: obj##name,
+      unit: obj##unit,
+      recommendedDV: obj##recommendedDV,
     };
   };
 

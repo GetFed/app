@@ -12,9 +12,8 @@ let sidemenuLayoutClass = [%bs.raw {| css(tw`
 let sidemenuContentsClass = [%bs.raw {| css(tw`
   
   w-full
-  sm:w-2/3
-  md:w-3/4
-  lg:w-5/6
+  sm:w-3/4
+  md:w-5/6
 `)|}];
 
 let sidemenuClass = [%bs.raw {| css(tw`
@@ -22,9 +21,8 @@ let sidemenuClass = [%bs.raw {| css(tw`
   sm:block
 
   w-full
-  sm:w-1/3
-  md:w-1/4
-  lg:w-1/6
+  sm:w-1/4
+  md:w-1/6
 
   h-screen
   z-10
@@ -34,9 +32,8 @@ let sidemenuClass = [%bs.raw {| css(tw`
 
 let sidemenuEmptyClass = [%bs.raw {| css(tw`
   w-full
-  sm:w-1/3
-  md:w-1/4
-  lg:w-1/6
+  sm:w-1/4
+  md:w-1/6
 `)|}];
 
 let make =

@@ -2,6 +2,7 @@ import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLString,
+  GraphQLFloat,
   GraphQLID
 } from 'graphql';
 
@@ -19,6 +20,15 @@ const nutrientToUnit = {
   dietaryFiber: "g",
   sugars: "g",
   protein: "g"
+};
+
+const recommendedDailyValue = {
+  totalFat: 65,
+  saturatedFat: 20,
+  cholesterol: 300,
+  sodium: 2400,
+  totalCarb: 300,
+  dietaryFiber: 25,
 };
 
 // idObj is id: String
@@ -39,6 +49,10 @@ export const {Type, Connection} = fullTypeDefinition(
       unit: {
         type: GraphQLString,
         resolve: async (idObj, args, context) => nutrientToUnit[idObj],
+      },
+      recommendedDV: {
+        type: GraphQLFloat,
+        resolve: async (idObj, args, context) => recommendedDailyValue[idObj],
       },
     }),
     interfaces: () => [nodeInterface],

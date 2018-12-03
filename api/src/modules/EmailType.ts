@@ -9,8 +9,6 @@ import {
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 import { Loader as UserLoader } from '../model/UserModel';
 
-import _ from 'lodash';
-
 const TYPE_NAME = 'Email';
 
 // idObj is {id: String, email: String}

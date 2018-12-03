@@ -10,6 +10,9 @@ import { Loader as ItemLoader } from '../model/ItemModel';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
+import { camelToCapitalized } from '../utils/string';
+
+
 const TYPE_NAME = 'MacroNutrientAmount';
 import * as Nutrient from './NutrientType';
 
@@ -26,7 +29,7 @@ export const {Type, Connection} = fullTypeDefinition(
       },
       name: {
         type: GraphQLNonNull(GraphQLString),
-        resolve: async (idObj, args, context) => idObj.name,
+        resolve: async (idObj, args, context) => camelToCapitalized(idObj.name),
       },
       nutrient: {
         type: GraphQLNonNull(Nutrient.Type),

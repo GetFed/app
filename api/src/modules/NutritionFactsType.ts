@@ -112,6 +112,13 @@ export const {Type, Connection} = fullTypeDefinition(
           return {id: item._id, name: "sugars"};
         },
       },
+      addedSugar: {
+        type: GraphQLNonNull(MacroNutrientAmount.Type),
+        resolve: async (idObj, args, context) => {
+          const item = await ItemLoader.load(context, idObj);
+          return {id: item._id, name: "addedSugars"};
+        },
+      },
       protein: {
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {

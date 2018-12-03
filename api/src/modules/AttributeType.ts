@@ -6,11 +6,9 @@ import {
 } from 'graphql';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
+import { camelToUpperCase } from '../utils/string';
 
 const TYPE_NAME = 'Attribute';
-
-const camelToCapitalized = (str) => str.split(/(?=[A-Z])/).join(' ').toUpperCase();
-
 
 // idObj is id: String
 
@@ -25,7 +23,7 @@ export const {Type, Connection} = fullTypeDefinition(
       },
       name: {
         type: GraphQLNonNull(GraphQLString),
-        resolve: async (idObj, args, context) => camelToCapitalized(idObj),
+        resolve: async (idObj, args, context) => camelToUpperCase(idObj),
       },
     }),
     interfaces: () => [nodeInterface],

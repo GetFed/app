@@ -3,7 +3,7 @@ let css = Css.css;
 let tw = Css.tw;
 
 let menuItemContentClass = [%bs.raw {| css(tw`
-  sm:mx-16
+  sm:mx-4
 `)|}];
 let menuItemLayoutWrapperImageClass = [%bs.raw {| css(tw`
   w-full

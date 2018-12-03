@@ -10,6 +10,7 @@ import { Loader as ItemLoader } from '../model/ItemModel';
 import * as Nutrient from './NutrientType';
 
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
+import { camelToCapitalized } from '../utils/string';
 
 const TYPE_NAME = 'MineralNutrientAmount';
 
@@ -26,7 +27,7 @@ export const {Type, Connection} = fullTypeDefinition(
       },
       name: {
         type: GraphQLNonNull(GraphQLID),
-        resolve: async (idObj, args, context) => idObj.name,
+        resolve: async (idObj, args, context) => camelToCapitalized(idObj.name),
       },
       nutrient: {
         type: GraphQLNonNull(Nutrient.Type),

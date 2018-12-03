@@ -4,6 +4,7 @@ let css = Css.css;
 let cx = Css.cx;
 let tw = Css.tw;
 let macroNutrientAmountClass = [%bs.raw {| css(tw`
+  pl-2
 `)|}];
 
 let make = (~data as mineralNutrientAmount : MineralNutrientAmount.Model.Record.t, _children) => {
@@ -11,6 +12,7 @@ let make = (~data as mineralNutrientAmount : MineralNutrientAmount.Model.Record.
   render: _self =>
     <div className=macroNutrientAmountClass>
       {ReasonReact.string(mineralNutrientAmount.data.name ++ " ")}
-      {ReasonReact.string(mineralNutrientAmount.data.percentageDailyValue |> string_of_float)}
+      {ReasonReact.string(mineralNutrientAmount.data.percentageDailyValue |> Utils.String.nutritionPrecision)}
+      {ReasonReact.string("%, ")}
     </div>,
 };

@@ -12,6 +12,7 @@ type _data = {
   totalCarbohydrateId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
   dietaryFiberId: option(Schema.MacroNutrientAmount.idAsType(Schema.modelIdType)),
   sugarId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
+  addedSugarId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
   proteinId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
   mineralIds: list(option(Schema.MineralNutrientAmount.idAsType(Schema.modelIdType))),
   /* UI */
@@ -43,6 +44,7 @@ module GraphFragment = [%graphql
       totalCarbohydrate{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       dietaryFiber{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       sugar{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
+      addedSugar{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       protein{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
       minerals{
         edges{
@@ -75,6 +77,7 @@ let _defaultData = id => {
   totalCarbohydrateId: MacroNutrientAmount.Model.idToTypedId(id),
   dietaryFiberId: None,
   sugarId: MacroNutrientAmount.Model.idToTypedId(id),
+  addedSugarId: MacroNutrientAmount.Model.idToTypedId(id),
   proteinId: MacroNutrientAmount.Model.idToTypedId(id),
   mineralIds: [],
   /* UI */
@@ -108,6 +111,7 @@ module Record = {
       totalCarbohydrateId: obj##totalCarbohydrate |> MacroNutrientAmount.Model.objectToId,
       dietaryFiberId: obj##dietaryFiber |> Belt.Option.map(_, (data) => data |> MacroNutrientAmount.Model.objectToId),
       sugarId: obj##sugar |> MacroNutrientAmount.Model.objectToId,
+      addedSugarId: obj##addedSugar |> MacroNutrientAmount.Model.objectToId,
       proteinId: obj##protein |> MacroNutrientAmount.Model.objectToId,
       mineralIds: obj##minerals |> ModelUtils.getConnectionList(_, MineralNutrientAmount.Model.objectToId),
     };

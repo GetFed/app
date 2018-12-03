@@ -12,8 +12,6 @@ import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
 import * as Restriction from './RestrictionType';
 
-import _ from 'lodash';
-
 const TYPE_NAME = 'Diet';
 
 import * as Diet from '../model/non_standard/DietModel';
