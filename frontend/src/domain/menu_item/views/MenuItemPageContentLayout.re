@@ -83,7 +83,6 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, _children) => {
             })
           })
         }
-        
       </div>
     }
 };

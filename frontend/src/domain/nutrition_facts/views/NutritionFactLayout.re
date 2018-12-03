@@ -100,7 +100,10 @@ let make = (~data as nutritionFacts : NutritionFacts.Model.Record.t, _children) 
       <div className=nutritionFactLayoutFirstSectionClass>
         <div className=nutritionFactSeparatorClass>
           <div className=nutritionFactWordsTextClass>
-            {ReasonReact.string("Nutrition Facts")}
+            {ReasonReact.string("Nutrition")}
+          </div>
+          <div className=nutritionFactWordsTextClass>
+            {ReasonReact.string("Facts")}
           </div>
         </div>
         <div className=nutritionFactSeparatorClass>

@@ -16,7 +16,13 @@ let foodAttributesLayoutTextSpaceClass = [%bs.raw {| css(tw`
 `)|}];
 
 let foodAttributesLayoutNutritionalFactsClass = [%bs.raw {| css(tw`
-  mb-8
+  mb-2
+`)|}];
+
+let foodAttributesLayoutIngredientClass = [%bs.raw {| css(tw`
+  flex
+  flex-wrap
+  mb-2
 `)|}];
 
 let make = (~data as food : Food.Model.Record.t, _children) => {
@@ -62,7 +68,7 @@ let make = (~data as food : Food.Model.Record.t, _children) => {
           )
         }
       </div>
-      <div>
+      <div className=foodAttributesLayoutIngredientClass>
         {
           food.data.ingredientIds
           |> Utils.List.removeOptionsFromList
@@ -71,6 +77,7 @@ let make = (~data as food : Food.Model.Record.t, _children) => {
           |> Belt.List.map(_, (ingredient) => <IngredientText data=ingredient />)
           |> Utils.ReasonReact.listToReactArray
         }
+        {ReasonReact.string("*Organic")}
       </div>
     </div>,
 };

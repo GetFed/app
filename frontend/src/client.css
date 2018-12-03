@@ -60,5 +60,9 @@ body {
 
 .object-contain {
   object-fit: contain;
-};
+}
+
+.text-shadow {
+  text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.8);
+}
 /* purgecss end ignore */

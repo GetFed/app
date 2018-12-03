@@ -8,7 +8,6 @@ let menuItemLayoutClass = [%bs.raw {| css(tw`
   overflow-hidden
   shadow-lg
   flex
-  h-full
   sm:flex-col
 `)|}];
 
