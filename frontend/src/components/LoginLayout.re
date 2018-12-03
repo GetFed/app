@@ -1,7 +1,45 @@
 let css = Css.css;
 let tw = Css.tw;
+
 let loginLayoutClass = [%bs.raw
-  {| css(tw` bg-green h-64`)|}
+  {| css(tw`
+    w-full
+    h-full
+    p-32
+    flex
+    justify-center
+  `)|}
+];
+
+let loginLayoutInternalClass = [%bs.raw
+  {| css(tw`
+    bg-white
+    h-full
+    w-64
+    px-4
+    py-32
+    flex
+    flex-col
+    justify-center
+  `)|}
+];
+
+let loginButtons = [%bs.raw
+{| css(tw`
+  flex
+  justify-between
+`)|}
+];
+
+let loginButton = [%bs.raw
+{| css(tw`
+`)|}
+];
+
+let loginTextInput = [%bs.raw
+{| css(tw`
+  mb-4
+`)|}
 ];
 
 type state = {
@@ -15,6 +53,23 @@ type action =
 
 let component = ReasonReact.reducerComponent("LoginLayout");
 
+let loginButtonOnClick = (state : state, accountSend, successClick) =>
+  {
+    accountSend(Accounts.AccountWithPromise(
+      Login({
+        "password": state.password,
+        "user": { "email": state.email },
+        "code": ""
+      }),
+      (userId : option(string)) =>
+        Js.Promise.make((~resolve, ~reject) => {
+          /* TODO OVER HERE HANDLE ERRORS FOR LOGIN */
+          userId !== None ? successClick() : ();
+          resolve(. true);
+        })
+    ))
+  };
+
 let make = (~accountSend, ~successClick, _children) => {
   ...component,
   initialState: () => {email: "", password: ""},
@@ -25,28 +80,41 @@ let make = (~accountSend, ~successClick, _children) => {
     },
   render: self =>
     <div className=loginLayoutClass>
-      <TextInput value=self.state.email onTextChange=((email) => self.send(UpdateEmail(email)) |> Js.Promise.resolve) placeholder="Email" />
-      <TextInput value=self.state.password onTextChange=((password) => self.send(UpdatePassword(password)) |> Js.Promise.resolve) type_="password" placeholder="Password" />
-      <Button
-        onClick=(() =>
-          {
-            accountSend(Accounts.AccountWithPromise(
-              Login({
-                "password": self.state.password,
-                "user": { "email": self.state.email },
-                "code": ""
-              }),
-              (userId : option(string)) =>
-                Js.Promise.make((~resolve, ~reject) => {
-                  /* OVER HERE HANDLE ERRORS FOR LOGIN */
-                  userId !== None ? successClick() : ();
-                  resolve(. true);
-                })
-            ))
-          })
-        theme=CTA
-      >
-        {ReasonReact.string("Login abc")}
-      </Button>
+      <div className=loginLayoutInternalClass>
+        <div>
+          <div className=loginTextInput>
+            <FedTextInput
+              value=self.state.email
+              onTextChange=((email) => self.send(UpdateEmail(email)) |> Js.Promise.resolve)
+              placeholder="Email"
+            />
+          </div>
+          <div className=loginTextInput>
+            <FedTextInput
+              value=self.state.password
+              onTextChange=((password) => self.send(UpdatePassword(password)) |> Js.Promise.resolve)
+              type_="password"
+              placeholder="Password"
+            />
+          </div>
+          <div className=loginButtons>
+            <div>
+              <FedButton
+                onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
+              >
+                {ReasonReact.string("Sign In")}
+              </FedButton>
+            </div>
+            <div>
+              <FedButton
+                color=GREY
+                onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
+              >
+                {ReasonReact.string("Join (x)")}
+              </FedButton>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   };

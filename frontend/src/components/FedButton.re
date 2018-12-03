@@ -1,6 +1,7 @@
 let component = ReasonReact.statelessComponent("FedButton");
 
 let css = Css.css;
+let cx = Css.cx;
 let tw = Css.tw;
 
 let dietButtonClass = [%bs.raw {| css(tw`
@@ -14,10 +15,28 @@ let dietButtonClass = [%bs.raw {| css(tw`
   w-full
 `)|}];
 
-let make = (~onClick, children) => {
+let colorClassGreen = [%bs.raw {| css(tw`
+  bg-green-darker
+`)|}];
+
+let colorClassGrey = [%bs.raw {| css(tw`
+  bg-grey-darker
+`)|}];
+
+type color =
+  | GREEN
+  | GREY;
+
+let colorClass = (color : color) =>
+  switch(color) {
+  | GREEN => colorClassGreen
+  | GREY => colorClassGrey
+  };
+
+let make = (~onClick, ~color=GREEN, children) => {
   ...component,
   render: _self =>
-   <button className=dietButtonClass onClick>
+   <button className=cx(dietButtonClass, colorClass(color)) onClick>
      {children |> ReasonReact.array}
    </button>
 };

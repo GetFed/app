@@ -33,8 +33,8 @@ let modalInternalClass = [%bs.raw
   {| css(tw`
   w-2/3
   flex
-  bg-white
   pointer-events-auto
+  justify-center
 `)
 |}
 ];
