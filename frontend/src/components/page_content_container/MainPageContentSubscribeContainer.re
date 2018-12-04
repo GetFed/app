@@ -33,10 +33,12 @@ let mainPageContentSubscribeDietClass = [%bs.raw {| css(tw`
 
 let mainPageContentSubscribeRestrictionClass = [%bs.raw {| css(tw`
   h-24
+  md:h-32
 `)|}];
 
 let mainPageContentSubscribeRestrictionTextClass = [%bs.raw {| css(tw`
   w-24
+  md:w-32
 `)|}];
 
 let mainPageContentSubscribeButtonClass = [%bs.raw {| css(tw`
