@@ -32,16 +32,20 @@ let mainPageContentSubscribeDietClass = [%bs.raw {| css(tw`
 `)|}];
 
 let mainPageContentSubscribeRestrictionClass = [%bs.raw {| css(tw`
-  h-16
+  h-24
 `)|}];
 
 let mainPageContentSubscribeRestrictionTextClass = [%bs.raw {| css(tw`
-  w-16
+  w-24
 `)|}];
 
 let mainPageContentSubscribeButtonClass = [%bs.raw {| css(tw`
   flex
-  flex-between
+  justify-between
+`)|}];
+
+let mainPageContentSubscribeSingleButtonClass = [%bs.raw {| css(tw`
+  w-48
 `)|}];
 
 let make = (_children) => {
@@ -91,12 +95,16 @@ let make = (_children) => {
               </div>
               <div className=mainPageContentSubscribeSectionTextClass>
                 <div className=mainPageContentSubscribeButtonClass>
-                  <FedButton onClick=((_) => ())>
-                    {ReasonReact.string("Cancel")}
-                  </FedButton>
-                  <FedButton onClick=((_) => ())>
-                    {ReasonReact.string("Save")}
-                  </FedButton>
+                  <div className=mainPageContentSubscribeSingleButtonClass>
+                    <FedButton onClick=((_) => ())>
+                      {ReasonReact.string("Cancel")}
+                    </FedButton>
+                  </div>
+                  <div className=mainPageContentSubscribeSingleButtonClass>
+                    <FedButton onClick=((_) => ())>
+                      {ReasonReact.string("Save")}
+                    </FedButton>
+                  </div>
                 </div>
               </div>
             </div>

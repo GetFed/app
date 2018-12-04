@@ -47,10 +47,6 @@ let make = (
   ...component,
   render: _self =>
     {
-      Js.log("restriction.data.id = ");
-      Js.log(restriction.data.id);
-      Js.log("restricted = ");
-      Js.log(restricted);
       <div
         className=restrictionCheckerClass
         onClick=((_) => updateRestriction(`RestrictionId(restriction.data.id), !restricted))
