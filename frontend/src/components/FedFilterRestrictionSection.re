@@ -1,21 +1,25 @@
 let component = ReasonReact.statelessComponent("FedFilterRestrictionSection");
 
 let css = Css.css;
+let cx = Css.cx;
 let tw = Css.tw;
 
 let fedFilterRestrictionSectionClass = [%bs.raw {| css(tw`
   flex
+  flex-wrap
   h-full
 `)|}];
 
 let fedFilterRestrictionSectionItemClass = [%bs.raw {| css(tw`
   max-h-full
-  w-10
   mx-2
+  h-16
 `)|}];
 
 let make = (
   ~selectedRestrictions: list(Restriction.Model.idType),
+  ~restrictionClass="",
+  ~restrictionTextClass="",
   ~updateRestriction: ((Restriction.Model.idType, bool) => unit),
   _children
 ) => {
@@ -31,13 +35,14 @@ let make = (
               restrictionsId
               |> Restriction.Container.getRecordById
               |> Belt.Option.map(_, (restriction) => 
-                <div className=fedFilterRestrictionSectionItemClass>
+                <div className=cx(fedFilterRestrictionSectionItemClass, restrictionClass)>
                   <RestrictionChecker
                     data=restriction
                     updateRestriction
                     restricted=(
                       Belt.List.getBy(selectedRestrictions, (id) => id == `RestrictionId(restriction.data.id)) != None
                     )
+                    restrictionTextClass
                   />
                 </div>
               )

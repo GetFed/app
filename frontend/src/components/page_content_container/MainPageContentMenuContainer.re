@@ -3,7 +3,7 @@ let css = Css.css;
 let tw = Css.tw;
 
 let mainPageContentFedFilterClass = [%bs.raw {| css(tw`
-  mb-4
+  mb-2
 `)|}];
 
 type action =

@@ -1,6 +1,7 @@
 let component = ReasonReact.statelessComponent("RestrictionChecker");
 
 let css = Css.css;
+let cx = Css.cx;
 let tw = Css.tw;
 
 let restrictionCheckerClass = [%bs.raw {| css(tw`
@@ -40,6 +41,7 @@ let make = (
   ~data as restriction: Restriction.Model.Record.t,
   ~restricted: bool,
   ~updateRestriction: ((Restriction.Model.idType, bool) => unit),
+  ~restrictionTextClass="",
   _children
 ) => {
   ...component,
@@ -50,10 +52,10 @@ let make = (
       Js.log("restricted = ");
       Js.log(restricted);
       <div
-      className=restrictionCheckerClass
-      onClick=((_) => updateRestriction(`RestrictionId(restriction.data.id), !restricted))
-    >
-      <div className=restrictionImageAreaClass>
+        className=restrictionCheckerClass
+        onClick=((_) => updateRestriction(`RestrictionId(restriction.data.id), !restricted))
+      >
+        <div className=restrictionImageAreaClass>
         {
           switch(restriction.data.image){
           | Some(image) => <img className=restrictionCheckerImageClass src=Utils.Fed.legacyFedUrl(image) />
@@ -72,7 +74,7 @@ let make = (
           }
         }
       </div>
-      <div className=restrictionCheckerTextClass>
+      <div className=cx(restrictionCheckerTextClass, restrictionTextClass)>
         {ReasonReact.string(restriction.data.id)}
       </div>
     </div>
