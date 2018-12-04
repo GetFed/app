@@ -42,6 +42,7 @@ let mainPageContentSubscribeRestrictionTextClass = [%bs.raw {| css(tw`
 let mainPageContentSubscribeButtonClass = [%bs.raw {| css(tw`
   flex
   justify-between
+  flex-wrap
 `)|}];
 
 let mainPageContentSubscribeSingleButtonClass = [%bs.raw {| css(tw`
