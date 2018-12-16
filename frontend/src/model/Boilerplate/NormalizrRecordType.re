@@ -156,13 +156,13 @@ module Wrapper = {
     let apolloEnabled = true;
   };
 
-  module Food = {
-    type model = Food.Model.Record.t;
-    type record = [`Food(model)];
-    let wrap = model => `Food(model);
+  module IngredientBaseSpread = {
+    type model = IngredientBaseSpread.Model.Record.t;
+    type record = [`IngredientBaseSpread(model)];
+    let wrap = model => `IngredientBaseSpread(model);
     let unwrap = recordType =>
       switch (recordType) {
-      | `Food(model) => Some(model)
+      | `IngredientBaseSpread(model) => Some(model)
       | _ => None
       };
     let apolloEnabled = true;
@@ -195,8 +195,8 @@ type t = [
   | Wrapper.Nutrient.record
   | Wrapper.Attribute.record
   | Wrapper.Ingredient.record
+  | Wrapper.IngredientBaseSpread.record
   | Wrapper.FoodProduct.record
-  | Wrapper.Food.record
   | Wrapper.ProductBase.record
 ];
 
@@ -214,7 +214,7 @@ let modelTypeToRecordType = (recordType: t): (Schema.schemaType, UUID.t) =>
   | `Nutrient(data) => (Schema.Nutrient.schema, data.data.id)
   | `Attribute(data) => (Schema.Attribute.schema, data.data.id)
   | `Ingredient(data) => (Schema.Ingredient.schema, data.data.id)
+  | `IngredientBaseSpread(data) => (Schema.IngredientBaseSpread.schema, data.data.id)
   | `FoodProduct(data) => (Schema.FoodProduct.schema, data.data.id)
-  | `Food(data) => (Schema.Food.schema, data.data.id)
   | `ProductBase(data) => (Schema.ProductBase.schema, data.data.id)
   };

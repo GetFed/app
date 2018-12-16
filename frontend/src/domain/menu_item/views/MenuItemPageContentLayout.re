@@ -77,9 +77,9 @@ let make = (~data as menuItem : MenuItem.Model.Record.t, _children) => {
           |> FoodProduct.Container.getRecordById
           |> Belt.Option.mapWithDefault(_, <div/>, (foodProduct) => {
             foodProduct.data.foodId
-            |> Food.Container.getRecordById
+            |> Ingredient.Container.getRecordById
             |> Belt.Option.mapWithDefault(_, <div/>, (food) => {
-              <FoodAttributesLayout data=food />
+              <IngredientAttributesLayout data=food />
             })
           })
         }

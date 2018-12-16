@@ -8,7 +8,6 @@ type _local = unit;
 type _record = RecordType.t(_data, _local);
 
 let fragmentType = "ProductBase";
-let fragmentName = "productBaseFields";
 module ModelSchema = Schema.ProductBase;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -27,6 +26,8 @@ module Fragment = {
   include GraphFragment;
   module Fields = GraphFragment.ProductBaseFields;
 };
+
+let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {

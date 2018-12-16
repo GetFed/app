@@ -41,9 +41,9 @@ let make = (~data as menu : Menu.Model.Record.t, ~restrictions: list(Restriction
           |> FoodProduct.Container.getRecordById
           |> Belt.Option.mapWithDefault(_, true, (foodProduct) =>
             foodProduct.data.foodId
-            |> Food.Container.getRecordById
-            |> Belt.Option.mapWithDefault(_, true, (food) =>
-              food.data.restrictionIds
+            |> Ingredient.Container.getRecordById
+            |> Belt.Option.mapWithDefault(_, true, (ingredient) =>
+              ingredient.data.restrictionIds
               |> Belt.Option.mapWithDefault(_, true, (restrictionIds) =>
                 !(
                   restrictionIds

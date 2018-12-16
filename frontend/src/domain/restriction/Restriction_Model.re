@@ -9,7 +9,6 @@ type _local = unit;
 type _record = RecordType.t(_data, _local);
 
 let fragmentType = "Restriction";
-let fragmentName = "restrictionFields";
 module ModelSchema = Schema.Restriction;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -29,6 +28,8 @@ module Fragment = {
   include GraphFragment;
   module Fields = GraphFragment.RestrictionFields;
 };
+
+let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {

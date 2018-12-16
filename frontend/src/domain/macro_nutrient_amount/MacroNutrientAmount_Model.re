@@ -10,7 +10,7 @@ type _local = unit;
 type _record = RecordType.t(_data, _local);
 
 let fragmentType = "MacroNutrientAmount";
-let fragmentName = "macroNutrientAmountFields";
+
 module ModelSchema = Schema.MacroNutrientAmount;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -33,6 +33,7 @@ module Fragment = {
   include GraphFragment;
   module Fields = GraphFragment.MacroNutrientAmountFields;
 };
+let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {

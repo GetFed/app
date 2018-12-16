@@ -89,17 +89,17 @@ module Ingredient = {
   type idAsType('a) = [> | idType] as 'a;
 };
 
+module IngredientBaseSpread = {
+  type schemaType = [`IngredientBaseSpreadSchema];
+  type idType = [`IngredientBaseSpreadId(UUID.t)];
+  let schema: [> schemaType] = `IngredientBaseSpreadSchema;
+  type idAsType('a) = [> | idType] as 'a;
+};
+
 module FoodProduct = {
   type schemaType = [`FoodProductSchema];
   type idType = [`FoodProductId(UUID.t)];
   let schema: [> schemaType] = `FoodProductSchema;
-  type idAsType('a) = [> | idType] as 'a;
-};
-
-module Food = {
-  type schemaType = [`FoodSchema];
-  type idType = [`FoodId(UUID.t)];
-  let schema: [> schemaType] = `FoodSchema;
   type idAsType('a) = [> | idType] as 'a;
 };
 
@@ -125,8 +125,8 @@ type modelIdType = [
   | Nutrient.idType
   | Attribute.idType
   | Ingredient.idType
+  | IngredientBaseSpread.idType
   | FoodProduct.idType
-  | Food.idType
   | ProductBase.idType
 ];
 
@@ -149,8 +149,8 @@ type schemaType = [
   | Nutrient.schemaType
   | Attribute.schemaType
   | Ingredient.schemaType
+  | IngredientBaseSpread.schemaType
   | FoodProduct.schemaType
-  | Food.schemaType
   | ProductBase.schemaType
 ];
 
@@ -170,10 +170,9 @@ let modelIdToIdFunction = (recordIdType: modelIdType): (schemaType, UUID.t) =>
   | `NutrientId(uuid) => (Nutrient.schema, uuid)
   | `AttributeId(uuid) => (Attribute.schema, uuid)
   | `IngredientId(uuid) => (Ingredient.schema, uuid)
+  | `IngredientBaseSpreadId(uuid) => (IngredientBaseSpread.schema, uuid)
   | `FoodProductId(uuid) => (FoodProduct.schema, uuid)
-  | `FoodId(uuid) => (Food.schema, uuid)
   | `ProductBaseId(uuid) => (ProductBase.schema, uuid)
-  | `IngredientId(uuid) => (ProductBase.schema, uuid)
   };
 
 /* can come from normalizr module */

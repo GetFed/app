@@ -7,11 +7,11 @@ let ingredientTextClass = [%bs.raw {| css(tw`
 `)|}];
 
 
-let make = (~data as ingredient : Ingredient.Model.Record.t, _children) => {
+let make = (~data as ingredient : IngredientBaseSpread.Model.Record.t, _children) => {
   ...component,
   render: _self => {
     <div className=ingredientTextClass>
-     {ReasonReact.string("*" ++ ingredient.data.name ++ ", ")}
+      {ReasonReact.string("*" ++ ingredient.data.name ++ ", ")}
     </div>
   },
 };

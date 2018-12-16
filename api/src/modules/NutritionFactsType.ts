@@ -27,6 +27,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(GraphQLID),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return idObj;}
           return item._id;
         },
       },
@@ -34,6 +35,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return 0;}
           return item.nutrition_facts.servingSize || 0;
         },
       },
@@ -48,6 +50,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(GraphQLFloat),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return 0;}
           return item.nutrition_facts.calories || 0;
         },
       },
@@ -59,6 +62,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "totalFat"};}
           return {id: item._id, name: "totalFat"};
         },
       },
@@ -66,6 +70,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "saturatedFat"};}
           return {id: item._id, name: "saturatedFat"};
         },
       },
@@ -73,6 +78,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: MacroNutrientAmount.Type,
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "transFat"};}
           return {id: item._id, name: "transFat"};
         },
       },
@@ -80,6 +86,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "cholesterol"};}
           return {id: item._id, name: "cholesterol"};
         },
       },
@@ -87,6 +94,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "sodium"};}
           return {id: item._id, name: "sodium"};
         },
       },
@@ -94,6 +102,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "totalCarb"};}
           return {id: item._id, name: "totalCarb"};
         },
       },
@@ -101,6 +110,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: MacroNutrientAmount.Type,
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "dietaryFiber"};}
           return {id: item._id, name: "dietaryFiber"};
         },
       },
@@ -108,6 +118,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "sugars"};}
           return {id: item._id, name: "sugars"};
         },
       },
@@ -115,6 +126,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "addedSugars"};}
           return {id: item._id, name: "addedSugars"};
         },
       },
@@ -122,6 +134,7 @@ export const {Type, Connection} = fullTypeDefinition(
         type: GraphQLNonNull(MacroNutrientAmount.Type),
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
+          if(!item) {return {id: idObj, name: "protein"};}
           return {id: item._id, name: "protein"};
         },
       },
@@ -131,10 +144,12 @@ export const {Type, Connection} = fullTypeDefinition(
         resolve: async (idObj, args, context) => {
           const item = await ItemLoader.load(context, idObj);
 
-          const pvdNutrition = 
-            Object.entries(item.nutrition_facts.PDV)
-              .filter(([_, value]) => value)
-              .map(([key, _]) => ({id: item._id, name: key}));
+          const pvdNutrition =
+            item
+            ? Object.entries(item.nutrition_facts.PDV)
+                .filter(([_, value]) => value)
+                .map(([key, _]) => ({id: item._id, name: key}))
+            : [];
 
           return connectionFromArray(pvdNutrition, args);
         },

@@ -2,6 +2,10 @@ type _data = {
   id: UUID.t,
   name: string,
   /* UI */
+  restrictionIds: option(list(option(Schema.Restriction.idAsType(Schema.modelIdType)))),
+  ingredientIds: list(option(Schema.Ingredient.idAsType(Schema.modelIdType))),
+  attributeIds: list(option(Schema.Attribute.idAsType(Schema.modelIdType))),
+  nutritionFactsId: Schema.NutritionFacts.idAsType(Schema.modelIdType)
 };
 
 type _local = unit;
@@ -17,11 +21,38 @@ let idToTypedId = (id: UUID.t): idType => `IngredientId(id);
 module GraphFragment = [%graphql
   {|
     fragment ingredientFields on Ingredient {
+      ingredients {
+        edges {
+          node {
+            ...IngredientBaseSpread.Model.Fragment.Fields
+          }
+        }
+      }
       id
       name
+      restrictions {
+        edges {
+          node {
+            ...Restriction.Model.Fragment.Fields
+          }
+        }
+      }
+      nutritionFacts {
+        ...NutritionFacts.Model.Fragment.Fields
+      }
+      attributes {
+        edges {
+          node {
+            ...Attribute.Model.Fragment.Fields
+          }
+        }
+      }
     }
   |}
 ];
+
+/* ^ can't be recursive because it would be an infinite object */
+
 
 module Fragment = {
   include GraphFragment;
@@ -33,6 +64,10 @@ let _defaultData = id => {
   id: id,
   name: "",
   /* UI */
+  restrictionIds: None,
+  ingredientIds: [],
+  attributeIds: [],
+  nutritionFactsId: NutritionFacts.Model.idToTypedId(id),
 };
 
 let _defaultRecordId = id: _record => {
@@ -52,6 +87,17 @@ module Record = {
     let fromObject = (obj: Fragment.Fields.t): t => {
       id: obj##id,
       name: obj##name,
+      nutritionFactsId: obj##nutritionFacts |> NutritionFacts.Model.objectToId,
+      restrictionIds:
+        obj##restrictions
+        |> Belt.Option.map(_, (res) => ModelUtils.getConnectionList(res, Restriction.Model.objectToId)),
+      attributeIds:
+        obj##attributes
+        |> ModelUtils.getConnectionList(_, Attribute.Model.objectToId),
+      ingredientIds:
+        obj##ingredients
+        |> ModelUtils.getConnectionList(_, IngredientBaseSpread.Model.objectToId),
+      
     };
   };
 

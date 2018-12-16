@@ -13,7 +13,6 @@ module ModelSchema = Schema.MineralNutrientAmount;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
 let fragmentType = "MineralNutrientAmount";
-let fragmentName = "mineralNutrientAmountFields";
 let idToTypedId = (id: UUID.t): idType => `MineralNutrientAmountId(id);
 
 module GraphFragment = [%graphql
@@ -33,6 +32,8 @@ module Fragment = {
   include GraphFragment;
   module Fields = GraphFragment.MineralNutrientAmountFields;
 };
+
+let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {

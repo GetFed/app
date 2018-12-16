@@ -7,7 +7,6 @@ type _local = Teacher_Local.Model.Record.t;
 type _record = RecordType.t(_data, _local);
 
 let fragmentType = "Teacher";
-let fragmentName = "teacherFields";
 module ModelSchema = Schema.Teacher;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -25,6 +24,8 @@ module Fragment = {
   include GraphFragment;
   module Fields = GraphFragment.TeacherFields;
 };
+
+let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {

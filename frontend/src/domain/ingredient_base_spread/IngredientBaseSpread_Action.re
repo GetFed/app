@@ -2,7 +2,7 @@
 type action =
   | NoOp;
 
-type model = Food_Model.Record.t;
+type model = IngredientBaseSpread_Model.Record.t;
 
 let rec reduce = (action, promise: Js.Promise.t(model)): Js.Promise.t(model) =>
   promise

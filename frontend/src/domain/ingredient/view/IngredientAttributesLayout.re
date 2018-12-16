@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("FoodAttributesLayout");
+let component = ReasonReact.statelessComponent("IngredientAttributesLayout");
 
 let css = Css.css;
 let cx = Css.cx;
@@ -25,7 +25,7 @@ let foodAttributesLayoutIngredientClass = [%bs.raw {| css(tw`
   mb-2
 `)|}];
 
-let make = (~data as food : Food.Model.Record.t, _children) => {
+let make = (~data as food : Ingredient.Model.Record.t, _children) => {
   ...component,
   render: _self =>
     <div>
@@ -70,9 +70,11 @@ let make = (~data as food : Food.Model.Record.t, _children) => {
       </div>
       <div className=foodAttributesLayoutIngredientClass>
         {
+          Js.log("food.data.ingredientIds = ");
+          Js.log(food.data.ingredientIds);
           food.data.ingredientIds
           |> Utils.List.removeOptionsFromList
-          |> Belt.List.map(_, Ingredient.Container.getRecordById)
+          |> Belt.List.map(_, IngredientBaseSpread.Container.getRecordById)
           |> Utils.List.removeOptionsFromList
           |> Belt.List.map(_, (ingredient) => <IngredientText data=ingredient />)
           |> Utils.ReasonReact.listToReactArray

@@ -7,7 +7,7 @@ import {
 import { fullTypeDefinition, nodeInterface } from '../interface/NodeInterface';
 
 import * as ProductBase from './ProductBaseType';
-import * as Food from './FoodType';
+import * as Ingredient from './IngredientType';
 
 const TYPE_NAME = 'FoodProduct';
 
@@ -27,7 +27,7 @@ export const {Type, Connection} = fullTypeDefinition(
         resolve: async (idObj, args, context) => idObj,
       },
       food: {
-        type: GraphQLNonNull(Food.Type),
+        type: GraphQLNonNull(Ingredient.Type),
         resolve: async (idObj, args, context) => idObj,
       },
     }),

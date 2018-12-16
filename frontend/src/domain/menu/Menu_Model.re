@@ -8,7 +8,7 @@ type _local = unit;
 type _record = RecordType.t(_data, _local);
 
 let fragmentType = "Menu";
-let fragmentName = "menuFields";
+
 module ModelSchema = Schema.Menu;
 type idType = ModelSchema.idAsType(Schema.modelIdType);
 
@@ -33,6 +33,8 @@ module Fragment = {
   include GraphFragment;
   module Fields = GraphFragment.MenuFields;
 };
+
+let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
 let _defaultData = id => {

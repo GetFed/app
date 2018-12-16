@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("MenuItemCardLayout");
+let component = ReasonReact.statelessComponent("MenuItemPageContentLayout");
 
 let css = Css.css;
 let cx = Css.cx;
