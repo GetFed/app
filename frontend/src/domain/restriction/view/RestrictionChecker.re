@@ -9,6 +9,7 @@ let restrictionCheckerClass = [%bs.raw {| css(tw`
   flex-col
   h-full
   w-full
+  cursor-pointer
 `)|}];
 
 let restrictionCheckerImageClass = [%bs.raw {| css(tw`

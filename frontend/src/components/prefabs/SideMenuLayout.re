@@ -36,6 +36,7 @@ let sidemenuEmptyClass = [%bs.raw {| css(tw`
 
 let sidemenuTopContentClass = [%bs.raw {| css(tw`
   w-full
+  flex
   h-16
   sm:hidden
   z-30

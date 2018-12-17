@@ -6,6 +6,7 @@ let tw = Css.tw;
 let dietButtonClass = [%bs.raw {| css(tw`
   w-full
   flex
+  cursor-pointer
 `)|}];
 
 let dietButtonTextClass = [%bs.raw {| css(tw`

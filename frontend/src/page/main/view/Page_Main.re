@@ -5,6 +5,16 @@ type state = {modal: option(Page_Actions.modalType)};
 
 let component = ReasonReact.reducerComponent("PageMain");
 
+let topContentClass = [%bs.raw {| css(tw`
+  w-full
+  h-full
+  ml-6
+  text-green-darker
+  flex
+  items-center
+  text-2xl
+`)|}];
+
 let make = (~pathIds, _children) => {
   ...component,
   initialState: () => {modal: None},
@@ -40,6 +50,16 @@ let make = (~pathIds, _children) => {
           } 
         }>
           <SideMenuLayout
+            topContent=(
+              <div className=topContentClass>
+                {
+                  pathIds
+                  |> MenuLinkType.idToMenuLink
+                  |> MenuLinkType.menuLinkToText
+                  |> ReasonReact.string
+                }
+              </div>
+            )
             sideMenu=(
               <FedSideMenu
                 pathIds
