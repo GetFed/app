@@ -9,6 +9,8 @@ let mainPageContentHomeClass = cx(
     w-screen
     absolute
     pin-t
+    mt-16
+    sm:mt-0
     pin-l`)|}],
   [%bs.raw {| css(' z-index: -1 ') |}]
 );

@@ -15,10 +15,6 @@ let sideMenuInternalSeparatorClass = [%bs.raw {| css(tw`
   mb-12
 `)|}];
 
-
-
-
-
 let fedSigninLink = (openModal) =>
   <FedMenuItem key="signin" selected=(false)>
     <div key="signin-container" onClick=((_) => openModal())>

@@ -17,11 +17,9 @@ let sidemenuContentsClass = [%bs.raw {| css(tw`
 let sidemenuClass = [%bs.raw {| css(tw`
   hidden
   sm:block
-
   w-full
   sm:w-1/4
   md:w-1/6
-
   h-screen
   z-10
   fixed
