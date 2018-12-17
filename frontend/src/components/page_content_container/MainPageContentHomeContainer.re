@@ -38,11 +38,6 @@ let mainPageContentHomeTextAreaClass = [%bs.raw {| css(tw`
   pt-16
 `)|}];
 
-/* let mainPageContentHomeShadyAreaClass = [%bs.raw {| css(tw`
-  h-16
-  w-16
-`)|}]; */
-
 let mainPageContentHomeTextEatEverydayClass = [%bs.raw {| css(tw`
   text-white
   text-5xl

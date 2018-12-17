@@ -53,6 +53,20 @@ let sidemenuContentBackgroundClass = [%bs.raw {| css(tw`
   z-0
 `)|}];
 
+let hamburgerWrapperClass = [%bs.raw {| css(tw`
+  h-full
+  w-16
+  flex
+  justify-center
+  items-center
+`)|}];
+
+let hamburgerClass = [%bs.raw {| css(tw`
+  w-8
+  h-8
+  text-green-darker
+`)|}];
+
 type state = {
   openTopMenu: bool
 };
@@ -82,7 +96,9 @@ let make = (~sideMenu, ~topContent=?, children) => {
         <div className=sidemenuEmptyClass />
         <div className=sidemenuContentsClass>
           <div className=sidemenuTopContentClass>
-            <button onClick=((_) => self.send(ToggleMenu))>{ReasonReact.string("Toggle")}</button>
+            <div className=hamburgerWrapperClass onClick=((_) => self.send(ToggleMenu))>
+              <BarsIcon className=hamburgerClass />
+            </div>
             {Belt.Option.getWithDefault(topContent, <div/>)}
           </div>
           (children |> ReasonReact.array)
