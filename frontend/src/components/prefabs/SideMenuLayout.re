@@ -59,6 +59,7 @@ let hamburgerWrapperClass = [%bs.raw {| css(tw`
   flex
   justify-center
   items-center
+  cursor-pointer
 `)|}];
 
 let hamburgerClass = [%bs.raw {| css(tw`
