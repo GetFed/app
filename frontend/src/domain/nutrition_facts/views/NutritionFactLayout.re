@@ -3,13 +3,17 @@ let component = ReasonReact.statelessComponent("NutritionFactLayout");
 let css = Css.css;
 let cx = Css.cx;
 let tw = Css.tw;
-let nutritionFactLayoutClass = [%bs.raw {| css(tw`
-  p-2
-  border-2
-  border-black
-  border-solid
-  flex
-`)|}];
+let nutritionFactLayoutClass = 
+  cx(
+    [%bs.raw {| css(tw`
+      p-2
+      border-2
+      border-black
+      border-solid
+      flex
+    `)|}],
+    [%bs.raw {| css("font-size: .65rem; ")|}]
+  );
 
 let nutritionFactLayoutFirstSectionClass = [%bs.raw {| css(tw`
   w-1/6

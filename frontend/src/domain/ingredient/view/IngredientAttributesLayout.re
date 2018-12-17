@@ -5,6 +5,10 @@ let cx = Css.cx;
 let tw = Css.tw;
 
 let foodAttributesLayoutClass = [%bs.raw {| css(tw`
+  mx-4
+`)|}];
+
+let foodAttributesLayoutSectionClass = [%bs.raw {| css(tw`
   flex
   justify-center
   mb-4
@@ -28,8 +32,8 @@ let foodAttributesLayoutIngredientClass = [%bs.raw {| css(tw`
 let make = (~data as food : Ingredient.Model.Record.t, _children) => {
   ...component,
   render: _self =>
-    <div>
-      <div className=foodAttributesLayoutClass>
+    <div className=foodAttributesLayoutClass>
+      <div className=foodAttributesLayoutSectionClass>
         {
           food.data.attributeIds
           |> Utils.List.removeOptionsFromList
@@ -40,7 +44,7 @@ let make = (~data as food : Ingredient.Model.Record.t, _children) => {
           |> Utils.ReasonReact.listToReactArray
         }
       </div>
-      <div className=foodAttributesLayoutClass>
+      <div className=foodAttributesLayoutSectionClass>
         {
           food.data.restrictionIds
           |> Belt.Option.mapWithDefault(_, <div />, (restrictionIds) =>
