@@ -6,6 +6,8 @@ let component = ReasonReact.statelessComponent("FedFilterDietDropdown");
 
 let make = (
   ~diets: list(Diet.Model.idType),
+  ~size=FedButton.MEDIUM,
+  ~color=FedButton.GREEN,
   ~selectedDietId: Diet.Model.idType,
   ~updateDiet: ((Diet.Model.idType) => unit),
   _children
@@ -21,14 +23,14 @@ let make = (
           | Some(selectedId) =>
               `DietId(selectedId)
               |> Diet.Container.getRecordById
-              |> Belt.Option.mapWithDefault(_, <div/>, (diet) => <DietButton data=diet />)
+              |> Belt.Option.mapWithDefault(_, <div/>, (diet) => <DietButton size color data=diet />)
           | None => <div />
           }
       }
       toOptionButton={(selectedId) =>
         `DietId(selectedId)
         |> Diet.Container.getRecordById
-        |> Belt.Option.mapWithDefault(_, <div/>, (diet) => <DietButton data=diet />)
+        |> Belt.Option.mapWithDefault(_, <div/>, (diet) => <DietButton size color data=diet />)
       }
       afterSelect=((id) => `DietId(id) |> updateDiet)
     />

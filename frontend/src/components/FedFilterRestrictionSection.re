@@ -8,6 +8,7 @@ let fedFilterRestrictionSectionClass = [%bs.raw {| css(tw`
   flex
   flex-wrap
   h-full
+  w-full
 `)|}];
 
 let fedFilterRestrictionSectionItemClass = [%bs.raw {| css(tw`

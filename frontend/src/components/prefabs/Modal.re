@@ -6,6 +6,8 @@ let tw = Css.tw;
 let modalOverlayClass = [%bs.raw
   {| css(tw`
   fixed
+  pin-t
+  pin-l
   h-screen
   w-screen
   bg-grey-darkest
@@ -18,6 +20,8 @@ let modalOverlayClass = [%bs.raw
 let modalOuterClass = [%bs.raw
   {| css(tw`
   fixed
+  pin-t
+  pin-l
   w-screen
   h-screen
   z-50

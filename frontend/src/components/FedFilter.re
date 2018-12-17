@@ -4,8 +4,8 @@ let css = Css.css;
 let tw = Css.tw;
 
 let fedFilterClass = [%bs.raw {| css(tw`
-  h-12
   w-full
+  h-full
   bg-grey
   py-2
   px-4
@@ -25,6 +25,7 @@ let fedFilterDietClass = [%bs.raw {| css(tw`
   flex
   items-center
   flex-no-grow
+  mr-8
 `)|}];
 
 let fedFilterRestrictionClass = [%bs.raw {| css(tw`

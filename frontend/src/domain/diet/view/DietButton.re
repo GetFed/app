@@ -18,10 +18,10 @@ type chevronDirection =
   | Down
   | None;
 
-let make = (~data as diet : Diet.Model.Record.t, ~chevron=None, ~onClick=((_) => ()), _children) => {
+let make = (~data as diet : Diet.Model.Record.t, ~chevron=None, ~size=FedButton.MEDIUM,  ~color=FedButton.GREY, ~onClick=((_) => ()), _children) => {
   ...component,
   render: _self =>
-    <FedButton onClick>
+    <FedButton size color onClick>
       <div key="dietButton" className=dietButtonClass>
         <div className=dietButtonTextClass>
           {ReasonReact.string(diet.data.name)}

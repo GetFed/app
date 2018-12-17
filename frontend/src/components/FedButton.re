@@ -20,7 +20,9 @@ let colorClassGreen = [%bs.raw {| css(tw`
 `)|}];
 
 let colorClassGrey = [%bs.raw {| css(tw`
-  bg-grey-darker
+  bg-grey
+  text-green-darker
+  hover:text-white
 `)|}];
 
 let mediumClass = [%bs.raw {| css(tw`
