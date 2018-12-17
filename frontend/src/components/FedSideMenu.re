@@ -55,13 +55,16 @@ let make = (~pathIds, ~accountSend, ~authUserId, ~updateMain, _children) => {
             : <div key="none" />
         }
         <div key="separator" className=sideMenuInternalSeparatorClass />
-        <FedMenuItem selected=(menuLink == ABOUT_US)>
-          <FedMenuLink key="about-us"  href="/about-us" text=MenuLinkType.menuLinkToText(ABOUT_US) /> 
-        </FedMenuItem>
-
-        <FedMenuItem selected=(menuLink == SUPPORT)>
-          <FedMenuLink key="support"  href="/support" text=MenuLinkType.menuLinkToText(SUPPORT) /> 
-        </FedMenuItem>
+        /*
+          <FedMenuItem selected=(menuLink == ABOUT_US)>
+            <FedMenuLink key="about-us"  href="/about-us" text=MenuLinkType.menuLinkToText(ABOUT_US) /> 
+          </FedMenuItem>
+        */
+        /*
+          <FedMenuItem selected=(menuLink == SUPPORT)>
+            <FedMenuLink key="support"  href="/support" text=MenuLinkType.menuLinkToText(SUPPORT) /> 
+          </FedMenuItem>
+        */
         <Query.Me.Container key="me-container" userId=authUserId loadingComponent=fedSigninLink(() => updateMain(Page_Actions.OpenLoginModal))>
           ...{(~me) =>
             Belt.Option.mapWithDefault(me, ReasonReact.string("Me Query Failure"), (me) =>

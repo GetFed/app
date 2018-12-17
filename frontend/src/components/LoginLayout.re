@@ -6,6 +6,7 @@ let loginLayoutClass = [%bs.raw
     bg-white
     h-full
     px-32
+    py-8
     flex
     flex-col
     justify-center
@@ -19,6 +20,7 @@ let loginLayoutClass = [%bs.raw
 let loginLayoutSigninText = [%bs.raw
 {| css(tw`
   h-32
+  pb-8
   flex
   justify-center
   items-center
