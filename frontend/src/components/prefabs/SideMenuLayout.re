@@ -1,6 +1,5 @@
-let component = ReasonReact.statelessComponent("SideMenuLayout");
-
 let css = Css.css;
+let cx = Css.cx;
 let tw = Css.tw;
 
 let sidemenuLayoutClass = [%bs.raw {| css(tw`
@@ -10,7 +9,6 @@ let sidemenuLayoutClass = [%bs.raw {| css(tw`
 `)|}];
 
 let sidemenuContentsClass = [%bs.raw {| css(tw`
-  
   w-full
   sm:w-3/4
   md:w-5/6
@@ -36,17 +34,57 @@ let sidemenuEmptyClass = [%bs.raw {| css(tw`
   md:w-1/6
 `)|}];
 
-let make =
-    (~sideMenu, children) => {
+let sidemenuTopContentClass = [%bs.raw {| css(tw`
+  w-full
+  h-16
+  sm:hidden
+  z-30
+  bg-white
+`)|}];
+
+let openedSideMenuClass = [%bs.raw {| css(tw`
+  w-3/4
+  block
+  bg-white
+  mt-16
+`)|}];
+
+let sidemenuContentBackgroundClass = [%bs.raw {| css(tw`
+  z-0
+`)|}];
+
+type state = {
+  openTopMenu: bool
+};
+
+type action =
+  | ToggleMenu;
+
+let defaultState = {
+  openTopMenu: false
+};
+
+let component = ReasonReact.reducerComponent("SideMenuLayout");
+
+let make = (~sideMenu, ~topContent=?, children) => {
   ...component,
-  render: _self =>
+  initialState: () => defaultState,
+  reducer: (action, state: state) =>
+    switch (action) {
+    | ToggleMenu => ReasonReact.Update({openTopMenu: !state.openTopMenu})
+    },
+  render: self =>
     <div>
-      <div className=sidemenuClass>
+      <div className=cx(sidemenuClass, self.state.openTopMenu ? openedSideMenuClass : "")>
         {sideMenu}
       </div>
       <div key="sidemenuLayout" className=sidemenuLayoutClass>
         <div className=sidemenuEmptyClass />
         <div className=sidemenuContentsClass>
+          <div className=sidemenuTopContentClass>
+            <button onClick=((_) => self.send(ToggleMenu))>{ReasonReact.string("Toggle")}</button>
+            {Belt.Option.getWithDefault(topContent, <div/>)}
+          </div>
           (children |> ReasonReact.array)
         </div>
       </div>

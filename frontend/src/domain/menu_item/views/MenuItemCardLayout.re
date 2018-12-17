@@ -4,7 +4,7 @@ let css = Css.css;
 let cx = Css.cx;
 let tw = Css.tw;
 let menuItemLayoutClass = [%bs.raw {| css(tw`
-  max-w-sm
+  w-full
   overflow-hidden
   shadow-lg
   flex

@@ -1,14 +1,17 @@
 let component = ReasonReact.statelessComponent("MainPageContentHomeContainer");
 
 let css = Css.css;
+let cx = Css.cx;
 let tw = Css.tw;
 
-let mainPageContentHomeClass = [%bs.raw {| css(tw`
-  w-screen
-  absolute
-  pin-t
-  pin-l
-`)|}];
+let mainPageContentHomeClass = cx(
+  [%bs.raw {| css(tw`
+    w-screen
+    absolute
+    pin-t
+    pin-l`)|}],
+  [%bs.raw {| css(' z-index: -1 ') |}]
+);
 
 let backgroundImageClass = [%bs.raw {| css(tw`
   w-full
