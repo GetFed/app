@@ -20,21 +20,10 @@ let modalOuterClass = [%bs.raw
   fixed
   w-screen
   h-screen
+  z-50
   flex
   justify-center
   items-center
-  pointer-events-none
-  z-50
-`)
-|}
-];
-
-let modalInternalClass = [%bs.raw
-  {| css(tw`
-  w-2/3
-  flex
-  pointer-events-auto
-  justify-center
 `)
 |}
 ];
@@ -52,15 +41,20 @@ let make =
       {
         switch (modalSelect) {
         | Some(select) =>
-          <div>
+          <div >
+            <div className=modalOverlayClass onClick=(_ => closeFn() |> ignore) />
             <div
-              className=modalOverlayClass
-              onClick=(_ => closeFn() |> ignore)
-            />
-            <div className=modalOuterClass>
-              <div className=modalInternalClass>
-                {select |> modalContents}
-              </div>
+              className=modalOuterClass
+              onClick=(
+                e => {
+                  let currentTarget = ReactEventRe.Mouse.currentTarget(e);
+                  let target = ReactEventRe.Mouse.target(e);
+                  let isSameElement = (target == currentTarget);
+                  (isSameElement ? closeFn() : ())
+                }
+              )
+            >
+              {select |> modalContents}
             </div>
           </div>
         | _ => <div />

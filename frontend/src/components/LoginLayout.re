@@ -5,13 +5,26 @@ let loginLayoutClass = [%bs.raw
   {| css(tw`
     bg-white
     h-full
-    w-64
-    px-4
-    py-32
+    px-32
     flex
     flex-col
     justify-center
+    w-full
+    sm:w-2/3
+    sm:h-5/6
+    md:w-1/2
   `)|}
+];
+
+let loginLayoutSigninText = [%bs.raw
+{| css(tw`
+  h-32
+  flex
+  justify-center
+  items-center
+  text-green-darker
+  text-4xl
+`)|}
 ];
 
 let loginButtons = [%bs.raw
@@ -29,7 +42,7 @@ let loginButton = [%bs.raw
 
 let loginTextInput = [%bs.raw
 {| css(tw`
-  mb-4
+  mb-6
 `)|}
 ];
 
@@ -37,6 +50,7 @@ let loginLayoutCenterTextClass = [%bs.raw
 {| css(tw`
   flex
   justify-center
+  items-center
 `)|}
 ];
 
@@ -80,6 +94,9 @@ let make = (~accountSend, ~successClick, _children) => {
     },
   render: self =>
       <div className=loginLayoutClass>
+        <div className=loginLayoutSigninText>
+          {ReasonReact.string("Sign In")}
+        </div>
         <div className=loginTextInput>
           <FedTextInput
             value=self.state.email
@@ -98,6 +115,7 @@ let make = (~accountSend, ~successClick, _children) => {
         <div className=loginButtons>
           <div>
             <FedButton
+              size=LARGE
               onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
             >
               {ReasonReact.string("Sign In")}
@@ -105,6 +123,7 @@ let make = (~accountSend, ~successClick, _children) => {
           </div>
           <div>
             <FedButton
+              size=LARGE
               color=GREY
               onClick=((_) => loginButtonOnClick(self.state, accountSend, successClick))
             >

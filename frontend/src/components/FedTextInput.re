@@ -5,8 +5,9 @@ let cx = Css.cx;
 let tw = Css.tw;
 
 let fedTextAreaClass = [%bs.raw {| css(tw`
-  p-2
+  p-4
   w-full
+  text-lg
   rounded-lg
   border-green-darker
 `)|}];

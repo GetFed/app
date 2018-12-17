@@ -33,6 +33,7 @@ let sidemenuEmptyClass = [%bs.raw {| css(tw`
 `)|}];
 
 let sidemenuTopContentClass = [%bs.raw {| css(tw`
+  fixed
   w-full
   flex
   h-16
@@ -41,8 +42,13 @@ let sidemenuTopContentClass = [%bs.raw {| css(tw`
   bg-white
 `)|}];
 
+let sidemenuRealContentsClass = [%bs.raw {| css(tw`
+  mt-16
+  sm:mt-0
+`)|}];
+
 let openedSideMenuClass = [%bs.raw {| css(tw`
-  w-3/4
+  w-1/2
   block
   bg-white
   mt-16
@@ -101,7 +107,9 @@ let make = (~sideMenu, ~topContent=?, children) => {
             </div>
             {Belt.Option.getWithDefault(topContent, <div/>)}
           </div>
-          (children |> ReasonReact.array)
+          <div className=sidemenuRealContentsClass>
+            (children |> ReasonReact.array)
+          </div>
         </div>
       </div>
     </div>,

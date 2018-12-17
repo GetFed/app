@@ -23,20 +23,39 @@ let colorClassGrey = [%bs.raw {| css(tw`
   bg-grey-darker
 `)|}];
 
+let mediumClass = [%bs.raw {| css(tw`
+`)|}];
+
+let largeClass = [%bs.raw {| css(tw`
+  py-2
+  px-6
+  text-xl
+  `)|}];
+
 type color =
   | GREEN
   | GREY;
 
-let colorClass = (color : color) =>
-  switch(color) {
-  | GREEN => colorClassGreen
-  | GREY => colorClassGrey
-  };
+type size =
+  | MEDIUM
+  | LARGE;
 
-let make = (~onClick, ~color=GREEN, children) => {
+let buttonClass = (color : color, size: size) =>
+  cx(
+    switch(color) {
+    | GREEN => colorClassGreen
+    | GREY => colorClassGrey
+    },
+    switch(size) {
+    | MEDIUM => mediumClass
+    | LARGE => largeClass
+    },
+  )
+
+let make = (~onClick, ~color=GREEN, ~size=MEDIUM, children) => {
   ...component,
   render: _self =>
-   <button className=cx(dietButtonClass, colorClass(color)) onClick>
+   <button className=cx(dietButtonClass, buttonClass(color, size)) onClick>
      {children |> ReasonReact.array}
    </button>
 };
