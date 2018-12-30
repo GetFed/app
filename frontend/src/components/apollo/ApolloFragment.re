@@ -56,14 +56,14 @@ module Container = (
       InnerContainer.get(
         ~fragmentType=Model.fragmentType,
         ~fragmentName=Model.fragmentName,
-        ~id=Schema.getUUIDFromId(id)
+        ~id=Model.getUUIDFromId(id)
       );
 
   let getRecordById = (id: idType) : option(Model.Record.t) =>
     InnerContainer.get(
       ~fragmentType=Model.fragmentType,
       ~fragmentName=Model.fragmentName,
-      ~id=Schema.getUUIDFromId(id)
+      ~id=Model.getUUIDFromId(id)
     )
     |> Belt.Option.map(_, Model.Record.fromObject);
 

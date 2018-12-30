@@ -3,7 +3,7 @@ type _data = {
   name: string,
   description: string,
   photo: string,
-  productId: Schema.FoodProduct.idAsType(Schema.modelIdType)
+  productId: Schema.FoodProduct.id
   
 
   /* UI */
@@ -12,32 +12,16 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "MenuItem";
 
 module ModelSchema = Schema.MenuItem;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let idToTypedId = (id: UUID.t): idType => `MenuItemId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment menuItemFields on MenuItem {
-      id
-      name
-      description
-      photo
-      product{
-        ...FoodProduct.Model.Fragment.Fields
-      }
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.MenuItemFields;
-};
-
+module Fragment = MenuItem_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -46,7 +30,7 @@ let _defaultData = id => {
   name: "",
   description: "",
   photo: "",
-  productId: `FoodProductId(id),
+  productId: FoodProduct.Model.idToTypedId(id),
   
   /* UI */
 };
@@ -76,7 +60,8 @@ module Record = {
 
   let default = () => _defaultRecord();
   let defaultWithId = ((), id): t =>
-    _defaultRecordId(id |> Schema.getUUIDFromId);
+    _defaultRecordId(id |> getUUIDFromId);
+  let findId = (record : _record) => record.data.id;
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),

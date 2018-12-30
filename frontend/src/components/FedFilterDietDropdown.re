@@ -15,23 +15,25 @@ let make = (
   ...component,
   render: self =>
     <DropdownSelector
-      selection={diets |> Belt.List.map(_, Schema.getUUIDFromId)}
-      selected={Some(Schema.getUUIDFromId(selectedDietId))}
+      selection={diets |> Belt.List.map(_, Diet.Model.getUUIDFromId)}
+      selected={Some(Diet.Model.getUUIDFromId(selectedDietId))}
       toSelectorButton={
         (id) =>
           switch(id){
           | Some(selectedId) =>
-              `DietId(selectedId)
+              selectedId
+              |> Diet.Model.idToTypedId
               |> Diet.Container.getRecordById
               |> Belt.Option.mapWithDefault(_, <div/>, (diet) => <DietButton size color data=diet />)
           | None => <div />
           }
       }
       toOptionButton={(selectedId) =>
-        `DietId(selectedId)
+        selectedId
+        |> Diet.Model.idToTypedId
         |> Diet.Container.getRecordById
         |> Belt.Option.mapWithDefault(_, <div/>, (diet) => <DietButton size color data=diet />)
       }
-      afterSelect=((id) => `DietId(id) |> updateDiet)
+      afterSelect=((id) => id |> Diet.Model.idToTypedId |> updateDiet)
     />
 };

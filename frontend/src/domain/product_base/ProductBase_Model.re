@@ -7,26 +7,15 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "ProductBase";
 module ModelSchema = Schema.ProductBase;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let idToTypedId = (id: UUID.t): idType => `ProductBaseId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment productBaseFields on ProductBase {
-      id
-      price
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.ProductBaseFields;
-};
-
+module Fragment = ProductBase_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -55,10 +44,10 @@ module Record = {
       price: obj##price,
     };
   };
-
+  let findId = (record : _record) => record.data.id;
   let default = () => _defaultRecord();
   let defaultWithId = ((), id): t =>
-    _defaultRecordId(id |> Schema.getUUIDFromId);
+    _defaultRecordId(id |> getUUIDFromId);
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),

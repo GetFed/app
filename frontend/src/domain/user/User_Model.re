@@ -7,48 +7,15 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "User";
 module ModelSchema = Schema.User;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let idToTypedId = (id: UUID.t): idType => `UserId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment userFields on User {
-      id
-      createdAt
-      defaultAddress {
-        id
-        firstName
-        lastName
-        addressLine1
-        addressLine2
-        addressState
-        addressZip{
-          id
-        }
-      }
-      amountSpent
-      restrictions{
-        edges{
-          node{
-            id
-          }
-        }
-      }
-      credit
-      phoneNumber
-      stripeId
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.UserFields;
-};
-
+module Fragment = User_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -64,7 +31,7 @@ let defaultWithId = id => {
   ..._defaultRecord(),
   data: {
     ..._defaultData(),
-    id: Schema.getUUIDFromId(id),
+    id: getUUIDFromId(id),
   },
 };
 
@@ -85,9 +52,10 @@ module Record = {
     ..._defaultRecord(),
     data: {
       ..._defaultData(),
-      id: Schema.getUUIDFromId(id),
+      id: getUUIDFromId(id),
     },
   };
+  let findId = (record : _record) => record.data.id;
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),

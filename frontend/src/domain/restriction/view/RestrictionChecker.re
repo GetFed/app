@@ -51,7 +51,7 @@ let make = (
     {
       <div
         className=restrictionCheckerClass
-        onClick=((_) => updateRestriction(`RestrictionId(restriction.data.id), !restricted))
+        onClick=((_) => updateRestriction(Restriction.Model.idToTypedId(restriction.data.id), !restricted))
       >
         <div className=restrictionImageAreaClass>
         {

@@ -7,26 +7,16 @@ type _data = {
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "Attribute";
 module ModelSchema = Schema.Attribute;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let idToTypedId = (id: UUID.t): idType => `AttributeId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment attributeFields on Attribute {
-      id
-      name
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.AttributeFields;
-};
-
+/* */
+module Fragment = Attribute_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -56,9 +46,10 @@ module Record = {
     };
   };
 
+  let findId = (record : _record) => record.data.id;
   let default = () => _defaultRecord();
   let defaultWithId = ((), id): t =>
-    _defaultRecordId(id |> Schema.getUUIDFromId);
+    _defaultRecordId(id |> getUUIDFromId);
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),

@@ -7,7 +7,18 @@ module type Model = {
   type _local;
 
   type _record = RecordType.t(_data, _local);
-  type idType = Schema.modelIdType;
+  type idType;
+  type rootIdType;
+  let idToRootId: (idType) => rootIdType;
+  let getUUIDFromId: (idType) => UUID.t;
+
+  module ModelSchema:  {
+    type _id;
+    type _id += Id(UUID.t);
+
+    type t;
+    type t += Schema;
+  };
 
   module rec Fragment: {
     module Fields: ReasonApolloTypes.Config;
@@ -15,7 +26,8 @@ module type Model = {
   and Record: {
     type t = _record;
     type defaultParam;
-    type defaultFn = (defaultParam, Schema.modelIdType) => t;
+    type defaultFn = (defaultParam, idType) => t;
+    let findId: (_record) => UUID.t;
 
     module Data: {
       type t = _data;
@@ -54,6 +66,22 @@ module type Container {
       ReasonReact.noRetainedProps,
       ReasonReact.actionless
     );
+};
+
+module type DomainWrapper = {
+  type model;
+  type rootRecord;
+  let wrap: model => rootRecord;
+  let unwrap: rootRecord => option(model);
+  let apolloEnabled: bool;
+};
+
+module type ModelRecordType {
+  module Model: Model;
+  module Wrapper: DomainWrapper;
+  type model;
+  type _record;
+  type _record += Record(Model.Record.t);
 };
 
 module type Action = {

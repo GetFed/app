@@ -2,37 +2,23 @@ type _data = {
   id: UUID.t,
   amount: float,
   name: string,
-  nutrientId: Schema.Nutrient.idAsType(Schema.modelIdType),
+  nutrientId: Schema.Nutrient.id,
   /* UI */
 };
 
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "MacroNutrientAmount";
 
 module ModelSchema = Schema.MacroNutrientAmount;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let idToTypedId = (id: UUID.t): idType => `MacroNutrientAmountId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment macroNutrientAmountFields on MacroNutrientAmount {
-      id
-      amount
-      name
-      nutrient {
-        ...Nutrient.Model.Fragment.Fields
-      }
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.MacroNutrientAmountFields;
-};
+module Fragment = MacroNutrientAmount_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -68,7 +54,8 @@ module Record = {
 
   let default = () => _defaultRecord();
   let defaultWithId = ((), id): t =>
-    _defaultRecordId(id |> Schema.getUUIDFromId);
+    _defaultRecordId(id |> getUUIDFromId);
+  let findId = (record : _record) => record.data.id;
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),

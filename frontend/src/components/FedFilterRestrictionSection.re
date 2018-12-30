@@ -41,7 +41,7 @@ let make = (
                     data=restriction
                     updateRestriction
                     restricted=(
-                      Belt.List.getBy(selectedRestrictions, (id) => id == `RestrictionId(restriction.data.id)) != None
+                      Belt.List.getBy(selectedRestrictions, (id) => id == Restriction.Model.idToTypedId(restriction.data.id)) != None
                     )
                     restrictionTextClass
                   />

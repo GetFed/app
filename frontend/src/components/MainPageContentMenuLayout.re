@@ -59,7 +59,7 @@ let make = (~diets, ~restrictions, ~currentMenu, _children) => {
             ReasonReact.Update({
               ...state,
               restrictions: restrictionIds |> Utils.List.removeOptionsFromList,
-              selectedDietId: Some(`DietId(diet.data.id))
+              selectedDietId: Some(Diet.Model.idToTypedId(diet.data.id))
             });
           });
         });

@@ -22,7 +22,8 @@ let make = (~restrictions, _children) => {
           currentMenu,
           noMenu,
           (currentMenu) => {
-            `MenuId(currentMenu##id)
+            currentMenu##id
+            |> Menu.Model.idToTypedId
             |> Menu.Container.getRecordById
             |> Belt.Option.mapWithDefault(_, noMenu, (menu) => <MenuLayout restrictions data=menu/>)
           });

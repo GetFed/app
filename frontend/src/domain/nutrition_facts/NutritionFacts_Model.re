@@ -4,64 +4,33 @@ type _data = {
   servingSize: float,
   servingsPerContainer: float,
   caloriesFromFat: option(float),
-  totalFatId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  transFatId: option(Schema.MacroNutrientAmount.idAsType(Schema.modelIdType)),
-  saturatedFatId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  cholesterolId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  sodiumId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  totalCarbohydrateId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  dietaryFiberId: option(Schema.MacroNutrientAmount.idAsType(Schema.modelIdType)),
-  sugarId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  addedSugarId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  proteinId: Schema.MacroNutrientAmount.idAsType(Schema.modelIdType),
-  mineralIds: list(option(Schema.MineralNutrientAmount.idAsType(Schema.modelIdType))),
+  totalFatId: Schema.MacroNutrientAmount.id,
+  transFatId: option(Schema.MacroNutrientAmount.id),
+  saturatedFatId: Schema.MacroNutrientAmount.id,
+  cholesterolId: Schema.MacroNutrientAmount.id,
+  sodiumId: Schema.MacroNutrientAmount.id,
+  totalCarbohydrateId: Schema.MacroNutrientAmount.id,
+  dietaryFiberId: option(Schema.MacroNutrientAmount.id),
+  sugarId: Schema.MacroNutrientAmount.id,
+  addedSugarId: Schema.MacroNutrientAmount.id,
+  proteinId: Schema.MacroNutrientAmount.id,
+  mineralIds: list(option(Schema.MineralNutrientAmount.id)),
   /* UI */
 };
 
 type _local = unit;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "NutritionFacts";
 
 module ModelSchema = Schema.NutritionFacts;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let idToTypedId = (id: UUID.t): idType => `NutritionFactsId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment nutritionFactsFields on NutritionFacts {
-      id
-      calories
-      servingSize
-      servingsPerContainer
-      caloriesFromFat
-      totalFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      transFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      saturatedFat{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      cholesterol{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      sodium{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      totalCarbohydrate{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      dietaryFiber{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      sugar{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      addedSugar{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      protein{ ...MacroNutrientAmount.Model.Fragment.MacroNutrientAmountFields }
-      minerals{
-        edges{
-          node{
-            ...MineralNutrientAmount.Model.Fragment.Fields
-          }
-        }
-      }
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.NutritionFactsFields;
-};
-
+module Fragment = NutritionFacts_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -121,7 +90,8 @@ module Record = {
 
   let default = () => _defaultRecord();
   let defaultWithId = ((), id): t =>
-    _defaultRecordId(id |> Schema.getUUIDFromId);
+    _defaultRecordId(id |> getUUIDFromId);
+  let findId = (record : _record) => record.data.id;
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),

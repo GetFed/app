@@ -6,25 +6,15 @@ type _data = {
 type _local = Teacher_Local.Model.Record.t;
 type _record = RecordType.t(_data, _local);
 
-let fragmentType = "Teacher";
 module ModelSchema = Schema.Teacher;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let idToTypedId = (id: UUID.t): idType => `TeacherId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment teacherFields on User {
-      id
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.TeacherFields;
-};
-
+module Fragment = Teacher_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -54,8 +44,8 @@ module Record = {
 
   let default = () => _defaultRecord();
   let defaultWithId = ((), id): t =>
-    _defaultRecordId(id |> Schema.getUUIDFromId);
-
+    _defaultRecordId(id |> getUUIDFromId);
+  let findId = (record : _record) => record.data.id;
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),
     local: Teacher_Local.Model.Record.default(obj##id),

@@ -2,7 +2,7 @@ type _data = {
   id: UUID.t,
   name: string,
   percentageDailyValue: float,
-  nutrientId: Schema.Nutrient.idAsType(Schema.modelIdType),
+  nutrientId: Schema.Nutrient.id,
   /* UI */
 };
 
@@ -10,29 +10,14 @@ type _local = unit;
 type _record = RecordType.t(_data, _local);
 
 module ModelSchema = Schema.MineralNutrientAmount;
-type idType = ModelSchema.idAsType(Schema.modelIdType);
+type idType = ModelSchema.id;
+type rootIdType = ModelUtils.RootModel.id;
+let idToRootId = ModelSchema.idToRootId;
+let getUUIDFromId = ModelSchema.idToString;
+let idToTypedId = (id: UUID.t): idType => ModelSchema.stringToId(id);
 
-let fragmentType = "MineralNutrientAmount";
-let idToTypedId = (id: UUID.t): idType => `MineralNutrientAmountId(id);
-
-module GraphFragment = [%graphql
-  {|
-    fragment mineralNutrientAmountFields on MineralNutrientAmount {
-      id
-      name
-      percentageDailyValue
-      nutrient {
-        ...Nutrient.Model.Fragment.Fields
-      }
-    }
-  |}
-];
-
-module Fragment = {
-  include GraphFragment;
-  module Fields = GraphFragment.MineralNutrientAmountFields;
-};
-
+module Fragment = MineralNutrientAmount_Fragment;
+let fragmentType = Fragment.fragmentType;
 let fragmentName = Fragment.Fields.name;
 let objectToId = (obj: Fragment.Fields.t): idType => idToTypedId(obj##id);
 
@@ -65,10 +50,11 @@ module Record = {
       nutrientId: obj##nutrient |> Nutrient.Model.objectToId,
     };
   };
+  let findId = (record : _record) => record.data.id;
 
   let default = () => _defaultRecord();
   let defaultWithId = ((), id): t =>
-    _defaultRecordId(id |> Schema.getUUIDFromId);
+    _defaultRecordId(id |> getUUIDFromId);
 
   let fromObject = (obj: Fragment.Fields.t): t => {
     data: Data.fromObject(obj),
