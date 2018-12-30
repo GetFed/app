@@ -1,5 +1,5 @@
-[@bs.module "react-icons/lib/fa/bars"]
-external comp : ReasonReact.reactClass = "default";
+[@bs.module "react-icons/fa"]
+external comp : ReasonReact.reactClass = "FaBars";
 
 let make = (~className=?, children) =>
   ReasonReact.wrapJsForReason(
